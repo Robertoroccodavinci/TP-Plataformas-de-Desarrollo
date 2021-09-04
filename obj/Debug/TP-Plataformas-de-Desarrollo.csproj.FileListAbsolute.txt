@@ -1,0 +1,7 @@
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\bin\Debug\TP-Plataformas-de-Desarrollo.exe.config
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\bin\Debug\TP-Plataformas-de-Desarrollo.exe
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\bin\Debug\TP-Plataformas-de-Desarrollo.pdb
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\obj\Debug\TP-Plataformas-de-Desarrollo.csproj.AssemblyReference.cache
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\obj\Debug\TP-Plataformas-de-Desarrollo.csproj.CoreCompileInputs.cache
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\obj\Debug\TP-Plataformas-de-Desarrollo.exe
+C:\Users\rober\Desktop\VisualStudio-Workspace\TP-Plataformas-de-Desarrollo\obj\Debug\TP-Plataformas-de-Desarrollo.pdb
