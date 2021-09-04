@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace TP_Plataformas_de_Desarrollo
 {
-    abstract class Usuario 
+    abstract class Usuario : IComparable<Usuario>
     {
-        private static int ID = 0;
-        
+    private int ID = 0;
     private int DNI;
     private string Nombre;
     private string Apellido;
@@ -17,22 +16,23 @@ namespace TP_Plataformas_de_Desarrollo
     private string Password;
     private Carro MiCarro;
 
-    public Usuario(string Nombre, string Apellido, string Mail, string Password)
+    public Usuario( string Nombre, string Apellido, string Mail, string Password, int ID)
     {
-        ID++;
-        this.Nombre = Nombre;
-        this.Apellido = Apellido;
-        this.Mail = Mail;
-        this.Password = Password;
-        MiCarro = new Carro(nID);
+        nID = ID;
+        nNombre = Nombre;
+        nApellido = Apellido;
+        nMail = Mail;
+        nPassword = Password;
+        nCarro = new Carro(nID);
     }
 
-    public static int nID
-    {
-        get { return ID; }
-    }
+        public int nID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
 
-    public int nDNI
+        public int nDNI
     {
         get { return DNI; }
         set { DNI = value; }
@@ -63,20 +63,19 @@ namespace TP_Plataformas_de_Desarrollo
     }
 
   
-    public Carro ncarro
+    public Carro nCarro
     {
-        get { return MiC
-                    arro; }
-        set { Carro = value; }
+        get { return MiCarro; }
+        set { MiCarro = value; }
     }
 
-    public int CompareTo(Usuario otro) { }
+    public int CompareTo(Usuario otro) {
+        return DNI.CompareTo(otro.DNI);
+    }
 
     public string toString()
     {
-
-
-        return "";
+        return nID+"-"+nDNI+ "-" + nNombre+"-"+nApellido+"-"+nMail+"-"+nPassword+"-"+nCarro.ToString();
     }
 }
 }

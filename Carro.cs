@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TP_Plataformas_de_Desarrollo
 {
-    class Carro
+    class Carro 
     {
         
         private int ID;

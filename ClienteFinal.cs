@@ -10,8 +10,8 @@ namespace TP_Plataformas_de_Desarrollo
     {
         private int CUIL;
 
-        public ClienteFinal(int CUIL, string Nombre, string Apellido, string Mail, string Password)
-            : base(string Nombre, string Apellido, string Mail, string Password) {
+        public ClienteFinal(int CUIL, string Nombre, string Apellido, string Mail, string Password, int ID)
+            : base( Nombre, Apellido, Mail, Password, ID) {
             nCUIL = CUIL;
         }
 
@@ -19,13 +19,10 @@ namespace TP_Plataformas_de_Desarrollo
             get { return CUIL; }
             set { CUIL = value; }
         }
-
-        public int CompareTo(ClienteFinal otro)
+        public string toString()
         {
-            return base.DNI.CompareTo(otro);
-           
+            return base.toString()+"-"+nCUIL;
         }
 
-        
     }
 }

@@ -8,14 +8,13 @@ namespace TP_Plataformas_de_Desarrollo
 {
     class Compra
     {
-        private int ID;
-        //private Comprador;
-        //private Producto Dictionary<Producto, Cantidad> Productos = new Dictionary<producto, cantidad>();
+        private static int IDCompra;
+        private Usuario Comprador;
+        private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
         private double Total;
-
-
-
 
 
     }
 }
+
+
