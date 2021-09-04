@@ -25,7 +25,7 @@ namespace TP_Plataformas_de_Desarrollo
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria) 
         {
             int n = Productos.Count();
-            Productos.Add(new Producto(n++, nombre, precio, cantidad, ID_Categoria)) ;
+            Productos.Add(new Producto(n++, nombre, precio, cantidad, Categorias[ID_Categoria]));
             return true;//solo para que no tire error
         }
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
