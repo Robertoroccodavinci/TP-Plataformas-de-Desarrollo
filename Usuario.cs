@@ -9,6 +9,7 @@ namespace TP_Plataformas_de_Desarrollo
     abstract class Usuario 
     {
         private static int ID = 0;
+        
     private int DNI;
     private string Nombre;
     private string Apellido;
@@ -18,15 +19,15 @@ namespace TP_Plataformas_de_Desarrollo
 
     public Usuario(string Nombre, string Apellido, string Mail, string Password)
     {
-        this.ID = Usuario.ID++;
+        ID++;
         this.Nombre = Nombre;
         this.Apellido = Apellido;
         this.Mail = Mail;
         this.Password = Password;
-        carro = new Carro(this.ID);
+        MiCarro = new Carro(nID);
     }
 
-    public static int ID
+    public static int nID
     {
         get { return ID; }
     }
@@ -37,39 +38,35 @@ namespace TP_Plataformas_de_Desarrollo
         set { DNI = value; }
     }
 
-    public string Nombre
+    public string nNombre
     {
         get { return Nombre; }
         set { Nombre = value; }
     }
 
-    public string Apellido
+    public string nApellido
     {
         get { return Apellido; }
         set { Apellido = value; }
     }
 
-    public string Mail
+    public string nMail
     {
         get { return Mail; }
         set { Mail = value; }
     }
 
-    public string Password
+    public string nPassword
     {
         get { return Password; }
         set { Password = value; }
     }
 
-    public string Password
+  
+    public Carro ncarro
     {
-        get { return Password; }
-        set { Password = value; }
-    }
-
-    public Carro carro
-    {
-        get { return Carro; }
+        get { return MiC
+                    arro; }
         set { Carro = value; }
     }
 

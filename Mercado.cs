@@ -43,7 +43,7 @@ namespace TP_Plataformas_de_Desarrollo
         }
         public void BuscarProductoPorCategoria(int ID_Categoria)
         {
-
+           
         }
         public void MostrarTodosProductosPorPrecio()
         {
