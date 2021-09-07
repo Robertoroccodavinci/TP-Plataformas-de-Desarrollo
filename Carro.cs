@@ -18,27 +18,57 @@ namespace TP_Plataformas_de_Desarrollo
             this.ID = ID;
         }
 
+        public int nID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+
+        public Dictionary<Producto, int> nProductos
+        {
+            get { return Productos; }
+            set { Productos = value; }
+        }
+
+
         public void AgregarProducto(Producto P, int Cantidad)
         {
-            Productos.Add(P, Cantidad);
+            if (Productos[P] != null)
+            {
+                Productos[P] = Productos[P] + Cantidad;
+            }
+            else 
+            { 
+                Productos.Add(P, Cantidad);
+            }
         }
         public void QuitarProducto(Producto P, int Cantidad) 
         {
-            if (Cantidad > 0)
+            if (Productos[P] != null)
             {
-                Productos[P]= Productos[P]-Cantidad;
+                if (Cantidad > 0)
+                {
+                    Productos[P] = Productos[P] - Cantidad;
+
+                }
+                else
+                {
+                    Productos.Remove(P);
+                }
             }
-            else {
-                Productos.Remove(P);
+            else 
+            {
+                Console.WriteLine("El producto no se encuentra en la lista");
             }
-            
+
         }
         public void Vaciar()
         {
             Productos.Clear();
+
         }
 
-        public override string ToString()
+        public string ToString()
         {
             
             string leer="";

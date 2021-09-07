@@ -16,8 +16,9 @@ namespace TP_Plataformas_de_Desarrollo
     private string Password;
     private Carro MiCarro;
 
-    public Usuario( string Nombre, string Apellido, string Mail, string Password, int ID)
+    public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password)
     {
+        nDNI = DNI;
         nID = ID;
         nNombre = Nombre;
         nApellido = Apellido;
@@ -73,7 +74,7 @@ namespace TP_Plataformas_de_Desarrollo
         return DNI.CompareTo(otro.DNI);
     }
 
-    public string toString()
+    public string ToString()
     {
         return nID+"-"+nDNI+ "-" + nNombre+"-"+nApellido+"-"+nMail+"-"+nPassword+"-"+nCarro.ToString();
     }

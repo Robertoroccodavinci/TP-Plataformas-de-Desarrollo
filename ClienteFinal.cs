@@ -10,8 +10,8 @@ namespace TP_Plataformas_de_Desarrollo
     {
         private int CUIL;
 
-        public ClienteFinal(int CUIL, string Nombre, string Apellido, string Mail, string Password, int ID)
-            : base( Nombre, Apellido, Mail, Password, ID) {
+        public ClienteFinal(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, int CUIL)
+            : base(ID, DNI, Nombre, Apellido, Mail, Password) {
             nCUIL = CUIL;
         }
 
@@ -19,9 +19,9 @@ namespace TP_Plataformas_de_Desarrollo
             get { return CUIL; }
             set { CUIL = value; }
         }
-        public string toString()
+        public string ToString()
         {
-            return base.toString()+"-"+nCUIL;
+            return base.ToString()+"-"+nCUIL;
         }
 
     }

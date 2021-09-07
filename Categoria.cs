@@ -31,7 +31,7 @@ namespace TP_Plataformas_de_Desarrollo
             return nNombre.CompareTo(otro.nNombre);
         }
 
-        public string toString()
+        public string ToString()
         {
             return nID + "-" + nNombre;
         }

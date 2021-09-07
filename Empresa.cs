@@ -10,8 +10,8 @@ namespace TP_Plataformas_de_Desarrollo
     {
         private int CUIT;
 
-        public Empresa(string Nombre, string Apellido, string Mail, string Password,int CUIT, int ID)
-            : base(Nombre,  Apellido, Mail,  Password, ID)
+        public Empresa(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, int CUIT)
+            : base(ID, DNI, Nombre, Apellido, Mail,  Password)
         {
             nCUIT = CUIT;
         }
@@ -21,9 +21,9 @@ namespace TP_Plataformas_de_Desarrollo
             set { CUIT = value; }
         }
 
-        public string toString()
+        public string ToString()
         {
-            return base.toString() + "-" + nCUIT;
+            return base.ToString() + "-" + nCUIT;
         }
 
     }
