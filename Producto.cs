@@ -12,9 +12,9 @@ namespace TP_Plataformas_de_Desarrollo
         private string Nombre;
         private double Precio;
         private int Cantidad;
-        private Categoria Cat;
+        public Categoria Cat;
 
-        public Producto(int IDProd,string nombre, double precio, int cant, Categoria cat)
+        public Producto(int IDProd, string nombre, double precio, int cant, Categoria cat)
         {
             nIDProd = IDProd;
             nNombre = nombre;
@@ -22,6 +22,7 @@ namespace TP_Plataformas_de_Desarrollo
             nCantidad = cant;
             nCategoria = cat;
         }
+
         public int nIDProd
         {
             get { return IDProd; }

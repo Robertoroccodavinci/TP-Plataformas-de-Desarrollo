@@ -30,7 +30,7 @@ namespace TP_Plataformas_de_Desarrollo
             set { Productos = value; }
         }
 
-
+        
         public void AgregarProducto(Producto P, int Cantidad)
         {
             if (Productos[P] != null)
