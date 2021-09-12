@@ -20,13 +20,14 @@ namespace TP_Plataformas_de_Desarrollo
         
         public Mercado()
         {
-             
+           
         }
 
         // METODOS DE PRODUCTO
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria) 
         {
             int n = Productos.Count();
+            n++;
             foreach (Producto p  in  Productos) 
             {
                 if (p.nNombre == nombre || nombre == "" || nombre == null) 
@@ -40,24 +41,37 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 if(Categorias[i] is Categoria) {
                     if (Categorias[i].nID == ID_Categoria) {
-                            Productos.Add(new Producto(n++, nombre, precio, cantidad, Categorias[i]));
+                            Productos.Add(new Producto(n, nombre, precio, cantidad, Categorias[i]));
                             Console.WriteLine("Producto agregado correctamente!");
                             return true;
                     }
                 }
             }
-            Console.WriteLine("ERROR: el producto fue ingresado con datos erroneos");
+            Console.WriteLine("ERROR: no se pudo agregar el producto");
             return false;
         }
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
         {
-            if (Productos[ID] != null /*|| Productos[ID] == 'undefined'*/) {  //falta probar
-                Productos[ID].nNombre = nombre;
-                Productos[ID].nPrecio = precio;
-                Productos[ID].nCantidad = cantidad;
-                Productos[ID].nCategoria = Categorias[ID_Categoria];
-                return true;
+            foreach (Producto p in Productos) 
+            {
+                if (p.nIDProd == ID) 
+                {
+                    p.nNombre = nombre;
+                    p.nPrecio = precio;
+                    p.nCantidad = cantidad;
+                    for (int i = 0; i <= MaxCategorias;i++) 
+                    {
+                        if (Categorias[i].nID==ID_Categoria) 
+                        {
+                            p.nCategoria = Categorias[i];
+                            Console.WriteLine("Producto modificado correctamente!");
+                            return true;
+                        }
+                    }
+                    
+                }
             }
+            Console.WriteLine("ERROR: producto no encontrado");
             return false;
 
         }
@@ -132,51 +146,79 @@ namespace TP_Plataformas_de_Desarrollo
         public bool AgregarUsuario(int DNI,string nombre, string apellido, string Mail,string password, int CUIT_CUIL, bool EsEmpresa)
         {
             int n = Usuarios.Count();
+            n++;
             if (EsEmpresa){
-                Usuarios.Add(new Empresa(n++, DNI, nombre, apellido, Mail, password, CUIT_CUIL)); 
+                Usuarios.Add(new Empresa(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL));
+                Console.WriteLine("Usuario Empresa agregado con exito!");
+                return true;
             } else { 
-                Usuarios.Add(new ClienteFinal(n++, DNI, nombre, apellido, Mail, password, CUIT_CUIL));
+                Usuarios.Add(new ClienteFinal(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL));
+                Console.WriteLine("Usuario Cliente Final agregado con exito!");
+                return true;
             }
-            
-            return true;//solo para que no tire error
+            Console.WriteLine("ERROR");
+            return false;
         }
 
         public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, bool EsEmpresa)
         {
-            if (Usuarios[ID] != null)
+            foreach (Usuario u in Usuarios)
             {
-                if (EsEmpresa)
+                if (u.nID == ID)
                 {
-                    Empresa e = (Empresa) Usuarios[ID];
-                    e.nDNI = DNI;
-                    e.nNombre = nombre;
-                    e.nApellido = apellido;
-                    e.nMail = Mail;
-                    e.nPassword = password;
-                    e.nCUIT=CUIT_CUIL;
-                    return true;
-                }
-                else
-                {
-                    ClienteFinal c = (ClienteFinal) Usuarios[ID];
-                    c.nDNI = DNI;
-                    c.nNombre = nombre;
-                    c.nApellido = apellido;
-                    c.nMail = Mail;
-                    c.nPassword = password;
-                    c.nCUIL = CUIT_CUIL; 
-                    return true;
+                    if (u is Empresa && EsEmpresa == true)
+                    {
+                        Empresa e = (Empresa)u;
+                        e.nDNI = DNI;
+                        e.nNombre = nombre;
+                        e.nApellido = apellido;
+                        e.nMail = Mail;
+                        e.nPassword = password;
+                        e.nCUIT = CUIT_CUIL;
+                        Console.WriteLine("Usuario Empresa modificado con exito!");
+                        return true;
+                    }
+                    else if(u is ClienteFinal && EsEmpresa == false)
+                    {
+                        ClienteFinal c = (ClienteFinal)Usuarios[ID];
+                        c.nDNI = DNI;
+                        c.nNombre = nombre;
+                        c.nApellido = apellido;
+                        c.nMail = Mail;
+                        c.nPassword = password;
+                        c.nCUIL = CUIT_CUIL;
+                        Console.WriteLine("Usuario Cliente Final modificado con exito!");
+                        return true;
+                    }
+                    
                 }
             }
+            if (EsEmpresa == true)
+            {
+                Console.WriteLine("ERROR: no hay Usuario Empresa con ese ID");
                 return false;
+            }
+            else 
+            {
+                Console.WriteLine("ERROR: no hay Usuario Cliente Final con ese ID");
+                return false;
+            }
+            
         }
 
         public bool EliminarUsuario(int ID)
         {
-            if (Usuarios.Remove(Usuarios[ID])) {
-                return true;
+            foreach (Usuario u in Usuarios)
+            {
+                if (u.nID == ID) 
+                {
+                    Usuarios.Remove(u);
+                    Console.WriteLine("Usuario eliminado con exito!");
+                    return true;
+                }
             }
 
+            Console.WriteLine("ERROR: ID usuario no encontrado");
             return false;
         }
         
@@ -184,7 +226,18 @@ namespace TP_Plataformas_de_Desarrollo
         {
             Usuarios.Sort();
             foreach (Usuario u in Usuarios) {
-                Console.WriteLine(u.ToString());
+                if (u is Empresa)
+                {
+                    Empresa e = (Empresa)u;
+                    Console.WriteLine(e.ToString());
+                }
+                else 
+                {
+                    ClienteFinal c = (ClienteFinal)u;
+                    Console.WriteLine(c.ToString());
+                }
+                
+                
             }
         }
 
@@ -192,45 +245,59 @@ namespace TP_Plataformas_de_Desarrollo
 
         public bool AgregarCategoria(string nombre)
         {
-            int ID = 1;
+            
             if (CantCategorias < MaxCategorias) {
-                
                 for  (int i = 0; i <= MaxCategorias; i++)
                 {
                     if(Categorias[i] == null) {          
-                        Categorias[i] = new Categoria(ID, nombre);
+                        Categorias[i] = new Categoria(i, nombre);
                         CantCategorias++;
                         Console.WriteLine("Categoria agregada con exito!");
                         return true;
                     }
-                    ID++;
+                    
                 }
                 
                 
             }
-            Console.WriteLine("ERROR: no se puede agregar esta categoria");
+            Console.WriteLine("ERROR: no se puede agregar mas categorias");
             return false;
         }
         public bool ModificarCategoria(int ID,string nombre)
         {
-            if (Categorias[ID] != null) {
-                Categorias[ID].nNombre = nombre;
-                return true;
+            for (int i = 0; i <= MaxCategorias; i++)
+            {
+                if (Categorias[i].nID == ID)
+                {
+                    Categorias[i].nNombre = nombre;
+                    
+                    Console.WriteLine("Categoria modificada con exito!");
+                    return true;
+                }
+
             }
-            
+            Console.WriteLine("ERROR: no hay categoria con ID: "+ID);
             return false;
         }
         public bool EliminarCategoria(int ID) // a probar
         {
-            if (Categorias[ID] != null)
+            for (int i = 0; i <= MaxCategorias; i++)
             {
-                Array.Clear(Categorias, ID, 1);
-                Categorias[ID] = null;
-                CantCategorias--;
-                return true;
+                if (Categorias[i].nID == ID)
+                {
+
+                    Array.Clear(Categorias, ID, 1);
+                    Categorias[i] = null;
+                    CantCategorias--;
+                    
+                    Console.WriteLine("Categoria eliminada con exito!");
+                    return true;
+                }
+
             }
-                
+            Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
             return false;
+
         }
         
         public void MostrarCategoria()
@@ -238,10 +305,8 @@ namespace TP_Plataformas_de_Desarrollo
            
             foreach (Categoria c in Categorias) 
             {
-                
                 if  (c is Categoria) {
-                    
-                    
+
                     Console.WriteLine(c.ToString());
                 }
             }

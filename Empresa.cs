@@ -23,7 +23,7 @@ namespace TP_Plataformas_de_Desarrollo
 
         public string ToString()
         {
-            return base.ToString() + "-" + nCUIT;
+            return "Empresa - "+base.ToString() + "-" + nCUIT;
         }
 
     }

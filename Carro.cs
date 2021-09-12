@@ -78,7 +78,7 @@ namespace TP_Plataformas_de_Desarrollo
                 leer+="Key = " + kvp.Key + ", Value = " + kvp.Value+"\n";
             }
 
-            return "ID: " + ID + " - " + leer;
+            return "ID Carro: " + ID + " - " + leer;
             
         }
     }

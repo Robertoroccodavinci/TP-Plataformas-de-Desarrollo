@@ -13,25 +13,25 @@ namespace TP_Plataformas_de_Desarrollo
 
             Mercado m = new Mercado();
 
-            //agregamos categorias
+            //agregamos Categorias
             
-            m.AgregarCategoria("Comida"); // 1
-            m.AgregarCategoria("Bebida"); // 2
-            m.AgregarCategoria("falopa"); // 2
-            m.AgregarCategoria("aaaaa"); // 2
+            m.AgregarCategoria("Comida"); // 0
+            m.AgregarCategoria("Bebida"); // 1
+            
 
-            //agregamos Producto
+            //agregamos Productos
 
-            m.AgregarProducto("cerveza", 10, 20,2); // 1
-            m.AgregarProducto("papas", 5, 20, 1); // 2
+            m.AgregarProducto("cerveza", 10, 20,1); // 1
+            m.AgregarProducto("papas", 5, 20, 0); // 2
 
             //agregamos Usuarios
             m.AgregarUsuario(12345678,"Pepito","Fulano", "pepito@gmail.com", "123456", 2145687, false); // 1
             m.AgregarUsuario(12345678, "Jose", "Gomez", "jose@gmail.com", "123456", 2189587, false); // 2
             m.AgregarUsuario(12345678, "Carlos", "Lopez", "carlos@gmail.com", "123456", 158468, true); // 3
             m.AgregarUsuario(12345678, "Luis", "Mengano", "luis@gmail.com", "123456", 157852, true); // 4
-
-
+            
+            //limpiamos la consola
+            Console.Clear();
 
             int flag = 1;
             int res  =  0;
@@ -39,7 +39,9 @@ namespace TP_Plataformas_de_Desarrollo
             string a,b,d, e;
             double p;
             int c, id,n;
-            Array.Sort(m.Categorias);
+
+            
+
             while (flag == 1)
             {
                 Console.WriteLine("\nBienvenido, elija una de las opciones.\n");
@@ -64,7 +66,11 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.WriteLine("Ingrese el nombre de la categoria nueva: ");
                                 e = Console.ReadLine();
                                 m.AgregarCategoria(e);
+                                //Array.Sort(m.Categorias);
                                 
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 2:
                                 Console.Clear();
@@ -73,6 +79,9 @@ namespace TP_Plataformas_de_Desarrollo
                                 m.MostrarCategoria();
                                 id = int.Parse(Console.ReadLine());
                                 m.EliminarCategoria(id);
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 3:
                                 Console.Clear();
@@ -83,12 +92,16 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.WriteLine("Ingrese nombre:");
                                 a = Console.ReadLine();
                                 m.ModificarCategoria(c,a);
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
                                 Console.ReadLine();
                                 break;
                             case 4:
                                 Console.Clear();
                                 
                                 m.MostrarCategoria();
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
                                 Console.ReadLine();
                                 break;
                             case 5:
@@ -118,18 +131,25 @@ namespace TP_Plataformas_de_Desarrollo
                                 {
                                     m.AgregarUsuario(c, a, b, e, d, res, true);
                                 }
-                                
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 6:
                                 Console.Clear();
+                                Console.WriteLine("Eliminar Usuario: \n");
                                 Console.WriteLine("Elija el ID del usuario que quiere eliminar: ");
                                 m.MostrarUsuarios();
                                 id = int.Parse(Console.ReadLine());
                                 m.EliminarUsuario(id);
 
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 7:
                                 Console.Clear();
+                                Console.WriteLine("Modificar Usuario: \n");
+                                m.MostrarUsuarios();
                                 Console.WriteLine("Ingrese ID del Usuario a modificar: \n");
                                 id = int.Parse(Console.ReadLine());
                                 Console.WriteLine("Ingrese el nuevo DNI:");
@@ -150,18 +170,22 @@ namespace TP_Plataformas_de_Desarrollo
                                 n = int.Parse(Console.ReadLine()); ;
                                 if (n == 1)
                                 {
-                                    m.AgregarUsuario(c, a, b, e, d, res, false);
+                                    m.ModificarUsuario(id,c, a, b, e, d, res, false);
                                 }
                                 else
                                 {
-                                    m.AgregarUsuario(c, a, b, e, d, res, true);
+                                    m.ModificarUsuario(id, c, a, b, e, d, res, true);
                                 }
 
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 8:
                                 Console.Clear();
                                 Console.WriteLine("\nUsuarios del sistema:");
                                 m.MostrarUsuarios();
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
                                 Console.ReadLine();
                                 break;
                             case 9:
@@ -179,7 +203,9 @@ namespace TP_Plataformas_de_Desarrollo
                                 
                                 id = int.Parse(Console.ReadLine());
                                 m.AgregarProducto(a, p, c, id);
-                                
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 10:
                                 Console.Clear();
@@ -187,10 +213,18 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.WriteLine("Ingrese ID de producto:");
                                 id = int.Parse(Console.ReadLine());
                                 m.EliminarProducto(id);
+                                
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 11:
                                 Console.Clear();
                                 Console.WriteLine("Modificacion de Producto: \n");
+                                foreach (Producto pro in m.Productos)
+                                {
+                                    Console.WriteLine(pro.ToString());
+                                }
+
                                 Console.WriteLine("Ingrese ID de producto:");
                                 n = int.Parse(Console.ReadLine());
                                 Console.WriteLine("Ingrese nombre de producto:");
@@ -203,6 +237,9 @@ namespace TP_Plataformas_de_Desarrollo
                                 m.MostrarCategoria();
                                 id = int.Parse(Console.ReadLine());
                                 m.ModificarProducto(n,a,p,c,id);
+
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 12:
                                 Console.Clear();
@@ -211,16 +248,23 @@ namespace TP_Plataformas_de_Desarrollo
                                 {
                                     Console.WriteLine(pro.ToString());
                                 }
+
+                                Console.WriteLine("Precione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 13:
                                 Console.Clear();
                                 m.MostrarTodosProductosPorPrecio();
 
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 14:
                                 Console.Clear();
                                 m.MostrarTodosProductosPorCategoria();
 
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
                             case 15:
                                 Console.Clear();
