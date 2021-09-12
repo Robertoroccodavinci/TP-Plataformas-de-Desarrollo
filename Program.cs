@@ -67,7 +67,6 @@ namespace TP_Plataformas_de_Desarrollo
                                 e = Console.ReadLine();
                                 m.AgregarCategoria(e);
                                 //Array.Sort(m.Categorias);
-                                
 
                                 Console.WriteLine("\nPrecione cualquier tecla para continuar");
                                 Console.ReadLine();
@@ -75,6 +74,7 @@ namespace TP_Plataformas_de_Desarrollo
                             case 2:
                                 Console.Clear();
                                 Console.WriteLine("Baja de categoria");
+                                m.MostrarCategoria();
                                 Console.WriteLine("Elija el numero de la categoria a eliminar: ");
                                 m.MostrarCategoria();
                                 id = int.Parse(Console.ReadLine());
@@ -86,8 +86,8 @@ namespace TP_Plataformas_de_Desarrollo
                             case 3:
                                 Console.Clear();
                                 Console.WriteLine("Modificar Categoria: \n");
-                                Console.WriteLine("Ingrese ID Categoria:");
                                 m.MostrarCategoria();
+                                Console.WriteLine("Ingrese ID Categoria:");
                                 c = int.Parse( Console.ReadLine());
                                 Console.WriteLine("Ingrese nombre:");
                                 a = Console.ReadLine();
