@@ -9,26 +9,54 @@ namespace TP_Plataformas_de_Desarrollo
 {
     class Mercado
     {
-        public List <Producto> Productos = new List<Producto>();
-        public List<Usuario> Usuarios = new List<Usuario>();
-        public const int MaxCategorias = 10; //POR AHORA
-        public int CantCategorias;
-        public Categoria[] Categorias = new Categoria[MaxCategorias];
-        public List <Compra> Compras = new List<Compra>();
+        private List <Producto> Productos;
+        private List<Usuario> Usuarios ;
+        private const int MaxCategorias = 10;
+        private int CantCategorias;
+        private Categoria[] Categorias;
+        private List <Compra> Compras;
        
         //public Dictionary<string, int> prueba = new Dictionary<string, int>();
         
         public Mercado()
         {
-           
+            nProductos = new List<Producto>();
+            nUsuarios = new List<Usuario>();
+            nCompras = new List<Compra>();
+            nCategorias = new Categoria[MaxCategorias];
+
         }
+        public List<Producto> nProductos
+        {
+            get { return Productos; }
+            set { Productos = value; }
+        }
+
+        public List<Usuario> nUsuarios
+        {
+            get { return Usuarios; }
+            set { Usuarios = value; }
+        }
+
+        public Categoria[] nCategorias
+        {
+            get { return Categorias; }
+            set { Categorias = value; }
+        }
+
+        public List<Compra> nCompras
+        {
+            get { return Compras; }
+            set { Compras = value; }
+        }
+
 
         // METODOS DE PRODUCTO
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria) 
         {
-            int n = Productos.Count();
+            int n = nProductos.Count();
             n++;
-            foreach (Producto p  in  Productos) 
+            foreach (Producto p  in  nProductos) 
             {
                 if (p.nNombre == nombre || nombre == "" || nombre == null) 
                 {
@@ -37,7 +65,7 @@ namespace TP_Plataformas_de_Desarrollo
                 }
             }
 
-            for (int i = 0; i <= MaxCategorias; i++)
+            for (int i = 0; i < MaxCategorias; i++)
             {
                 if(Categorias[i] is Categoria) {
                     if (Categorias[i].nID == ID_Categoria) {
@@ -59,7 +87,7 @@ namespace TP_Plataformas_de_Desarrollo
                     p.nNombre = nombre;
                     p.nPrecio = precio;
                     p.nCantidad = cantidad;
-                    for (int i = 0; i <= MaxCategorias;i++) 
+                    for (int i = 0; i < MaxCategorias;i++) 
                     {
                         if (Categorias[i].nID==ID_Categoria) 
                         {
@@ -71,7 +99,7 @@ namespace TP_Plataformas_de_Desarrollo
                     
                 }
             }
-            Console.WriteLine("ERROR: producto no encontrado");
+            Console.WriteLine("ERROR: producto no encontrado.");
             return false;
 
         }
@@ -79,8 +107,10 @@ namespace TP_Plataformas_de_Desarrollo
         {
             if (Productos[ID] != null) {
                 Productos.Remove(Productos[ID]);
+                Console.WriteLine("Producto eliminado correctamente.");
                 return true;
             }
+            Console.WriteLine("ERROR: No se encontro el producto con ese ID");
             return false;
 
 
@@ -156,7 +186,7 @@ namespace TP_Plataformas_de_Desarrollo
                 Console.WriteLine("Usuario Cliente Final agregado con exito!");
                 return true;
             }
-            Console.WriteLine("ERROR");
+            Console.WriteLine("ERROR: No se pudo agregar el usuario");
             return false;
         }
 
@@ -195,12 +225,12 @@ namespace TP_Plataformas_de_Desarrollo
             }
             if (EsEmpresa == true)
             {
-                Console.WriteLine("ERROR: no hay Usuario Empresa con ese ID");
+                Console.WriteLine("ERROR: no hay Usuario Empresa con ese ID: " + ID);
                 return false;
             }
             else 
             {
-                Console.WriteLine("ERROR: no hay Usuario Cliente Final con ese ID");
+                Console.WriteLine("ERROR: no hay Usuario Cliente Final con ese ID: " +ID);
                 return false;
             }
             
@@ -218,7 +248,7 @@ namespace TP_Plataformas_de_Desarrollo
                 }
             }
 
-            Console.WriteLine("ERROR: ID usuario no encontrado");
+            Console.WriteLine("ERROR: ID: " + ID + " usuario no encontrado");
             return false;
         }
         
@@ -247,9 +277,10 @@ namespace TP_Plataformas_de_Desarrollo
         {
             
             if (CantCategorias < MaxCategorias) {
-                for  (int i = 0; i <= MaxCategorias; i++)
+                for  (int i = 0; i < MaxCategorias; i++)
                 {
                     if(Categorias[i] == null) {          
+            
                         Categorias[i] = new Categoria(i, nombre);
                         CantCategorias++;
                         Console.WriteLine("Categoria agregada con exito!");
@@ -260,12 +291,12 @@ namespace TP_Plataformas_de_Desarrollo
                 
                 
             }
-            Console.WriteLine("ERROR: no se puede agregar mas categorias");
+            Console.WriteLine("ERROR: no se pueden agregar mas categorias");
             return false;
         }
         public bool ModificarCategoria(int ID,string nombre)
         {
-            for (int i = 0; i <= MaxCategorias; i++)
+            for (int i = 0; i < MaxCategorias; i++)
             {
                 if (Categorias[i].nID == ID)
                 {
@@ -281,7 +312,7 @@ namespace TP_Plataformas_de_Desarrollo
         }
         public bool EliminarCategoria(int ID) // a probar
         {
-            for (int i = 0; i <= MaxCategorias; i++)
+            for (int i = 0; i < MaxCategorias; i++)
             {
                 if (Categorias[i].nID == ID)
                 {
@@ -320,9 +351,10 @@ namespace TP_Plataformas_de_Desarrollo
             if (Productos[ID_Producto].nCantidad >= Cantidad) {
 
                 Usuarios[ID_Usuario].nCarro.AgregarProducto(Productos[ID_Producto], Cantidad);
+                Console.WriteLine("Producto agregada con exito al Carro.");
                 return true;
             }
-            
+            Console.WriteLine("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
         public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
@@ -333,16 +365,18 @@ namespace TP_Plataformas_de_Desarrollo
                     if (Cantidad <= p.nCantidad )
                     {
                         Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
+                        Console.WriteLine("Producto eliminado del Carro.");
                         return true;
                     }
                 }
             }
-                
+            Console.WriteLine("ERROR: no se encontro producto con el ID "+ID_Producto+" en el Carro.");
             return false;
         }
         public bool VaciarCarro(int ID_Usuario) 
         {
             Usuarios[ID_Usuario].nCarro.Vaciar();
+            Console.WriteLine("Carro vaciado con exito!");
             return true;
         }
 
@@ -375,9 +409,10 @@ namespace TP_Plataformas_de_Desarrollo
 
                 VaciarCarro(ID_Usuario);
                 Compras[n].ToString();
+                Console.WriteLine("Compraste con exito!");
                 return true;
             }
-            
+            Console.WriteLine("ERROR: no se pudo efectuar la compra");
             return false;
         }
 
@@ -390,6 +425,34 @@ namespace TP_Plataformas_de_Desarrollo
         {
             return true;//solo para que no tire error
         }
+
+        public int compare(Categoria a, Categoria b)
+        {
+            if (a is Categoria && b is Categoria)
+            {
+                char[] arr = (a.nNombre.ToUpper()).ToCharArray();
+                char first = arr[0];
+
+                char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
+                int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
+
+                for (int i = 0; i < cant; i++) 
+                { 
+                    if (arr[i] < arr2[i])
+                    {
+                        return -1;
+                    }
+                    else if (arr[i] > arr2[i])
+                    {
+                        return 1;
+                    }
+                    
+                }
+                return 0;
+            }
+            return 0;
+        }
+
 
 
 

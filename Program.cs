@@ -15,14 +15,14 @@ namespace TP_Plataformas_de_Desarrollo
 
             //agregamos Categorias
             
-            m.AgregarCategoria("Comida"); // 0
-            m.AgregarCategoria("Bebida"); // 1
-            
+            m.AgregarCategoria("Comida"); // 1
+            m.AgregarCategoria("Bebida"); // 2
+            //Array.Sort(m.Categorias);
 
             //agregamos Productos
 
-            m.AgregarProducto("cerveza", 10, 20,1); // 1
-            m.AgregarProducto("papas", 5, 20, 0); // 2
+            m.AgregarProducto("cerveza", 10, 20,2); // 1
+            m.AgregarProducto("papas", 5, 20, 1); // 2
 
             //agregamos Usuarios
             m.AgregarUsuario(12345678,"Pepito","Fulano", "pepito@gmail.com", "123456", 2145687, false); // 1
@@ -44,6 +44,7 @@ namespace TP_Plataformas_de_Desarrollo
 
             while (flag == 1)
             {
+                Console.Clear();
                 Console.WriteLine("\nBienvenido, elija una de las opciones.\n");
                 Console.WriteLine("1. Administrar \n2. Comprar \n");
                 res = int.Parse(Console.ReadLine());
@@ -98,9 +99,9 @@ namespace TP_Plataformas_de_Desarrollo
                                 break;
                             case 4:
                                 Console.Clear();
-                                
+                                Array.Sort(m.nCategorias,m.compare);
                                 m.MostrarCategoria();
-
+                                
                                 Console.WriteLine("\nPrecione cualquier tecla para continuar");
                                 Console.ReadLine();
                                 break;
@@ -220,7 +221,7 @@ namespace TP_Plataformas_de_Desarrollo
                             case 11:
                                 Console.Clear();
                                 Console.WriteLine("Modificacion de Producto: \n");
-                                foreach (Producto pro in m.Productos)
+                                foreach (Producto pro in m.nProductos)
                                 {
                                     Console.WriteLine(pro.ToString());
                                 }
@@ -244,7 +245,7 @@ namespace TP_Plataformas_de_Desarrollo
                             case 12:
                                 Console.Clear();
                                 Console.WriteLine("\nProductos del sistema:");
-                                foreach (Producto pro in m.Productos)
+                                foreach (Producto pro in m.nProductos)
                                 {
                                     Console.WriteLine(pro.ToString());
                                 }
@@ -270,7 +271,8 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.Clear();
                                 flag  =  0;
                                 Console.WriteLine("Adios!");
-
+                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.ReadLine();
                                 break;
 
                         }
@@ -281,6 +283,8 @@ namespace TP_Plataformas_de_Desarrollo
                 else if (res == 2)
                 {
                     Console.WriteLine("Bajo construcción, próximamente en TP2!");
+                    Console.WriteLine("\nPrecione cualquier tecla para salir");
+                    Console.ReadLine();
                 }
 
             }

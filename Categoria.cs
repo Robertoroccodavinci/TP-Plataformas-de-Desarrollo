@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TP_Plataformas_de_Desarrollo
 {
-    class Categoria : IComparable<Categoria>
+    class Categoria 
     {
         private int ID;
         private string Nombre;
 
         public Categoria(int ID, string Nombre) {
-            nID = ID;
+            nID = ID + 1;
             nNombre = Nombre;
         }
 
@@ -26,10 +26,7 @@ namespace TP_Plataformas_de_Desarrollo
             get { return Nombre; }
             set { Nombre = value; }
         }
-        public int CompareTo(Categoria otro)
-        {
-            return nNombre.CompareTo(otro.nNombre);
-        }
+        
 
         public string ToString()
         {
