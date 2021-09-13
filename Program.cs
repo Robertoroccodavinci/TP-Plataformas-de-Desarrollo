@@ -69,7 +69,7 @@ namespace TP_Plataformas_de_Desarrollo
                                 m.AgregarCategoria(e);
                                 //Array.Sort(m.Categorias);
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 2:
@@ -81,7 +81,7 @@ namespace TP_Plataformas_de_Desarrollo
                                 id = int.Parse(Console.ReadLine());
                                 m.EliminarCategoria(id);
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 3:
@@ -94,15 +94,15 @@ namespace TP_Plataformas_de_Desarrollo
                                 a = Console.ReadLine();
                                 m.ModificarCategoria(c,a);
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 4:
                                 Console.Clear();
                                 Array.Sort(m.nCategorias,m.compare);
                                 m.MostrarCategoria();
-                                
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 5:
@@ -133,18 +133,18 @@ namespace TP_Plataformas_de_Desarrollo
                                     m.AgregarUsuario(c, a, b, e, d, res, true);
                                 }
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 6:
                                 Console.Clear();
                                 Console.WriteLine("Eliminar Usuario: \n");
-                                Console.WriteLine("Elija el ID del usuario que quiere eliminar: ");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 m.MostrarUsuarios();
                                 id = int.Parse(Console.ReadLine());
                                 m.EliminarUsuario(id);
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 7:
@@ -178,7 +178,7 @@ namespace TP_Plataformas_de_Desarrollo
                                     m.ModificarUsuario(id, c, a, b, e, d, res, true);
                                 }
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 8:
@@ -186,7 +186,7 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.WriteLine("\nUsuarios del sistema:");
                                 m.MostrarUsuarios();
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 9:
@@ -205,7 +205,7 @@ namespace TP_Plataformas_de_Desarrollo
                                 id = int.Parse(Console.ReadLine());
                                 m.AgregarProducto(a, p, c, id);
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 10:
@@ -214,8 +214,8 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.WriteLine("Ingrese ID de producto:");
                                 id = int.Parse(Console.ReadLine());
                                 m.EliminarProducto(id);
-                                
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 11:
@@ -239,7 +239,7 @@ namespace TP_Plataformas_de_Desarrollo
                                 id = int.Parse(Console.ReadLine());
                                 m.ModificarProducto(n,a,p,c,id);
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 12:
@@ -250,28 +250,28 @@ namespace TP_Plataformas_de_Desarrollo
                                     Console.WriteLine(pro.ToString());
                                 }
 
-                                Console.WriteLine("Precione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 13:
                                 Console.Clear();
                                 m.MostrarTodosProductosPorPrecio();
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 14:
                                 Console.Clear();
                                 m.MostrarTodosProductosPorCategoria();
 
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 15:
                                 Console.Clear();
                                 flag  =  0;
                                 Console.WriteLine("Adios!");
-                                Console.WriteLine("\nPrecione cualquier tecla para continuar");
+                                Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
 
@@ -283,7 +283,7 @@ namespace TP_Plataformas_de_Desarrollo
                 else if (res == 2)
                 {
                     Console.WriteLine("Bajo construcción, próximamente en TP2!");
-                    Console.WriteLine("\nPrecione cualquier tecla para salir");
+                    Console.WriteLine("\nPrecione enter para salir");
                     Console.ReadLine();
                 }
 
