@@ -54,25 +54,36 @@ namespace TP_Plataformas_de_Desarrollo
         // METODOS DE PRODUCTO
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria) 
         {
-            int n = nProductos.Count();
-            n++;
+            /*int n = nProductos.Count();
+            n++;*/
+            
             foreach (Producto p  in  nProductos) 
-            {
-                if (p.nNombre == nombre || nombre == "" || nombre == null) 
-                {
+            {   /* **********************************************************************      Cambiamos el foreach por el metodo Exists */
+                bool nom = Productos.Exists(x => x.nNombre == nombre);
+ 
+                if (p != null && (nom || nombre == "" || nombre == null))
+                {/* ********************************************************************* */
                     Console.WriteLine("ERROR: ya existe ese producto");
                     return false;
-                }
+                } 
             }
-
+                    /* *****************************************   VER QUE PASA SI NO HAY NINGUN ***NULL***         */
             for (int i = 0; i < MaxCategorias; i++)
             {
-                if(Categorias[i] is Categoria) {
-                    if (Categorias[i].nID == ID_Categoria) {
-                            Productos.Add(new Producto(n, nombre, precio, cantidad, Categorias[i]));
-                            Console.WriteLine("Producto agregado correctamente!");
-                            return true;
+                if(Categorias[i] != null && Categorias[i].nID == ID_Categoria) {
+                    int idProd;
+                    if (Productos.Contains(null)) {
+                        idProd = Productos.IndexOf(null);
                     }
+                    else
+                    {
+                        idProd = Productos.Count();
+                    }
+                    Productos.Add(new Producto(idProd, nombre, precio, cantidad, Categorias[i]));
+                    /* ***************************************** */
+                    Console.WriteLine("Producto agregado correctamente!");
+                    return true;
+                    
                 }
             }
             Console.WriteLine("ERROR: no se pudo agregar el producto");
@@ -80,33 +91,85 @@ namespace TP_Plataformas_de_Desarrollo
         }
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
         {
-            foreach (Producto p in Productos) 
+
+            int IDProd = Productos.FindIndex(x => x.nIDProd == ID);
+            if (IDProd > 0)
             {
-                if (p.nIDProd == ID) 
+                
+                Productos[IDProd].nNombre = nombre;
+                Productos[IDProd].nPrecio = precio;
+                Productos[IDProd].nCantidad = cantidad;
+                for (int i = 0; i < MaxCategorias; i++)
                 {
-                    p.nNombre = nombre;
-                    p.nPrecio = precio;
-                    p.nCantidad = cantidad;
-                    for (int i = 0; i < MaxCategorias;i++) 
+                    if (Categorias[i].nID == ID_Categoria)
                     {
-                        if (Categorias[i].nID==ID_Categoria) 
-                        {
-                            p.nCategoria = Categorias[i];
-                            Console.WriteLine("Producto modificado correctamente!");
-                            return true;
-                        }
+                        Productos[i].nCategoria = Categorias[i];
+                        Console.WriteLine("Producto modificado correctamente!");
+                        return true;
                     }
-                    
-                }
+                } 
             }
             Console.WriteLine("ERROR: producto no encontrado.");
             return false;
+        
+            //int cont = 0;
+            //while (Productos[cont].nIDProd != ID)
+            //{
+            //    if (Productos.Count <= cont) { 
+            //        if (Productos[cont].nIDProd == ID)
+            //        {
+            //            Productos[cont].nNombre = nombre;
+            //            Productos[cont].nPrecio = precio;
+            //            Productos[cont].nCantidad = cantidad;
+            //            for (int i = 0; i < MaxCategorias; i++)
+            //            {
+            //                if (Categorias[i].nID == ID_Categoria)
+            //                {
+            //                    Productos[i].nCategoria = Categorias[i];
+            //                    Console.WriteLine("Producto modificado correctamente!");
+            //                    return true;
+            //                }
+            //            }
+            //        }
+            //        cont++;
+            //    }
+            //    else
+            //    {
+                    
+            //        return false;
+            //    }
+            //}
+
+
+
+
+            //foreach (Producto p in Productos) 
+            //{
+            //    if (p.nIDProd == ID) 
+            //    {
+            //        p.nNombre = nombre;
+            //        p.nPrecio = precio;
+            //        p.nCantidad = cantidad;
+            //        for (int i = 0; i < MaxCategorias;i++) 
+            //        {
+            //            if (Categorias[i].nID==ID_Categoria) 
+            //            {
+            //                p.nCategoria = Categorias[i];
+            //                Console.WriteLine("Producto modificado correctamente!");
+            //                return true;
+            //            }
+            //        }
+                    
+            //    }
+            //}
+            //Console.WriteLine("ERROR: producto no encontrado.");
+            //return false;
 
         }
         public bool EliminarProducto(int ID)
         {
             if (Productos[ID] != null) {
-                Productos.Remove(Productos[ID]);
+                Productos[ID] = null;
                 Console.WriteLine("Producto eliminado correctamente.");
                 return true;
             }
@@ -333,15 +396,16 @@ namespace TP_Plataformas_de_Desarrollo
         
         public void MostrarCategoria()
         {
-           
-            foreach (Categoria c in Categorias) 
+            /* ************************************************************* */
+            for (int i = 0; i < MaxCategorias; i++)
             {
-                if  (c is Categoria) {
-
-                    Console.WriteLine(c.ToString());
+                if (Categorias[i] != null)
+                {
+                    Console.WriteLine(Categorias[i].ToString());
                 }
-            }
 
+            }
+            /* ************************************************************* */
         }
 
         // METODOS DE CARRO

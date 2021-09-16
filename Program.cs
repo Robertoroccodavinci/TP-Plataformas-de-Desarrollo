@@ -247,7 +247,10 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.WriteLine("\nProductos del sistema:");
                                 foreach (Producto pro in m.nProductos)
                                 {
-                                    Console.WriteLine(pro.ToString());
+                                    if (pro != null)
+                                    {
+                                        Console.WriteLine(pro.ToString());
+                                    }
                                 }
 
                                 Console.WriteLine("\nPrecione enter para continuar");
