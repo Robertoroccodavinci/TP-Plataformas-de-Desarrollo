@@ -33,7 +33,7 @@ namespace TP_Plataformas_de_Desarrollo
         
         public bool AgregarProducto(Producto P, int Cantidad)
         {
-            if (Productos[P] != null)
+            if (Productos.ContainsKey(P))
             {
                 Productos[P] = Productos[P] + Cantidad;
             }
@@ -45,9 +45,9 @@ namespace TP_Plataformas_de_Desarrollo
         }
         public bool QuitarProducto(Producto P, int Cantidad) 
         {
-            if (Productos[P] != null)
+            if (Productos.ContainsKey(P))
             {
-                if (Cantidad > 0)
+                if (Productos[P] > Cantidad)
                 {
                     Productos[P] = Productos[P] - Cantidad;
 

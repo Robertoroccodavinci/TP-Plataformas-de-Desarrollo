@@ -12,7 +12,7 @@ namespace TP_Plataformas_de_Desarrollo
         private List <Producto> Productos;
         private List<Usuario> Usuarios ;
         private const int MaxCategorias = 10;
-        private int CantCategorias;
+        private int CantCategorias = 0;
         private Categoria[] Categorias;
         private List <Compra> Compras;
        
@@ -93,7 +93,7 @@ namespace TP_Plataformas_de_Desarrollo
         {
 
             int IDProd = Productos.FindIndex(x => x.nIDProd == ID);
-            if (IDProd > 0)
+            if (IDProd >= 0)
             {
                 
                 Productos[IDProd].nNombre = nombre;
@@ -111,59 +111,7 @@ namespace TP_Plataformas_de_Desarrollo
             }
             Console.WriteLine("ERROR: producto no encontrado.");
             return false;
-        
-            //int cont = 0;
-            //while (Productos[cont].nIDProd != ID)
-            //{
-            //    if (Productos.Count <= cont) { 
-            //        if (Productos[cont].nIDProd == ID)
-            //        {
-            //            Productos[cont].nNombre = nombre;
-            //            Productos[cont].nPrecio = precio;
-            //            Productos[cont].nCantidad = cantidad;
-            //            for (int i = 0; i < MaxCategorias; i++)
-            //            {
-            //                if (Categorias[i].nID == ID_Categoria)
-            //                {
-            //                    Productos[i].nCategoria = Categorias[i];
-            //                    Console.WriteLine("Producto modificado correctamente!");
-            //                    return true;
-            //                }
-            //            }
-            //        }
-            //        cont++;
-            //    }
-            //    else
-            //    {
-                    
-            //        return false;
-            //    }
-            //}
-
-
-
-
-            //foreach (Producto p in Productos) 
-            //{
-            //    if (p.nIDProd == ID) 
-            //    {
-            //        p.nNombre = nombre;
-            //        p.nPrecio = precio;
-            //        p.nCantidad = cantidad;
-            //        for (int i = 0; i < MaxCategorias;i++) 
-            //        {
-            //            if (Categorias[i].nID==ID_Categoria) 
-            //            {
-            //                p.nCategoria = Categorias[i];
-            //                Console.WriteLine("Producto modificado correctamente!");
-            //                return true;
-            //            }
-            //        }
-                    
-            //    }
-            //}
-            //Console.WriteLine("ERROR: producto no encontrado.");
-            //return false;
+      
 
         }
         public bool EliminarProducto(int ID)
@@ -178,11 +126,11 @@ namespace TP_Plataformas_de_Desarrollo
 
 
         }
-        public void BuscarProducto(Producto Query)
+        public void BuscarProducto(String Query)
         {
             Productos.Sort();
             /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
-                if (Productos.Contains(Query)) {
+                if (Productos.Equals(Query)) {
                     
                     Console.WriteLine("Existe");
                 }
@@ -195,7 +143,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 if (p.nNombre == Query)
                 {
-                    Console.WriteLine(p.ToString());
+                    Console.WriteLine(p);
                 }
             }
         }
@@ -206,7 +154,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 if (p.nCategoria.nID == ID_Categoria)
                 {
-                    Console.WriteLine(p.ToString());
+                    Console.WriteLine(p);
                 }
             }
         }
@@ -215,7 +163,7 @@ namespace TP_Plataformas_de_Desarrollo
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
             foreach (Producto p in Productos)
             {
-                Console.WriteLine(p.ToString());
+                Console.WriteLine(p);
             }
         }
         public void MostrarTodosProductosPorCategoria()
@@ -321,7 +269,7 @@ namespace TP_Plataformas_de_Desarrollo
             Usuarios.Sort();
             foreach (Usuario u in Usuarios) {
  
-                Console.WriteLine(u.ToString());
+                Console.WriteLine(u);
 
             }
         }
@@ -352,12 +300,14 @@ namespace TP_Plataformas_de_Desarrollo
 
         public bool ModificarCategoria(int ID,string nombre) /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
         {
-            if (Categorias[ID] != null)
+            Console.WriteLine(Categorias[ID].nID);
+            Console.ReadLine();
+            if (Categorias[ID].nID == ID) /* ALGUNA PARTE DE ACA ANDA MAL */
             {
-                
+               
                 Categorias[ID].nNombre = nombre;
 
-                Console.WriteLine("Categoria modificada con exito!");
+                Console.WriteLine("Categoria modificada con exito!" + Categorias[ID].nID);
                 return true;
                 
 
@@ -384,7 +334,8 @@ namespace TP_Plataformas_de_Desarrollo
         
         public void MostrarCategoria()
         {
-            /* ************************************************************* */
+            /* ************************************************************* MODIFICADO, LO PIDIO EL PROFE, CAMBIAR IS POR VERIFICACION DE NULL */
+            
             for (int i = 0; i < MaxCategorias; i++)
             {
                 if (Categorias[i] != null)
@@ -411,19 +362,15 @@ namespace TP_Plataformas_de_Desarrollo
         }
         public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
         {
-            Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
-            //foreach (Producto p in Usuarios[ID_Usuario].nCarro.nProductos.Keys) {
-            //    if (p.nIDProd == ID_Producto) {
-            //        if (Cantidad <= p.nCantidad )
-            //        {
-            //            Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
-            //            Console.WriteLine("Producto eliminado del Carro.");
-            //            return true;
-            //        }
-            //    }
-            //}
-            Console.WriteLine("ERROR: no se encontro producto con el ID "+ID_Producto+" en el Carro.");
-            return false;
+            if (Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad))
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("ERROR: no se encontro producto con el ID " + ID_Producto + " en el Carro.");
+                return false;
+            }
         }
         public bool VaciarCarro(int ID_Usuario) 
         {
@@ -478,32 +425,32 @@ namespace TP_Plataformas_de_Desarrollo
             return true;//solo para que no tire error
         }
 
-        public int compare(Categoria a, Categoria b)
-        {
-            if (a is Categoria && b is Categoria)
-            {
-                char[] arr = (a.nNombre.ToUpper()).ToCharArray();
-                char first = arr[0];
+        //public int compare(Categoria a, Categoria b)
+        //{
+        //    if (a is Categoria && b is Categoria)
+        //    {
+        //        char[] arr = (a.nNombre.ToUpper()).ToCharArray();
+        //        char first = arr[0];
 
-                char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
-                int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
+        //        char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
+        //        int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
 
-                for (int i = 0; i < cant; i++) 
-                { 
-                    if (arr[i] < arr2[i])
-                    {
-                        return -1;
-                    }
-                    else if (arr[i] > arr2[i])
-                    {
-                        return 1;
-                    }
+        //        for (int i = 0; i < cant; i++) 
+        //        { 
+        //            if (arr[i] < arr2[i])
+        //            {
+        //                return -1;
+        //            }
+        //            else if (arr[i] > arr2[i])
+        //            {
+        //                return 1;
+        //            }
                     
-                }
-                return 0;
-            }
-            return 0;
-        }
+        //        }
+        //        return 0;
+        //    }
+        //    return 0;
+        //}
 
 
 

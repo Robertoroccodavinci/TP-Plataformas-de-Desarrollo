@@ -20,15 +20,15 @@ namespace TP_Plataformas_de_Desarrollo
             //Array.Sort(m.Categorias);
 
             //agregamos Productos
-
-            m.AgregarProducto("cerveza", 10, 20,2); // 1
-            m.AgregarProducto("papas", 5, 20, 1); // 2
+            /*
+            m.AgregarProducto("cerveza", 10, 20,1); // 1
+            m.AgregarProducto("papas", 5, 20, 0); // 2*/
 
             //agregamos Usuarios
-            m.AgregarUsuario(12345678,"Pepito","Fulano", "pepito@gmail.com", "123456", 2145687, false); // 1
-            m.AgregarUsuario(12345678, "Jose", "Gomez", "jose@gmail.com", "123456", 2189587, false); // 2
-            m.AgregarUsuario(12345678, "Carlos", "Lopez", "carlos@gmail.com", "123456", 158468, true); // 3
-            m.AgregarUsuario(12345678, "Luis", "Mengano", "luis@gmail.com", "123456", 157852, true); // 4
+            //m.AgregarUsuario(12345678,"Pepito","Fulano", "pepito@gmail.com", "123456", 2145687, false); // 1
+            //m.AgregarUsuario(12345678, "Jose", "Gomez", "jose@gmail.com", "123456", 2189587, false); // 2
+            //m.AgregarUsuario(12345678, "Carlos", "Lopez", "carlos@gmail.com", "123456", 158468, true); // 3
+            //m.AgregarUsuario(12345678, "Luis", "Mengano", "luis@gmail.com", "123456", 157852, true); // 4
             
             //limpiamos la consola
             Console.Clear();
@@ -85,21 +85,22 @@ namespace TP_Plataformas_de_Desarrollo
                                 Console.ReadLine();
                                 break;
                             case 3:
-                                Console.Clear();
+                                Console.Clear();                                
                                 Console.WriteLine("Modificar Categoria: \n");
                                 m.MostrarCategoria();
                                 Console.WriteLine("Ingrese ID Categoria:");
                                 c = int.Parse( Console.ReadLine());
                                 Console.WriteLine("Ingrese nombre:");
                                 a = Console.ReadLine();
+                                Console.WriteLine(c);
+                                Console.ReadLine();
                                 m.ModificarCategoria(c,a);
-
                                 Console.WriteLine("\nPrecione enter para continuar");
                                 Console.ReadLine();
                                 break;
                             case 4:
                                 Console.Clear();
-                                Array.Sort(m.nCategorias,m.compare);
+                                Array.Sort(m.nCategorias, (c1,c2) => c1.nNombre.CompareTo(c2.nNombre));
                                 m.MostrarCategoria();
 
                                 Console.WriteLine("\nPrecione enter para continuar");
