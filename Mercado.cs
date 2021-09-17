@@ -178,14 +178,15 @@ namespace TP_Plataformas_de_Desarrollo
 
 
         }
-        public void BuscarProducto(string Query)
+        public void BuscarProducto(Producto Query)
         {
             Productos.Sort();
-            foreach (Producto p in Productos) {
-                if (p.nNombre == Query) {
-                    Console.WriteLine(p.ToString());
+            /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
+                if (Productos.Contains(Query)) {
+                    
+                    Console.WriteLine("Existe");
                 }
-            }
+            /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
         }
         public void BuscarProductoPorPrecio(string Query)
         {
@@ -221,13 +222,13 @@ namespace TP_Plataformas_de_Desarrollo
         {
             foreach (Categoria c in Categorias) 
             {
-                if  (c is Categoria) { 
-                    Console.WriteLine(c.ToString());
+                if  (c != null) { 
+                    Console.WriteLine(c);
                     foreach (Producto p in Productos)
                     {
                         if (c.nID == p.nCategoria.nID)
                         {
-                            Console.WriteLine(p.ToString());
+                            Console.WriteLine(p);
                         }
                     }
                 }
@@ -319,18 +320,9 @@ namespace TP_Plataformas_de_Desarrollo
         {
             Usuarios.Sort();
             foreach (Usuario u in Usuarios) {
-                if (u is Empresa)
-                {
-                    Empresa e = (Empresa)u;
-                    Console.WriteLine(e.ToString());
-                }
-                else 
-                {
-                    ClienteFinal c = (ClienteFinal)u;
-                    Console.WriteLine(c.ToString());
-                }
-                
-                
+ 
+                Console.WriteLine(u.ToString());
+
             }
         }
 
@@ -357,42 +349,38 @@ namespace TP_Plataformas_de_Desarrollo
             Console.WriteLine("ERROR: no se pueden agregar mas categorias");
             return false;
         }
-        public bool ModificarCategoria(int ID,string nombre)
+
+        public bool ModificarCategoria(int ID,string nombre) /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
         {
-            for (int i = 0; i < MaxCategorias; i++)
+            if (Categorias[ID] != null)
             {
-                if (Categorias[i].nID == ID)
-                {
-                    Categorias[i].nNombre = nombre;
-                    
-                    Console.WriteLine("Categoria modificada con exito!");
-                    return true;
-                }
+                
+                Categorias[ID].nNombre = nombre;
+
+                Console.WriteLine("Categoria modificada con exito!");
+                return true;
+                
 
             }
             Console.WriteLine("ERROR: no hay categoria con ID: "+ID);
             return false;
-        }
-        public bool EliminarCategoria(int ID) // a probar
+        }                   /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
+
+        public bool EliminarCategoria(int ID) // a probar ****************************** MODIFICADA, PREGUNTAR OPINIONES DE LOS DEMAS
         {
-            for (int i = 0; i < MaxCategorias; i++)
+            if (Categorias[ID] != null)
             {
-                if (Categorias[i].nID == ID)
-                {
-
-                    Array.Clear(Categorias, ID, 1);
-                    Categorias[i] = null;
-                    CantCategorias--;
+                Categorias[ID] = null;
+                CantCategorias--;
                     
-                    Console.WriteLine("Categoria eliminada con exito!");
-                    return true;
-                }
-
+                Console.WriteLine("Categoria eliminada con exito!");
+                return true;
+               
             }
             Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
             return false;
 
-        }
+        } /* MODIFICADA, PREGUNTAR OPINIONES DE LOS DEMAS   */
         
         public void MostrarCategoria()
         {
@@ -421,19 +409,19 @@ namespace TP_Plataformas_de_Desarrollo
             Console.WriteLine("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
-        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
+        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
         {
-            
-            foreach (Producto p in Usuarios[ID_Usuario].nCarro.nProductos.Keys) {
-                if (p.nIDProd == ID_Producto) {
-                    if (Cantidad <= p.nCantidad )
-                    {
-                        Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
-                        Console.WriteLine("Producto eliminado del Carro.");
-                        return true;
-                    }
-                }
-            }
+            Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
+            //foreach (Producto p in Usuarios[ID_Usuario].nCarro.nProductos.Keys) {
+            //    if (p.nIDProd == ID_Producto) {
+            //        if (Cantidad <= p.nCantidad )
+            //        {
+            //            Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
+            //            Console.WriteLine("Producto eliminado del Carro.");
+            //            return true;
+            //        }
+            //    }
+            //}
             Console.WriteLine("ERROR: no se encontro producto con el ID "+ID_Producto+" en el Carro.");
             return false;
         }
