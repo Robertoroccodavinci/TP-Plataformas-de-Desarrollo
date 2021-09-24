@@ -12,7 +12,7 @@ namespace TP_Plataformas_de_Desarrollo
         private List <Producto> Productos;
         private List<Usuario> Usuarios ;
         private const int MaxCategorias = 10;
-        private int CantCategorias;
+        private int CantCategorias = 0;
         private Categoria[] Categorias;
         private List <Compra> Compras;
        
@@ -54,25 +54,36 @@ namespace TP_Plataformas_de_Desarrollo
         // METODOS DE PRODUCTO
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria) 
         {
-            int n = nProductos.Count();
-            n++;
+            /*int n = nProductos.Count();
+            n++;*/
+            
             foreach (Producto p  in  nProductos) 
-            {
-                if (p.nNombre == nombre || nombre == "" || nombre == null) 
-                {
+            {   /* **********************************************************************      Cambiamos el foreach por el metodo Exists */
+                bool nom = Productos.Exists(x => x.nNombre == nombre);
+ 
+                if (p != null && (nom || nombre == "" || nombre == null))
+                {/* ********************************************************************* */
                     Console.WriteLine("ERROR: ya existe ese producto");
                     return false;
-                }
+                } 
             }
-
+                    /* *****************************************   VER QUE PASA SI NO HAY NINGUN ***NULL***         */
             for (int i = 0; i < MaxCategorias; i++)
             {
-                if(Categorias[i] is Categoria) {
-                    if (Categorias[i].nID == ID_Categoria) {
-                            Productos.Add(new Producto(n, nombre, precio, cantidad, Categorias[i]));
-                            Console.WriteLine("Producto agregado correctamente!");
-                            return true;
+                if(Categorias[i] != null && Categorias[i].nID == ID_Categoria) {
+                    int idProd;
+                    if (Productos.Contains(null)) {
+                        idProd = Productos.IndexOf(null);
                     }
+                    else
+                    {
+                        idProd = Productos.Count();
+                    }
+                    Productos.Add(new Producto(idProd, nombre, precio, cantidad, Categorias[i]));
+                    /* ***************************************** */
+                    Console.WriteLine("Producto agregado correctamente!");
+                    return true;
+                    
                 }
             }
             Console.WriteLine("ERROR: no se pudo agregar el producto");
@@ -80,33 +91,33 @@ namespace TP_Plataformas_de_Desarrollo
         }
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
         {
-            foreach (Producto p in Productos) 
+
+            int IDProd = Productos.FindIndex(x => x.nIDProd == ID);
+            if (IDProd >= 0)
             {
-                if (p.nIDProd == ID) 
+                
+                Productos[IDProd].nNombre = nombre;
+                Productos[IDProd].nPrecio = precio;
+                Productos[IDProd].nCantidad = cantidad;
+                for (int i = 0; i < MaxCategorias; i++)
                 {
-                    p.nNombre = nombre;
-                    p.nPrecio = precio;
-                    p.nCantidad = cantidad;
-                    for (int i = 0; i < MaxCategorias;i++) 
+                    if (Categorias[i].nID == ID_Categoria)
                     {
-                        if (Categorias[i].nID==ID_Categoria) 
-                        {
-                            p.nCategoria = Categorias[i];
-                            Console.WriteLine("Producto modificado correctamente!");
-                            return true;
-                        }
+                        Productos[i].nCategoria = Categorias[i];
+                        Console.WriteLine("Producto modificado correctamente!");
+                        return true;
                     }
-                    
-                }
+                } 
             }
             Console.WriteLine("ERROR: producto no encontrado.");
             return false;
+      
 
         }
         public bool EliminarProducto(int ID)
         {
             if (Productos[ID] != null) {
-                Productos.Remove(Productos[ID]);
+                Productos[ID] = null;
                 Console.WriteLine("Producto eliminado correctamente.");
                 return true;
             }
@@ -115,14 +126,15 @@ namespace TP_Plataformas_de_Desarrollo
 
 
         }
-        public void BuscarProducto(string Query)
+        public void BuscarProducto(String Query)
         {
             Productos.Sort();
-            foreach (Producto p in Productos) {
-                if (p.nNombre == Query) {
-                    Console.WriteLine(p.ToString());
+            /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
+                if (Productos.Equals(Query)) {
+                    
+                    Console.WriteLine("Existe");
                 }
-            }
+            /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
         }
         public void BuscarProductoPorPrecio(string Query)
         {
@@ -131,7 +143,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 if (p.nNombre == Query)
                 {
-                    Console.WriteLine(p.ToString());
+                    Console.WriteLine(p);
                 }
             }
         }
@@ -142,7 +154,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 if (p.nCategoria.nID == ID_Categoria)
                 {
-                    Console.WriteLine(p.ToString());
+                    Console.WriteLine(p);
                 }
             }
         }
@@ -151,20 +163,20 @@ namespace TP_Plataformas_de_Desarrollo
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
             foreach (Producto p in Productos)
             {
-                Console.WriteLine(p.ToString());
+                Console.WriteLine(p);
             }
         }
         public void MostrarTodosProductosPorCategoria()
         {
             foreach (Categoria c in Categorias) 
             {
-                if  (c is Categoria) { 
-                    Console.WriteLine(c.ToString());
+                if  (c != null) { 
+                    Console.WriteLine(c);
                     foreach (Producto p in Productos)
                     {
                         if (c.nID == p.nCategoria.nID)
                         {
-                            Console.WriteLine(p.ToString());
+                            Console.WriteLine(p);
                         }
                     }
                 }
@@ -256,18 +268,9 @@ namespace TP_Plataformas_de_Desarrollo
         {
             Usuarios.Sort();
             foreach (Usuario u in Usuarios) {
-                if (u is Empresa)
-                {
-                    Empresa e = (Empresa)u;
-                    Console.WriteLine(e.ToString());
-                }
-                else 
-                {
-                    ClienteFinal c = (ClienteFinal)u;
-                    Console.WriteLine(c.ToString());
-                }
-                
-                
+ 
+                Console.WriteLine(u);
+
             }
         }
 
@@ -294,54 +297,54 @@ namespace TP_Plataformas_de_Desarrollo
             Console.WriteLine("ERROR: no se pueden agregar mas categorias");
             return false;
         }
-        public bool ModificarCategoria(int ID,string nombre)
+
+        public bool ModificarCategoria(int ID,string nombre) /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
         {
-            for (int i = 0; i < MaxCategorias; i++)
+            Console.WriteLine(Categorias[ID].nID);
+            Console.ReadLine();
+            if (Categorias[ID].nID == ID) /* ALGUNA PARTE DE ACA ANDA MAL */
             {
-                if (Categorias[i].nID == ID)
-                {
-                    Categorias[i].nNombre = nombre;
-                    
-                    Console.WriteLine("Categoria modificada con exito!");
-                    return true;
-                }
+               
+                Categorias[ID].nNombre = nombre;
+
+                Console.WriteLine("Categoria modificada con exito!" + Categorias[ID].nID);
+                return true;
+                
 
             }
             Console.WriteLine("ERROR: no hay categoria con ID: "+ID);
             return false;
-        }
-        public bool EliminarCategoria(int ID) // a probar
+        }                   /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
+
+        public bool EliminarCategoria(int ID) // a probar ****************************** MODIFICADA, PREGUNTAR OPINIONES DE LOS DEMAS
         {
-            for (int i = 0; i < MaxCategorias; i++)
+            if (Categorias[ID] != null)
             {
-                if (Categorias[i].nID == ID)
-                {
-
-                    Array.Clear(Categorias, ID, 1);
-                    Categorias[i] = null;
-                    CantCategorias--;
+                Categorias[ID] = null;
+                CantCategorias--;
                     
-                    Console.WriteLine("Categoria eliminada con exito!");
-                    return true;
-                }
-
+                Console.WriteLine("Categoria eliminada con exito!");
+                return true;
+               
             }
             Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
             return false;
 
-        }
+        } /* MODIFICADA, PREGUNTAR OPINIONES DE LOS DEMAS   */
         
         public void MostrarCategoria()
         {
-           
-            foreach (Categoria c in Categorias) 
+            /* ************************************************************* MODIFICADO, LO PIDIO EL PROFE, CAMBIAR IS POR VERIFICACION DE NULL */
+            
+            for (int i = 0; i < MaxCategorias; i++)
             {
-                if  (c is Categoria) {
-
-                    Console.WriteLine(c.ToString());
+                if (Categorias[i] != null)
+                {
+                    Console.WriteLine(Categorias[i].ToString());
                 }
-            }
 
+            }
+            /* ************************************************************* */
         }
 
         // METODOS DE CARRO
@@ -357,21 +360,17 @@ namespace TP_Plataformas_de_Desarrollo
             Console.WriteLine("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
-        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
+        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
         {
-            
-            foreach (Producto p in Usuarios[ID_Usuario].nCarro.nProductos.Keys) {
-                if (p.nIDProd == ID_Producto) {
-                    if (Cantidad <= p.nCantidad )
-                    {
-                        Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad);
-                        Console.WriteLine("Producto eliminado del Carro.");
-                        return true;
-                    }
-                }
+            if (Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad))
+            {
+                return true;
             }
-            Console.WriteLine("ERROR: no se encontro producto con el ID "+ID_Producto+" en el Carro.");
-            return false;
+            else
+            {
+                Console.WriteLine("ERROR: no se encontro producto con el ID " + ID_Producto + " en el Carro.");
+                return false;
+            }
         }
         public bool VaciarCarro(int ID_Usuario) 
         {
@@ -426,32 +425,32 @@ namespace TP_Plataformas_de_Desarrollo
             return true;//solo para que no tire error
         }
 
-        public int compare(Categoria a, Categoria b)
-        {
-            if (a is Categoria && b is Categoria)
-            {
-                char[] arr = (a.nNombre.ToUpper()).ToCharArray();
-                char first = arr[0];
+        //public int compare(Categoria a, Categoria b)
+        //{
+        //    if (a is Categoria && b is Categoria)
+        //    {
+        //        char[] arr = (a.nNombre.ToUpper()).ToCharArray();
+        //        char first = arr[0];
 
-                char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
-                int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
+        //        char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
+        //        int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
 
-                for (int i = 0; i < cant; i++) 
-                { 
-                    if (arr[i] < arr2[i])
-                    {
-                        return -1;
-                    }
-                    else if (arr[i] > arr2[i])
-                    {
-                        return 1;
-                    }
+        //        for (int i = 0; i < cant; i++) 
+        //        { 
+        //            if (arr[i] < arr2[i])
+        //            {
+        //                return -1;
+        //            }
+        //            else if (arr[i] > arr2[i])
+        //            {
+        //                return 1;
+        //            }
                     
-                }
-                return 0;
-            }
-            return 0;
-        }
+        //        }
+        //        return 0;
+        //    }
+        //    return 0;
+        //}
 
 
 

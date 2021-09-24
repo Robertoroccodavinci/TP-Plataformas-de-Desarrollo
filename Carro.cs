@@ -31,9 +31,9 @@ namespace TP_Plataformas_de_Desarrollo
         }
 
         
-        public void AgregarProducto(Producto P, int Cantidad)
+        public bool AgregarProducto(Producto P, int Cantidad)
         {
-            if (Productos[P] != null)
+            if (Productos.ContainsKey(P))
             {
                 Productos[P] = Productos[P] + Cantidad;
             }
@@ -41,12 +41,13 @@ namespace TP_Plataformas_de_Desarrollo
             { 
                 Productos.Add(P, Cantidad);
             }
+            return true;
         }
-        public void QuitarProducto(Producto P, int Cantidad) 
+        public bool QuitarProducto(Producto P, int Cantidad) 
         {
-            if (Productos[P] != null)
+            if (Productos.ContainsKey(P))
             {
-                if (Cantidad > 0)
+                if (Productos[P] > Cantidad)
                 {
                     Productos[P] = Productos[P] - Cantidad;
 
@@ -55,10 +56,12 @@ namespace TP_Plataformas_de_Desarrollo
                 {
                     Productos.Remove(P);
                 }
+                return true;
             }
             else 
             {
                 Console.WriteLine("El producto no se encuentra en la lista");
+                return false;
             }
 
         }

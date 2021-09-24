@@ -12,7 +12,7 @@ namespace TP_Plataformas_de_Desarrollo
         private string Nombre;
 
         public Categoria(int ID, string Nombre) {
-            nID = ID + 1;
+            nID = ID;
             nNombre = Nombre;
         }
 
