@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Plataformas_de_Desarrollo
+namespace TP_2_PlataformasDeDesarrollo
 {
     class Mercado
     {
@@ -50,12 +50,12 @@ namespace TP_Plataformas_de_Desarrollo
             set { Compras = value; }
         }
 
+        // #######################################################################################
+        //                                  METODOS DE PRODUCTO
+        /// ######################################################################################
 
-        // METODOS DE PRODUCTO
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria) 
         {
-            /*int n = nProductos.Count();
-            n++;*/
             
             foreach (Producto p  in  nProductos) 
             {   /* **********************************************************************      Cambiamos el foreach por el metodo Exists */
@@ -89,6 +89,8 @@ namespace TP_Plataformas_de_Desarrollo
             Console.WriteLine("ERROR: no se pudo agregar el producto");
             return false;
         }
+
+        
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
         {
 
@@ -114,6 +116,8 @@ namespace TP_Plataformas_de_Desarrollo
       
 
         }
+
+
         public bool EliminarProducto(int ID)
         {
             if (Productos[ID] != null) {
@@ -126,6 +130,8 @@ namespace TP_Plataformas_de_Desarrollo
 
 
         }
+
+
         public void BuscarProducto(String Query)
         {
             Productos.Sort();
@@ -136,6 +142,8 @@ namespace TP_Plataformas_de_Desarrollo
                 }
             /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
         }
+
+
         public void BuscarProductoPorPrecio(string Query)
         {
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio);});
@@ -147,6 +155,8 @@ namespace TP_Plataformas_de_Desarrollo
                 }
             }
         }
+
+
         public void BuscarProductoPorCategoria(int ID_Categoria)
         {
             Productos.Sort();
@@ -158,6 +168,8 @@ namespace TP_Plataformas_de_Desarrollo
                 }
             }
         }
+
+
         public void MostrarTodosProductosPorPrecio()
         {
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
@@ -166,6 +178,8 @@ namespace TP_Plataformas_de_Desarrollo
                 Console.WriteLine(p);
             }
         }
+
+
         public void MostrarTodosProductosPorCategoria()
         {
             foreach (Categoria c in Categorias) 
@@ -184,7 +198,10 @@ namespace TP_Plataformas_de_Desarrollo
             }
         }
 
-        //METODOS DE USUARIO
+        // #######################################################################################
+        //                                  METODOS DE USUARIO
+        // ######################################################################################
+
         public bool AgregarUsuario(int DNI,string nombre, string apellido, string Mail,string password, int CUIT_CUIL, bool EsEmpresa)
         {
             int n = Usuarios.Count();
@@ -274,7 +291,9 @@ namespace TP_Plataformas_de_Desarrollo
             }
         }
 
-        //METODOS DE CATEGORIA
+        // #######################################################################################
+        //                                  METODOS DE CATEGORIA
+        // #######################################################################################
 
         public bool AgregarCategoria(string nombre)
         {
@@ -298,7 +317,7 @@ namespace TP_Plataformas_de_Desarrollo
             return false;
         }
 
-        public bool ModificarCategoria(int ID,string nombre) /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
+        public bool ModificarCategoria(int ID,string nombre) /********* A VECES TOMA OTRO VALOR DE ID, DIFERENTE AL QUE LE PASAMOS ********/
         {
             Console.WriteLine(Categorias[ID].nID);
             Console.ReadLine();
@@ -347,7 +366,9 @@ namespace TP_Plataformas_de_Desarrollo
             /* ************************************************************* */
         }
 
-        // METODOS DE CARRO
+        // #######################################################################################
+        //                                  METODOS DE CARRO
+        // #######################################################################################
 
         public bool AgregarAlCarro(int ID_Producto,int Cantidad, int ID_Usuario)
         {
@@ -379,8 +400,10 @@ namespace TP_Plataformas_de_Desarrollo
             return true;
         }
 
-
-        //METODOS DE COMPRA
+        // #######################################################################################
+        //                                  METODOS DE COMPRA
+        // #######################################################################################
+        
         public bool Comprar(int ID_Usuario)
         {
             double total=0;
@@ -425,34 +448,51 @@ namespace TP_Plataformas_de_Desarrollo
             return true;//solo para que no tire error
         }
 
-        //public int compare(Categoria a, Categoria b)
-        //{
-        //    if (a is Categoria && b is Categoria)
-        //    {
-        //        char[] arr = (a.nNombre.ToUpper()).ToCharArray();
-        //        char first = arr[0];
-
-        //        char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
-        //        int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
-
-        //        for (int i = 0; i < cant; i++) 
-        //        { 
-        //            if (arr[i] < arr2[i])
-        //            {
-        //                return -1;
-        //            }
-        //            else if (arr[i] > arr2[i])
-        //            {
-        //                return 1;
-        //            }
-                    
-        //        }
-        //        return 0;
-        //    }
-        //    return 0;
-        //}
+        // #######################################################################################
+        //                                  INICIAR SESION
+        // #######################################################################################
 
 
+        public int IniciarSesion(int DNI, string pass ) // PARA SEBA  
+        {
+            //SEBA VA A HACER ESTO, sino lo hace le pegamo!
+        }
+
+        public Boolean esAdmin(int ID)
+        {
+            if (Usuarios[ID] =! null && Usuarios[ID].nRol == 3) //preguntamos si usuario con ID es admin
+            { return true;  }
+            else 
+            { return false; }
+        }
+
+
+        /* 
+        public int compare(Categoria a, Categoria b) {
+            if (a is Categoria && b is Categoria)
+            {
+                char[] arr = (a.nNombre.ToUpper()).ToCharArray();
+                char first = arr[0];
+
+                char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
+                int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
+
+                for (int i = 0; i < cant; i++) 
+                { 
+                    if (arr[i] < arr2[i])
+                    {
+                        return -1;
+                    }
+                    else if (arr[i] > arr2[i])
+                    {
+                        return 1;
+                    }
+                }
+                return 0;
+            }
+            return 0;
+        }
+        */
 
 
 

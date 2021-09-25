@@ -12,9 +12,18 @@ namespace TP_2_PlataformasDeDesarrollo
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        private bool logued;
+        private string[] argumentos;
+        private string usuario;
+        private string pass;
+        public delegate void TransfDelegado(string usuario, string pass);
+        public TransfDelegado TrasfEvento;
+
+        public Form1(string[] args)
         {
+            logued = false;
             InitializeComponent();
+            argumentos = args;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -29,20 +38,35 @@ namespace TP_2_PlataformasDeDesarrollo
 
         private void button1_Click(object sender, EventArgs e)
         {
+            usuario = textBox1.Text;
+            pass = inputPass.Text;
+
+            if (usuario != null && usuario != "" && pass != null && pass != "")
+            {
+                this.TrasfEvento(usuario, pass);
+                this.Close();
+            }
+            else
+                MessageBox.Show("Debe ingresar un usuario!");
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (inputPass.UseSystemPasswordChar = true)
+            if (inputPass.UseSystemPasswordChar == true)
             {
                 inputPass.UseSystemPasswordChar = false;
             }
-            else if (inputPass.UseSystemPasswordChar = false)
+            else if (inputPass.UseSystemPasswordChar == false)
             {
                 inputPass.UseSystemPasswordChar = true;
             }
                
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

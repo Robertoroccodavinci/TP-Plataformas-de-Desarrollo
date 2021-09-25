@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Plataformas_de_Desarrollo
+namespace TP_2_PlataformasDeDesarrollo
 {
     class Compra : IComparable<Compra>
     {
