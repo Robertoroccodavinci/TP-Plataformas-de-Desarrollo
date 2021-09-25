@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace TP_2_PlataformasDeDesarrollo
 {
-    class Categoria 
+    class Categoria
     {
         private int ID;
         private string Nombre;
 
-        public Categoria(int ID, string Nombre) {
+        public Categoria(int ID, string Nombre)
+        {
             nID = ID;
             nNombre = Nombre;
         }
@@ -26,14 +27,11 @@ namespace TP_2_PlataformasDeDesarrollo
             get { return Nombre; }
             set { Nombre = value; }
         }
-        
 
-        public string ToString()
+
+        public override string ToString()
         {
             return nID + "-" + nNombre;
         }
-
-
     }
-
 }

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace TP_2_PlataformasDeDesarrollo
 {
-    class Carro 
+    class Carro
     {
-        
+
         private int ID;
         private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
 
@@ -30,20 +29,20 @@ namespace TP_2_PlataformasDeDesarrollo
             set { Productos = value; }
         }
 
-        
+
         public bool AgregarProducto(Producto P, int Cantidad)
         {
             if (Productos.ContainsKey(P))
             {
                 Productos[P] = Productos[P] + Cantidad;
             }
-            else 
-            { 
+            else
+            {
                 Productos.Add(P, Cantidad);
             }
             return true;
         }
-        public bool QuitarProducto(Producto P, int Cantidad) 
+        public bool QuitarProducto(Producto P, int Cantidad)
         {
             if (Productos.ContainsKey(P))
             {
@@ -58,7 +57,7 @@ namespace TP_2_PlataformasDeDesarrollo
                 }
                 return true;
             }
-            else 
+            else
             {
                 Console.WriteLine("El producto no se encuentra en la lista");
                 return false;
@@ -71,18 +70,18 @@ namespace TP_2_PlataformasDeDesarrollo
 
         }
 
-        public string ToString()
+        public override string ToString()
         {
-            
-            string leer="";
+
+            string leer = "";
             foreach (KeyValuePair<Producto, int> kvp in Productos)
             {
                 //Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-                leer+="Key = " + kvp.Key + ", Value = " + kvp.Value+"\n";
+                leer += "Key = " + kvp.Key + ", Value = " + kvp.Value + "\n";
             }
 
             return "ID Carro: " + ID + " - " + leer;
-            
+
         }
     }
 }

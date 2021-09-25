@@ -67,7 +67,7 @@ namespace TP_2_PlataformasDeDesarrollo
             set { Password = value; }
         }
 
-  
+
         public Carro nCarro
         {
             get { return MiCarro; }
@@ -86,13 +86,14 @@ namespace TP_2_PlataformasDeDesarrollo
             set { rol = value; }
         }
 
-        public int CompareTo(Usuario otro) {
+        public int CompareTo(Usuario otro)
+        {
             return DNI.CompareTo(otro.DNI);
         }
 
         public override string ToString()
         {
-            return nID+"-"+nDNI+ "-" + nNombre+"-"+nApellido+"-"+nMail+"-"+nPassword;
+            return nID + "-" + nDNI + "-" + nNombre + "-" + nApellido + "-" + nMail + "-" + nPassword;
         }
     }
 }

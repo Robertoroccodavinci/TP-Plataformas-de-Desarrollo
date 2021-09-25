@@ -21,12 +21,12 @@ namespace TP_2_PlataformasDeDesarrollo
             Application.Run(new Form2());
 
             //despues se quita
-            
+            Mercado m = new Mercado();
 
             //agregamos Categorias
             m.AgregarCategoria("Comida"); // 1
             m.AgregarCategoria("Bebida"); // 2
-            Array.Sort(m.Categorias);
+            Array.Sort(m.nCategorias);
 
             //agregamos Productos
             
@@ -41,5 +41,7 @@ namespace TP_2_PlataformasDeDesarrollo
 
 
         }
+
+        
     }
 }

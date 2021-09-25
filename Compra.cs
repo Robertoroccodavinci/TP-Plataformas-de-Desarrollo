@@ -51,7 +51,7 @@ namespace TP_2_PlataformasDeDesarrollo
             return nIDCompra.CompareTo(otro.nIDCompra);
         }
 
-        public string ToString()
+        public override string ToString()
         {
 
             string leer = "";
@@ -60,10 +60,8 @@ namespace TP_2_PlataformasDeDesarrollo
                 leer += "Key = " + kvp.Key + ", Value = " + kvp.Value + "\n";
             }
 
-            return nIDCompra + "-"+ nComprador + "-"+ nTotal + "-" + leer;
+            return nIDCompra + "-" + nComprador + "-" + nTotal + "-" + leer;
 
         }
     }
 }
-
-

@@ -59,7 +59,7 @@ namespace TP_2_PlataformasDeDesarrollo
             return nNombre.CompareTo(otro.nNombre);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return nIDProd + "-" + nNombre + "-" + nPrecio + "-" + nCantidad + "-" + nCategoria.ToString();
         }
