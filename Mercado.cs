@@ -15,16 +15,93 @@ namespace TP_2_PlataformasDeDesarrollo
         private Categoria[] Categorias;
         private List<Compra> Compras;
 
-        //public Dictionary<string, int> prueba = new Dictionary<string, int>();
+        private string[] fileName = { "productos.txt", "usuario.txt", "carro.txt", "compras.txt", "categoria.txt" };
+        private string sourcePath ;
+        private string targetPath ;
 
+
+
+        // #######################################################################################
+        //                                  CONSTRUCTOR
+        // ######################################################################################
+        //          SETEAMOS LAS LISTAS Y RUTAS DE ARCHIVOS
+        //          SETEAMOS LAS LISTAS, RUTAS
+        //          VERIFICAMOS QUE EXISTA LA RUTA TARGET Y SUS ARCHIVOS
+        //          SI NO EXISTE LA RUTA TARGET SE CREA, LO MISMO PARA LOS ARCHIVOS
+        // ######################################################################################
         public Mercado()
         {
             nProductos = new List<Producto>();
             nUsuarios = new List<Usuario>();
             nCompras = new List<Compra>();
             nCategorias = new Categoria[MaxCategorias];
+            
+
+            nSourcePath = System.IO.Directory.GetCurrentDirectory()+"/../../Archivos";
+            nTargetPath = "C:/ArchivosMercado";
+            Console.WriteLine(nTargetPath);
+
+            //PREGUNTAMOS SI EXISTE EL DIRECTORIO TARGET
+            if (System.IO.Directory.Exists(nTargetPath))
+            {
+                string[] files = System.IO.Directory.GetFiles(nTargetPath);
+                foreach (string s in fileName)
+                {
+                    int cont = 0;
+                    //PREGUNTAMOS SI EN EL DIRECTORIO TARGET, SE ENCUENTRAN LOS ARCHIVOS
+                    if (!files.Contains(s))
+                    {
+                        //SI NO EXISTEN LOS ARCHIVOS, LOS COPIAMOS DE SOURCE
+                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[cont]), Dest(cont), true);
+                        cont++;
+                    }
+                }
+            }
+            else 
+            {
+                //SI NO EXITE EL DIRECTORIO TARGET, LO CREAMOS
+                System.IO.Directory.CreateDirectory(nTargetPath);
+                //COPIAMOS TODOS LOS ARCHIVOS DE SOURCE A TARGET
+                for (int i = 0 ; i < fileName.Length ; i++)
+                {
+                    System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[i]), Dest(i));
+                }
+            }
 
         }
+        // ######################################################################################
+        //                                  METODOS SET Y GET
+        // ######################################################################################
+
+        //METODO DEST
+        //INDICAR CON EL INDEX QUE ARCHIVO SE CONSULTARA
+        // 0 - Productos
+        // 1 - Usuarios
+        // 2 - Carro
+        // 3 - Compras
+        // 4 - Categorias
+        public string Dest(int index)
+        {
+            return System.IO.Path.Combine(nTargetPath, fileName[index]);
+        }
+        
+        //GET Y SET DE RUTAS
+        public string nSourcePath
+        {
+            get { return sourcePath; }
+            set { sourcePath = value; }
+        }
+        public string nTargetPath
+        {
+            get { return targetPath; }
+            set { targetPath = value; }
+        }
+
+        // GET Y SET DE LAS LISTAS
+        // PRODUCTOS
+        // USUARIOS
+        // CATEGORIAS
+        // COMPRAS
         public List<Producto> nProductos
         {
             get { return Productos; }
@@ -49,9 +126,18 @@ namespace TP_2_PlataformasDeDesarrollo
             set { Compras = value; }
         }
 
-        // #######################################################################################
+        // ######################################################################################
         //                                  METODOS DE PRODUCTO
-        /// ######################################################################################
+        // ######################################################################################
+        //                                  AGREGAR PRODUCTO
+        //                                  MODIFICAR PRODUCTO
+        //                                  ELIMINAR PRODUCTO
+        //                                  BUSCAR PRODUCTO
+        //                                  BUSCAR PRODUCTO POR PRECIO
+        //                                  BUSCAR PRODUCTO POR CATEGORIA
+        //                                  MOSTRAR TODOS LOS PRODUCTOS POR PRECIO
+        //                                  MOSTRAR TODOS LOS PRODUCTOS POR CATEGORIA
+        // ######################################################################################
 
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria)
         {
@@ -81,6 +167,8 @@ namespace TP_2_PlataformasDeDesarrollo
                         idProd = Productos.Count();
                     }
                     Productos.Add(new Producto(idProd, nombre, precio, cantidad, Categorias[i]));
+                    List<string> texto;
+                    System.IO.File.ReadAllLines(Dest(0));
                     /* ***************************************** */
                     Console.WriteLine("Producto agregado correctamente!");
                     return true;
@@ -202,10 +290,14 @@ namespace TP_2_PlataformasDeDesarrollo
             }
         }
 
-        // #######################################################################################
+        // ######################################################################################
         //                                  METODOS DE USUARIO
         // ######################################################################################
-
+        //                                  AGREGAR USUARIO
+        //                                  MODIFICAR USUARIO
+        //                                  ELIMINAR USUARIO
+        //                                  MOSTRAR USUARIO
+        // ######################################################################################
         public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, bool EsEmpresa)
         {
             int n = Usuarios.Count();
@@ -304,7 +396,11 @@ namespace TP_2_PlataformasDeDesarrollo
         // #######################################################################################
         //                                  METODOS DE CATEGORIA
         // #######################################################################################
-
+        //                                  AGREGAR CATEGORIA
+        //                                  MODIFICAR CATEGORIA
+        //                                  ELIMINAR CATEGORIA
+        //                                  MOSTRAR CATEGORIA
+        // ######################################################################################
         public bool AgregarCategoria(string nombre)
         {
 
@@ -381,6 +477,10 @@ namespace TP_2_PlataformasDeDesarrollo
         // #######################################################################################
         //                                  METODOS DE CARRO
         // #######################################################################################
+        //                                  AGREGAR AL CARRO
+        //                                  QUITAR AL CARRO
+        //                                  VACIAR CARRO
+        // #######################################################################################
 
         public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
@@ -415,6 +515,10 @@ namespace TP_2_PlataformasDeDesarrollo
 
         // #######################################################################################
         //                                  METODOS DE COMPRA
+        // #######################################################################################
+        //                                  COMPRA
+        //                                  MODIFICACION COMPRA
+        //                                  ELIMINACION COMPRA
         // #######################################################################################
 
         public bool Comprar(int ID_Usuario)
@@ -476,7 +580,9 @@ namespace TP_2_PlataformasDeDesarrollo
             //SEBA VA A HACER ESTO, sino lo hace le pegamo!
             return 1;
         }
-
+        // #######################################################################################
+        //                                  ES ADMIN
+        // #######################################################################################
         public Boolean esAdmin(int ID)
         {
             if (Usuarios[ID] != null && Usuarios[ID].nRol == 3) //preguntamos si usuario con ID es admin

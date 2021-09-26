@@ -26,7 +26,7 @@ namespace TP_2_PlataformasDeDesarrollo
             //agregamos Categorias
             m.AgregarCategoria("Comida"); // 1
             m.AgregarCategoria("Bebida"); // 2
-            Array.Sort(m.nCategorias);
+            //Array.Sort(m.nCategorias);
 
             //agregamos Productos
             

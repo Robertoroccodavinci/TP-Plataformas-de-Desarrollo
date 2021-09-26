@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -102,6 +103,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Archivos\compras.txt" />
+    <Content Include="Archivos\categoria.txt" />
+    <Content Include="Archivos\carro.txt" />
+    <Content Include="Archivos\usuario.txt" />
+    <Content Include="Archivos\productos.txt" />
+    <Content Include="carro.txt" />
+    <Content Include="categoria.txt" />
+    <Content Include="compras.txt" />
+    <Content Include="productos.txt" />
+    <Content Include="usuario.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
