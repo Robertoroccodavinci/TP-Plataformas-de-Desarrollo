@@ -111,11 +111,6 @@
     <Content Include="Archivos\carro.txt" />
     <Content Include="Archivos\usuario.txt" />
     <Content Include="Archivos\productos.txt" />
-    <Content Include="carro.txt" />
-    <Content Include="categoria.txt" />
-    <Content Include="compras.txt" />
-    <Content Include="productos.txt" />
-    <Content Include="usuario.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

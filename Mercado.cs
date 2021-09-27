@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -167,8 +168,15 @@ namespace TP_2_PlataformasDeDesarrollo
                         idProd = Productos.Count();
                     }
                     Productos.Add(new Producto(idProd, nombre, precio, cantidad, Categorias[i]));
-                    List<string> texto;
-                    System.IO.File.ReadAllLines(Dest(0));
+                    
+                    //GUARDAR EN ARCHIVO
+                    StreamWriter file = new StreamWriter(Dest(0));
+                    foreach (Producto p  in Productos) 
+                    {
+                        file.WriteLine(p.nIDProd + "," + p.nNombre + "," +p.nPrecio + "," +p.nCantidad + "," + p.nCategoria);
+                    }
+                    file.Close();
+
                     /* ***************************************** */
                     Console.WriteLine("Producto agregado correctamente!");
                     return true;
@@ -298,72 +306,54 @@ namespace TP_2_PlataformasDeDesarrollo
         //                                  ELIMINAR USUARIO
         //                                  MOSTRAR USUARIO
         // ######################################################################################
-        public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, bool EsEmpresa)
+        public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
         {
             int n = Usuarios.Count();
-            n++;
-            if (EsEmpresa)
+            
+            Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL,rol));
+            
+
+            if (Usuarios[n] != null)
             {
-              //Usuarios.Add(new Empresa(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL));
-                Console.WriteLine("Usuario Empresa agregado con exito!");
+                //GUARDAR EN ARCHIVO
+                StreamWriter file = new StreamWriter(Dest(1));
+                foreach (Usuario u in Usuarios)
+                {
+                    file.WriteLine(u.nID + "," +u.nDNI + "," +u.nNombre + "," +u.nApellido + "," +u.nMail + "," +u.nPassword + "," +u.nCUIT_CUIL + "," +u.nRol);
+                }
+                file.Close();
+
+                Console.WriteLine("Usuario agregado con exito!");
                 return true;
             }
-            else
+            else 
             {
-              //Usuarios.Add(new ClienteFinal(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL));
-                Console.WriteLine("Usuario Cliente Final agregado con exito!");
-                return true;
+                Console.WriteLine("no se pudo agregar al usuario");
+                return false;
             }
-            //Console.WriteLine("ERROR: No se pudo agregar el usuario");
-            //return false;
+            
         }
 
-        public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, bool EsEmpresa)
+        public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
         {
             foreach (Usuario u in Usuarios)
             {
-                /*
-                 if (u.nID == ID)
+                 if (Usuarios[ID] != null)
                  {
-                     if (u is Empresa && EsEmpresa == true)
-                     {
-                         Empresa e = (Empresa)u;
-                         e.nDNI = DNI;
-                         e.nNombre = nombre;
-                         e.nApellido = apellido;
-                         e.nMail = Mail;
-                         e.nPassword = password;
-                         e.nCUIT = CUIT_CUIL;
-                         Console.WriteLine("Usuario Empresa modificado con exito!");
-                         return true;
-                     }
-                     else if (u is ClienteFinal && EsEmpresa == false)
-                     {
-                         ClienteFinal c = (ClienteFinal)Usuarios[ID];
-                         c.nDNI = DNI;
-                         c.nNombre = nombre;
-                         c.nApellido = apellido;
-                         c.nMail = Mail;
-                         c.nPassword = password;
-                         c.nCUIL = CUIT_CUIL;
-                         Console.WriteLine("Usuario Cliente Final modificado con exito!");
-                         return true;
-                     }
-
+                    Usuario e = (Usuario)u;
+                    e.nDNI = DNI;
+                    e.nNombre = nombre;
+                    e.nApellido = apellido;
+                    e.nMail = Mail;
+                    e.nPassword = password;
+                    e.nCUIT_CUIL = CUIT_CUIL;
+                    e.nRol = rol;
+                    Console.WriteLine("Usuario modificado con exito!");
+                    return true;
                  }
-                */
             }
-            if (EsEmpresa == true)
-            {
-                Console.WriteLine("ERROR: no hay Usuario Empresa con ese ID: " + ID);
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("ERROR: no hay Usuario Cliente Final con ese ID: " + ID);
-                return false;
-            }
-
+            Console.WriteLine("ERROR: no hay Usuario con ese ID: " + ID);
+            return false;
         }
 
         public bool EliminarUsuario(int ID)
@@ -414,6 +404,16 @@ namespace TP_2_PlataformasDeDesarrollo
                         Categorias[i] = new Categoria(i, nombre);
                         CantCategorias++;
                         Console.WriteLine("Categoria agregada con exito!");
+
+                        //GUARDAR EN ARCHIVO
+                        StreamWriter file = new StreamWriter(Dest(4));
+                        foreach (Categoria c in Categorias)
+                        {
+                            if (c != null) { 
+                                file.WriteLine(c.nID+","+c.nNombre);
+                            }
+                        }
+                        file.Close();
                         return true;
                     }
 
@@ -491,6 +491,16 @@ namespace TP_2_PlataformasDeDesarrollo
                 Console.WriteLine("Producto agregada con exito al Carro.");
                 return true;
             }
+
+            StreamWriter file = new StreamWriter(Dest(2));
+                foreach (Usuario u in Usuarios)
+                {
+                    foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos) {
+                        file.WriteLine(u.nID + "," + kvp.Key.nIDProd+","+kvp.Value);
+                    }
+                }
+        file.Close();
+
             Console.WriteLine("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
@@ -539,6 +549,14 @@ namespace TP_2_PlataformasDeDesarrollo
                 }
                */
                 Compras.Add(new Compra(n++, Usuarios[ID_Usuario], Usuarios[ID_Usuario].nCarro.nProductos, total));
+
+                //GUARDAR EN ARCHIVO
+                StreamWriter file = new StreamWriter(Dest(3));
+                foreach (Compra c in Compras)
+                {
+                    file.WriteLine(c.nIDCompra+ "," +c.nComprador + "," +c.nProductos + "," +c.nTotal);
+                }
+                file.Close();
 
                 foreach (KeyValuePair<Producto, int> kvp in Compras[n].nProductos)
                 {

@@ -18,6 +18,7 @@ namespace TP_2_PlataformasDeDesarrollo
         string usuario;
         bool logued;
         public bool touched;
+        Mercado m;
 
         public Form2()
         {
@@ -30,16 +31,18 @@ namespace TP_2_PlataformasDeDesarrollo
 
             hijoLogin.Show();
             touched = false;
+            m = new Mercado();
         }
 
         private void TransfDelegado(string Usuario, string pass)
         {
+            
             this.usuario = Usuario;
             if (usuario != null && usuario != "")
             {
                 MessageBox.Show("Log in correcto, Usuario: " + usuario);
                 hijoLogin.Close();
-                hijoMain = new Form3(new string[] { usuario });
+                hijoMain = new Form3();//new string[] { usuario }
                 hijoMain.MdiParent = this;
                 hijoMain.Show();
             }

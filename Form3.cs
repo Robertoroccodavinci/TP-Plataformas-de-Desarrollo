@@ -14,11 +14,16 @@ namespace TP_2_PlataformasDeDesarrollo
     {
         public string[] argumentos;
         List<List<string>> datos;
-        public Form3(string[] args)
+        Mercado merc = new Mercado();
+        string[] lines;
+        public Form3 ()
         {
             InitializeComponent();
-            argumentos = args;
-            label2.Text = args[0];
+            //merc = m;
+            //label2.Text = u.nNombre;
+            
+            lines = System.IO.File.ReadAllLines(merc.Dest(0));
+
             datos = new List<List<string>>();
             List<string> producto1 = new List<string>(new string[] { "TV", "50000", "200" });
             List<string> producto2 = new List<string>(new string[] { "PC", "75000", "150" });
@@ -28,16 +33,17 @@ namespace TP_2_PlataformasDeDesarrollo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            refreshData(datos);
+            refreshData(lines);
         }
 
-        private void refreshData(List<List<string>> data)
+        private void refreshData(string[] prod)
         {
             //borro los datos
             dataGridView1.Rows.Clear();
             //agrego lo nuevo
-            foreach (List<string> producto in data)
-                dataGridView1.Rows.Add(producto.ToArray());
+            foreach (string p in prod) {
+                dataGridView1.Rows.Add(p.ToArray());
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -56,6 +62,21 @@ namespace TP_2_PlataformasDeDesarrollo
         }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void tabPage4_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView4_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
