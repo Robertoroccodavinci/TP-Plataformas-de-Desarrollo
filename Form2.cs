@@ -8,54 +8,101 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TP_2_PlataformasDeDesarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
     public partial class Form2 : Form
     {
-        Form1 hijoLogin;
-        Form3 hijoMain;
-        internal string texto;
-        string usuario;
-        bool logued;
-        public bool touched;
-        Mercado m;
-
-        public Form2()
+        private bool logued;
+        private string[] argumentos;
+        private string usuario;
+        private string pass;
+        public delegate void TransfDelegado(string usuario,string pass);
+        public TransfDelegado TrasfEvento;
+        public Form2(string[] args)
         {
-            InitializeComponent();
             logued = false;
-            hijoLogin = new Form1(new string[1]);
-            IsMdiContainer = true;
-            hijoLogin.MdiParent = this;
-            hijoLogin.TrasfEvento += TransfDelegado;
-
-            hijoLogin.Show();
-            touched = false;
-            m = new Mercado();
+            InitializeComponent();
+            argumentos = args;
         }
-
-        private void TransfDelegado(string Usuario, string pass)
+        private void button1_Click(object sender, EventArgs e)
         {
-            
-            this.usuario = Usuario;
-            if (usuario != null && usuario != "")
+           
+        }
+        //######################################################
+        //               BOTON INICIAR SESION
+        //######################################################
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            usuario = textBox1.Text;
+            pass = inputPass.Text;
+
+            if (usuario != null && usuario != "" && pass != null && pass != "")
+            {   
+                
+                this.TrasfEvento(usuario, pass);
+                this.Close();
+            }
+            else
+                MessageBox.Show("Debe ingresar un usuario!");
+        }
+        //######################################################
+        //           BOTON VER - OCULTAR CONTRASEÑA
+        //            FORMULARIO INICIO DE SESION
+        //######################################################
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (inputPass.UseSystemPasswordChar == true)
             {
-                MessageBox.Show("Log in correcto, Usuario: " + usuario);
-                hijoLogin.Close();
-                hijoMain = new Form3();//new string[] { usuario }
-                hijoMain.MdiParent = this;
-                hijoMain.Show();
+                inputPass.UseSystemPasswordChar = false;
+            }
+            else if (inputPass.UseSystemPasswordChar == false)
+            {
+                inputPass.UseSystemPasswordChar = true;
             }
         }
+        //######################################################
+        //                  BOTON REGISTRARSE
+        //######################################################
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = tabPage2;
+        }
+        //######################################################
+        //                BOTON CONFIGURACION
+        //######################################################
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = tabPage3;
+        }
+
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void Form2_Load_1(object sender, EventArgs e)
+        //######################################################
+        //           BOTON REGISTRAR USUARIO NUEVO
+        //######################################################
+        private void button5_Click(object sender, EventArgs e)
         {
-
+            //si puso todos los datos y se registra sin problemas en la lista de usuarios
+            //se salta a iniciar sesion
+            tabControl1.SelectedTab = tabPage1;
+        }
+        //######################################################
+        //           BOTON VER - OCULTAR CONTRASEÑA
+        //        FORMULARIO REGISTRO DE USUARIO NUEVO
+        //######################################################
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (textBox6.UseSystemPasswordChar == true)
+            {
+                textBox6.UseSystemPasswordChar = false;
+            }
+            else if (textBox6.UseSystemPasswordChar == false)
+            {
+                textBox6.UseSystemPasswordChar = true;
+            }
         }
     }
 }

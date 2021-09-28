@@ -1,0 +1,12 @@
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.AssemblyReference.cache
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form1.resources
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form2.resources
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form3.resources
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Properties.Resources.resources
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.GenerateResource.cache
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CoreCompileInputs.cache
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe.config
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.pdb
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
+C:\Users\rober\source\repos\TP2_PlataformasDeDesarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TP_2_PlataformasDeDesarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
     class Mercado
     {
@@ -17,8 +15,8 @@ namespace TP_2_PlataformasDeDesarrollo
         private List<Compra> Compras;
 
         private string[] fileName = { "productos.txt", "usuario.txt", "carro.txt", "compras.txt", "categoria.txt" };
-        private string sourcePath ;
-        private string targetPath ;
+        private string sourcePath;
+        private string targetPath;
 
 
 
@@ -36,11 +34,14 @@ namespace TP_2_PlataformasDeDesarrollo
             nUsuarios = new List<Usuario>();
             nCompras = new List<Compra>();
             nCategorias = new Categoria[MaxCategorias];
-            
 
-            nSourcePath = System.IO.Directory.GetCurrentDirectory()+"/../../Archivos";
+            nSourcePath = System.IO.Directory.GetCurrentDirectory() + "/../../Archivos";
             nTargetPath = "C:/ArchivosMercado";
             Console.WriteLine(nTargetPath);
+            
+            //###########################################
+            //  COMPROBACION DE DIRECTORIOS Y ARCHIVOS 
+            //###########################################
 
             //PREGUNTAMOS SI EXISTE EL DIRECTORIO TARGET
             if (System.IO.Directory.Exists(nTargetPath))
@@ -58,17 +59,97 @@ namespace TP_2_PlataformasDeDesarrollo
                     }
                 }
             }
-            else 
+            else
             {
                 //SI NO EXITE EL DIRECTORIO TARGET, LO CREAMOS
                 System.IO.Directory.CreateDirectory(nTargetPath);
                 //COPIAMOS TODOS LOS ARCHIVOS DE SOURCE A TARGET
-                for (int i = 0 ; i < fileName.Length ; i++)
+                for (int i = 0; i < fileName.Length; i++)
                 {
                     System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[i]), Dest(i));
                 }
             }
+            //###########################################
+            //   PASAMOS DE LOS ARCHIVOS A LAS LISTAS 
+            //###########################################
 
+            string[] lines;
+
+            // 0 - Productos
+            if (System.IO.File.Exists(Dest(0))) 
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(0));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID PRODUCTO
+                    // 1 - NOMBRE
+                    // 2 - PRECIO
+                    // 3 - CANTIDAD
+                    // 4 - ID CATEGORIA
+                    AgregarProducto(parts[1], Double.Parse(parts[2]), int.Parse(parts[3]), int.Parse(parts[4]));
+                }
+            }
+            // 1 - Usuarios
+            if (System.IO.File.Exists(Dest(1)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(1));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID
+                    // 1 - DNI
+                    // 2 - NOMBRE
+                    // 3 - APELLIDO
+                    // 4 - MAIL
+                    // 5 - PASSWORD
+                    // 6 - CUIT_CUIL
+                    // 7 - ROL
+                    AgregarUsuario(int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], int.Parse(parts[6]), int.Parse(parts[7]));
+                }
+            }
+
+            // 2 - Carro
+            if (System.IO.File.Exists(Dest(2)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(2));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID PRODUCTO
+                    // 1 - CANTIDAD
+                    // 2 - ID USUARIO
+                    AgregarAlCarro(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
+                }
+            }
+
+            // 3 - Compras
+            if (System.IO.File.Exists(Dest(3)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(3));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID COMPRA
+                    // 1 - ID USUARIO
+                    // 3 - PRODUCTO
+                    // 4 - TOTAL
+                    Comprar(int.Parse(parts[1]));
+                }
+            }
+
+            // 4 - Categorias
+            if (System.IO.File.Exists(Dest(4)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(4));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID
+                    // 1 - Nombre
+                    AgregarCategoria(parts[1]);
+                }
+            }
         }
         // ######################################################################################
         //                                  METODOS SET Y GET
@@ -85,7 +166,7 @@ namespace TP_2_PlataformasDeDesarrollo
         {
             return System.IO.Path.Combine(nTargetPath, fileName[index]);
         }
-        
+
         //GET Y SET DE RUTAS
         public string nSourcePath
         {
@@ -168,33 +249,20 @@ namespace TP_2_PlataformasDeDesarrollo
                         idProd = Productos.Count();
                     }
                     Productos.Add(new Producto(idProd, nombre, precio, cantidad, Categorias[i]));
-                    
-                    //GUARDAR EN ARCHIVO
-                    StreamWriter file = new StreamWriter(Dest(0));
-                    foreach (Producto p  in Productos) 
-                    {
-                        file.WriteLine(p.nIDProd + "," + p.nNombre + "," +p.nPrecio + "," +p.nCantidad + "," + p.nCategoria);
-                    }
-                    file.Close();
 
-                    /* ***************************************** */
                     Console.WriteLine("Producto agregado correctamente!");
                     return true;
-
                 }
             }
             Console.WriteLine("ERROR: no se pudo agregar el producto");
             return false;
         }
 
-
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
         {
-
             int IDProd = Productos.FindIndex(x => x.nIDProd == ID);
             if (IDProd >= 0)
             {
-
                 Productos[IDProd].nNombre = nombre;
                 Productos[IDProd].nPrecio = precio;
                 Productos[IDProd].nCantidad = cantidad;
@@ -210,8 +278,6 @@ namespace TP_2_PlataformasDeDesarrollo
             }
             Console.WriteLine("ERROR: producto no encontrado.");
             return false;
-
-
         }
 
 
@@ -225,8 +291,6 @@ namespace TP_2_PlataformasDeDesarrollo
             }
             Console.WriteLine("ERROR: No se encontro el producto con ese ID");
             return false;
-
-
         }
 
 
@@ -278,7 +342,6 @@ namespace TP_2_PlataformasDeDesarrollo
             }
         }
 
-
         public void MostrarTodosProductosPorCategoria()
         {
             foreach (Categoria c in Categorias)
@@ -294,7 +357,6 @@ namespace TP_2_PlataformasDeDesarrollo
                         }
                     }
                 }
-
             }
         }
 
@@ -309,37 +371,26 @@ namespace TP_2_PlataformasDeDesarrollo
         public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
         {
             int n = Usuarios.Count();
-            
-            Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL,rol));
-            
+            Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol));
 
             if (Usuarios[n] != null)
             {
-                //GUARDAR EN ARCHIVO
-                StreamWriter file = new StreamWriter(Dest(1));
-                foreach (Usuario u in Usuarios)
-                {
-                    file.WriteLine(u.nID + "," +u.nDNI + "," +u.nNombre + "," +u.nApellido + "," +u.nMail + "," +u.nPassword + "," +u.nCUIT_CUIL + "," +u.nRol);
-                }
-                file.Close();
-
                 Console.WriteLine("Usuario agregado con exito!");
                 return true;
             }
-            else 
+            else
             {
                 Console.WriteLine("no se pudo agregar al usuario");
                 return false;
             }
-            
         }
 
         public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
         {
             foreach (Usuario u in Usuarios)
             {
-                 if (Usuarios[ID] != null)
-                 {
+                if (Usuarios[ID] != null)
+                {
                     Usuario e = (Usuario)u;
                     e.nDNI = DNI;
                     e.nNombre = nombre;
@@ -350,7 +401,7 @@ namespace TP_2_PlataformasDeDesarrollo
                     e.nRol = rol;
                     Console.WriteLine("Usuario modificado con exito!");
                     return true;
-                 }
+                }
             }
             Console.WriteLine("ERROR: no hay Usuario con ese ID: " + ID);
             return false;
@@ -367,7 +418,6 @@ namespace TP_2_PlataformasDeDesarrollo
                     return true;
                 }
             }
-
             Console.WriteLine("ERROR: ID: " + ID + " usuario no encontrado");
             return false;
         }
@@ -377,9 +427,7 @@ namespace TP_2_PlataformasDeDesarrollo
             Usuarios.Sort();
             foreach (Usuario u in Usuarios)
             {
-
                 Console.WriteLine(u);
-
             }
         }
 
@@ -393,33 +441,19 @@ namespace TP_2_PlataformasDeDesarrollo
         // ######################################################################################
         public bool AgregarCategoria(string nombre)
         {
-
             if (CantCategorias < MaxCategorias)
             {
                 for (int i = 0; i < MaxCategorias; i++)
                 {
                     if (Categorias[i] == null)
                     {
-
                         Categorias[i] = new Categoria(i, nombre);
                         CantCategorias++;
-                        Console.WriteLine("Categoria agregada con exito!");
 
-                        //GUARDAR EN ARCHIVO
-                        StreamWriter file = new StreamWriter(Dest(4));
-                        foreach (Categoria c in Categorias)
-                        {
-                            if (c != null) { 
-                                file.WriteLine(c.nID+","+c.nNombre);
-                            }
-                        }
-                        file.Close();
+                        Console.WriteLine("Categoria agregada con exito!");
                         return true;
                     }
-
                 }
-
-
             }
             Console.WriteLine("ERROR: no se pueden agregar mas categorias");
             return false;
@@ -431,19 +465,15 @@ namespace TP_2_PlataformasDeDesarrollo
             Console.ReadLine();
             if (Categorias[ID].nID == ID) /* ALGUNA PARTE DE ACA ANDA MAL */
             {
-
                 Categorias[ID].nNombre = nombre;
-
                 Console.WriteLine("Categoria modificada con exito!" + Categorias[ID].nID);
                 return true;
-
-
             }
             Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
             return false;
         }                   /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
 
-        public bool EliminarCategoria(int ID) // a probar ****************************** MODIFICADA, PREGUNTAR OPINIONES DE LOS DEMAS
+        public bool EliminarCategoria(int ID)
         {
             if (Categorias[ID] != null)
             {
@@ -452,26 +482,20 @@ namespace TP_2_PlataformasDeDesarrollo
 
                 Console.WriteLine("Categoria eliminada con exito!");
                 return true;
-
             }
             Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
             return false;
-
-        } /* MODIFICADA, PREGUNTAR OPINIONES DE LOS DEMAS   */
+        } 
 
         public void MostrarCategoria()
         {
-            /* ************************************************************* MODIFICADO, LO PIDIO EL PROFE, CAMBIAR IS POR VERIFICACION DE NULL */
-
             for (int i = 0; i < MaxCategorias; i++)
             {
                 if (Categorias[i] != null)
                 {
                     Console.WriteLine(Categorias[i].ToString());
                 }
-
             }
-            /* ************************************************************* */
         }
 
         // #######################################################################################
@@ -486,25 +510,14 @@ namespace TP_2_PlataformasDeDesarrollo
         {
             if (Productos[ID_Producto].nCantidad >= Cantidad)
             {
-
                 Usuarios[ID_Usuario].nCarro.AgregarProducto(Productos[ID_Producto], Cantidad);
                 Console.WriteLine("Producto agregada con exito al Carro.");
                 return true;
             }
-
-            StreamWriter file = new StreamWriter(Dest(2));
-                foreach (Usuario u in Usuarios)
-                {
-                    foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos) {
-                        file.WriteLine(u.nID + "," + kvp.Key.nIDProd+","+kvp.Value);
-                    }
-                }
-        file.Close();
-
             Console.WriteLine("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
-        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
+        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
             if (Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad))
             {
@@ -538,25 +551,10 @@ namespace TP_2_PlataformasDeDesarrollo
             foreach (KeyValuePair<Producto, int> kvp in Usuarios[ID_Usuario].nCarro.nProductos)
             {
                 total += kvp.Key.nPrecio * kvp.Value;
-
             }
             if (total > 0)
             {
-               /* 
-                if (Usuarios[ID_Usuario] is Empresa)
-                {
-                    total = (total * 21) / 100;
-                }
-               */
                 Compras.Add(new Compra(n++, Usuarios[ID_Usuario], Usuarios[ID_Usuario].nCarro.nProductos, total));
-
-                //GUARDAR EN ARCHIVO
-                StreamWriter file = new StreamWriter(Dest(3));
-                foreach (Compra c in Compras)
-                {
-                    file.WriteLine(c.nIDCompra+ "," +c.nComprador + "," +c.nProductos + "," +c.nTotal);
-                }
-                file.Close();
 
                 foreach (KeyValuePair<Producto, int> kvp in Compras[n].nProductos)
                 {
@@ -568,7 +566,6 @@ namespace TP_2_PlataformasDeDesarrollo
                         }
                     }
                 }
-
                 VaciarCarro(ID_Usuario);
                 Compras[n].ToString();
                 Console.WriteLine("Compraste con exito!");
@@ -580,19 +577,27 @@ namespace TP_2_PlataformasDeDesarrollo
 
         public bool ModificarCompra(int ID, double Total)
         {
-            return true;//solo para que no tire error
+            if (Compras[ID] != null)
+            {
+                Compras[ID].nTotal = Total;
+                return true;
+            }
+            return false;
         }
 
         public bool EliminarCompra(int ID)
         {
-            return true;//solo para que no tire error
+            if (Compras[ID] != null) 
+            {
+                Compras[ID] = null;
+                return true;
+            }
+            return false;
         }
 
         // #######################################################################################
         //                                  INICIAR SESION
         // #######################################################################################
-
-
         public int IniciarSesion(int DNI, string pass) // PARA SEBA  
         {
             //SEBA VA A HACER ESTO, sino lo hace le pegamo!
@@ -608,6 +613,63 @@ namespace TP_2_PlataformasDeDesarrollo
             else
             { return false; }
         }
+        // #######################################################################################
+        //                                  GUARDAR ARCHIVOS
+        // #######################################################################################
+
+        public void guardarTodo()
+        {
+            //GUARDAR PRODUCTOS
+            StreamWriter file0 = new StreamWriter(Dest(0));
+            foreach (Producto p in Productos)
+            {
+                file0.WriteLine(p.nIDProd + "," + p.nNombre + "," + p.nPrecio + "," + p.nCantidad + "," + p.nCategoria);
+            }
+            file0.Close();
+
+            //GUARDAR USUARIOS
+            StreamWriter file1 = new StreamWriter(Dest(1));
+            foreach (Usuario u in Usuarios)
+            {
+                file1.WriteLine(u.nID + "," + u.nDNI + "," + u.nNombre + "," + u.nApellido + "," + u.nMail + "," + u.nPassword + "," + u.nCUIT_CUIL + "," + u.nRol);
+            }
+            file1.Close();
+
+            //GUARDAR CARROS
+            StreamWriter file2 = new StreamWriter(Dest(2));
+            foreach (Usuario u in Usuarios)
+            {
+                foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos)
+                {
+                    file2.WriteLine(u.nID + "," + kvp.Key.nIDProd + "," + kvp.Value);
+                }
+            }
+            file2.Close();
+
+            //GUARDAR COMPRAS
+            StreamWriter file3 = new StreamWriter(Dest(3));
+            foreach (Compra c in Compras)
+            {
+                foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
+                {
+                    file3.WriteLine(c.nComprador + "," + kvp.Key.nIDProd + ","+kvp.Value+ "," + c.nTotal);
+                }
+            }
+            file3.Close();
+            
+            //GUARDAR CATEGORIAS
+            StreamWriter file4 = new StreamWriter(Dest(4));
+            foreach (Categoria c in Categorias)
+            {
+                if (c != null)
+                {
+                    file4.WriteLine(c.nID + "," + c.nNombre);
+                }
+            }
+            file4.Close();
+
+        }
+
 
 
         /* 

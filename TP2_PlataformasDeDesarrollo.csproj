@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC85F063-727D-4522-88BD-4DD84ED0B621}</ProjectGuid>
+    <ProjectGuid>{529EDCEA-6DC4-49B1-9C44-007001F7B04F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TP_2_PlataformasDeDesarrollo</RootNamespace>
-    <AssemblyName>TP-2-PlataformasDeDesarrollo</AssemblyName>
+    <RootNamespace>TP2_PlataformasDeDesarrollo</RootNamespace>
+    <AssemblyName>TP2_PlataformasDeDesarrollo</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,7 +49,6 @@
     <Compile Include="Carro.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Compra.cs" />
-    <Compile Include="Mercado.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +67,7 @@
     <Compile Include="Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mercado.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,13 +103,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Archivos\compras.txt" />
-    <Content Include="Archivos\categoria.txt" />
     <Content Include="Archivos\carro.txt" />
-    <Content Include="Archivos\usuario.txt" />
+    <Content Include="Archivos\categoria.txt" />
+    <Content Include="Archivos\compras.txt" />
     <Content Include="Archivos\productos.txt" />
+    <Content Include="Archivos\usuario.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-namespace TP_2_PlataformasDeDesarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
     static class Program
     {
@@ -15,10 +14,9 @@ namespace TP_2_PlataformasDeDesarrollo
         [STAThread]
         static void Main()
         {
-           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form2());
+            Application.Run(new Form1());
 
             //despues se quita
             Mercado m = new Mercado();
@@ -30,11 +28,9 @@ namespace TP_2_PlataformasDeDesarrollo
             m.AgregarCategoria("Articulos de limpieza"); // 4
             m.AgregarCategoria("Electrodomesticos");     // 5
             m.AgregarCategoria("Informatica");           // 6
-            //Array.Sort(m.nCategorias);
-
+            
             //agregamos Productos
-
-            m.AgregarProducto("Cerveza", 10, 20,1); // 1
+            m.AgregarProducto("Cerveza", 10, 20, 1); // 1
             m.AgregarProducto("Papas", 5, 20, 0);   // 2
             m.AgregarProducto("Palitos", 5, 20, 0); // 3
             m.AgregarProducto("Cheetos", 5, 20, 0); // 4
@@ -42,17 +38,15 @@ namespace TP_2_PlataformasDeDesarrollo
             m.AgregarProducto("PC", 5, 20, 5);      // 6
 
             //agregamos Usuarios
-            m.AgregarUsuario(12345678,"Pepito","Fulano", "pepito@gmail.com", "123456", 2145687, 1);     // 1
+            m.AgregarUsuario(12345678, "Pepito", "Fulano", "pepito@gmail.com", "123456", 2145687, 1);     // 1
             m.AgregarUsuario(12345678, "Jose", "Gomez", "jose@gmail.com", "123456", 2189587, 2);        // 2
             m.AgregarUsuario(12345678, "Carlos", "Lopez", "carlos@gmail.com", "123456", 158468, 3);     // 3
             m.AgregarUsuario(12345678, "Luis", "Mengano", "luis@gmail.com", "123456", 157852, 1);       // 4
             m.AgregarUsuario(12345678, "Pepito", "Fulano", "pepito@gmail.com", "123456", 2145687, 2);   // 5
             m.AgregarUsuario(12345678, "Jose", "Gomez", "jose@gmail.com", "123456", 2189587, 3);        // 6
             m.AgregarUsuario(12345678, "Carlos", "Lopez", "carlos@gmail.com", "123456", 158468, 1);     // 7
-            m.AgregarUsuario(12345678, "Luis", "Mengano", "luis@gmail.com", "123456", 157852,2);        // 8
+            m.AgregarUsuario(12345678, "Luis", "Mengano", "luis@gmail.com", "123456", 157852, 2);        // 8
 
         }
-
-        
     }
 }

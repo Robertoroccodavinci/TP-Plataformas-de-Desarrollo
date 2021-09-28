@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace TP_2_PlataformasDeDesarrollo.Properties
+namespace TP2_PlataformasDeDesarrollo.Properties
 {
     /// <summary>
     ///   Clase de recurso fuertemente tipado para buscar cadenas traducidas, etc.
@@ -43,7 +43,7 @@ namespace TP_2_PlataformasDeDesarrollo.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TP_2_PlataformasDeDesarrollo.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TP2_PlataformasDeDesarrollo.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

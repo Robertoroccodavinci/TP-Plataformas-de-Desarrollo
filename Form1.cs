@@ -8,64 +8,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TP_2_PlataformasDeDesarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
     public partial class Form1 : Form
     {
-        private bool logued;
-        private string[] argumentos;
-        private string usuario;
-        private string pass;
-        public delegate void TransfDelegado(string usuario, string pass);
-        public TransfDelegado TrasfEvento;
+        Form2 hijoLogin;
+        Form3 hijoMain;
+        
+        bool logued;
 
-        public Form1(string[] args)
+        internal string texto;
+        string usuario;
+        public bool touched;
+        public Form1()
         {
-            logued = false;
             InitializeComponent();
-            argumentos = args;
+            logued = false;
+            hijoLogin = new Form2(new string[1]);
+
+            hijoLogin.MdiParent = this;
+            hijoLogin.TrasfEvento += TransfDelegado;
+
+            hijoLogin.Show();
+            touched = false;
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        private void TransfDelegado(string Usuario,string pass)
         {
+            //  AQUI VA EL INICIO DE SESION
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            usuario = textBox1.Text;
-            pass = inputPass.Text;
-
-            if (usuario != null && usuario != "" && pass != null && pass != "")
+            this.usuario = Usuario;
+            if (usuario != null && usuario != "")
             {
-                this.TrasfEvento(usuario, pass);
-                this.Close();
+                MessageBox.Show("Log in correcto, Usuario: " + usuario);
+                hijoLogin.Close();
+                hijoMain = new Form3();//new string[] { usuario });
+                hijoMain.MdiParent = this;
+                hijoMain.Show();
             }
-            else
-                MessageBox.Show("Debe ingresar un usuario!");
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (inputPass.UseSystemPasswordChar == true)
-            {
-                inputPass.UseSystemPasswordChar = false;
-            }
-            else if (inputPass.UseSystemPasswordChar == false)
-            {
-                inputPass.UseSystemPasswordChar = true;
-            }
-               
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
+            
 
         }
     }
