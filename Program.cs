@@ -22,20 +22,20 @@ namespace TP2_PlataformasDeDesarrollo
             Mercado m = new Mercado();
 
             //agregamos Categorias
-            m.AgregarCategoria("Comida");                // 1
+           /* m.AgregarCategoria("Comida");                // 1
             m.AgregarCategoria("Bebida");                // 2
             m.AgregarCategoria("Ropa");                  // 3
             m.AgregarCategoria("Articulos de limpieza"); // 4
             m.AgregarCategoria("Electrodomesticos");     // 5
-            m.AgregarCategoria("Informatica");           // 6
+            m.AgregarCategoria("Informatica");           // 6*/
             
             //agregamos Productos
-            m.AgregarProducto("Cerveza", 10, 20, 1); // 1
+           /* m.AgregarProducto("Cerveza", 10, 20, 1); // 1
             m.AgregarProducto("Papas", 5, 20, 0);   // 2
             m.AgregarProducto("Palitos", 5, 20, 0); // 3
             m.AgregarProducto("Cheetos", 5, 20, 0); // 4
             m.AgregarProducto("TV", 5, 20, 4);      // 5
-            m.AgregarProducto("PC", 5, 20, 5);      // 6
+            m.AgregarProducto("PC", 5, 20, 5);      // 6*/
 
             //agregamos Usuarios
             m.AgregarUsuario(12345678, "Pepito", "Fulano", "pepito@gmail.com", "123456", 2145687, 1);     // 1

@@ -75,6 +75,19 @@ namespace TP2_PlataformasDeDesarrollo
 
             string[] lines;
 
+            // 4 - Categorias -> ANTES DE PRODUCTOS
+            if (System.IO.File.Exists(Dest(4)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(4));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID
+                    // 1 - Nombre
+                    AgregarCategoria(parts[1]);
+                }
+            }
+
             // 0 - Productos
             if (System.IO.File.Exists(Dest(0))) 
             {
@@ -87,7 +100,7 @@ namespace TP2_PlataformasDeDesarrollo
                     // 2 - PRECIO
                     // 3 - CANTIDAD
                     // 4 - ID CATEGORIA
-                    AgregarProducto(parts[1], Double.Parse(parts[2]), int.Parse(parts[3]), int.Parse(parts[4]));
+                    AgregarProducto(parts[1], double.Parse(parts[2]), int.Parse(parts[3]), int.Parse(parts[4]));
                 }
             }
             // 1 - Usuarios
@@ -138,18 +151,7 @@ namespace TP2_PlataformasDeDesarrollo
                 }
             }
 
-            // 4 - Categorias
-            if (System.IO.File.Exists(Dest(4)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(4));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID
-                    // 1 - Nombre
-                    AgregarCategoria(parts[1]);
-                }
-            }
+            
         }
         // ######################################################################################
         //                                  METODOS SET Y GET
