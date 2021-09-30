@@ -22,3 +22,15 @@ C:\Users\rober\Desktop\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeD
 C:\Users\rober\Desktop\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CoreCompileInputs.cache
 C:\Users\rober\Desktop\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
 C:\Users\rober\Desktop\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe.config
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.pdb
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.AssemblyReference.cache
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form2.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form3.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Properties.Resources.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.GenerateResource.cache
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CoreCompileInputs.cache
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form1.resources
