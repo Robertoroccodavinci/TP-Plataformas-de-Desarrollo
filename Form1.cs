@@ -20,11 +20,14 @@ namespace TP2_PlataformasDeDesarrollo
         internal string texto;
         string usuario;
         public bool touched;
+        Mercado merc;
         public Form1()
         {
             InitializeComponent();
+            
+
             logued = false;
-            hijoLogin = new Form2(new string[1]);
+            hijoLogin = new Form2();
 
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;
@@ -32,21 +35,12 @@ namespace TP2_PlataformasDeDesarrollo
             hijoLogin.Show();
             touched = false;
         }
-        private void TransfDelegado(string Usuario,string pass)
+        private void TransfDelegado(int ID, string nombre,Object m)
         {
-            //  AQUI VA EL INICIO DE SESION
-
-            this.usuario = Usuario;
-            if (usuario != null && usuario != "")
-            {
-                MessageBox.Show("Log in correcto, Usuario: " + usuario);
                 hijoLogin.Close();
-                hijoMain = new Form3();//new string[] { usuario });
+                hijoMain = new Form3(ID,nombre,m);
                 hijoMain.MdiParent = this;
                 hijoMain.Show();
-            }
-            
-
         }
 
         private void Form1_Load(object sender, EventArgs e)

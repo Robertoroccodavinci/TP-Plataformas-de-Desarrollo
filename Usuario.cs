@@ -8,7 +8,7 @@ namespace TP2_PlataformasDeDesarrollo
 {
     class Usuario : IComparable<Usuario>
     {
-        private int ID = 0;
+        private int ID;
         private int DNI;
         private string Nombre;
         private string Apellido;

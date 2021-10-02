@@ -19,13 +19,23 @@ namespace TP2_PlataformasDeDesarrollo
         
         public string[] argumentos;
         List<List<string>> datos;
-        
-        Mercado merc = new Mercado();
+
+        Mercado merc;
+        int ID;
+        int rol;
         List<string> producto = new List<string>();
 
-        public Form3()
+        public Form3(int ID, string nombre,Object m)
         {
             InitializeComponent();
+            this.ID = ID;
+            merc = (Mercado) m;
+            
+            
+            rol = merc.nUsuarios[ID].nRol;
+
+            label2.Text = nombre;
+
             Console.WriteLine(merc.nProductos);
 
             //  DEBERIA LLEVAR PARAMETROS EL CONSTRUCTOR
@@ -49,7 +59,7 @@ namespace TP2_PlataformasDeDesarrollo
 
 
             datos = new List<List<string>>();
-            string line;
+            
 
             //########################################################################
             //AGARRAMOS EL ARCHIVO DE PRODUCTOS
@@ -63,9 +73,13 @@ namespace TP2_PlataformasDeDesarrollo
                 producto.Add(l);
             }
             datos.Add(producto);*/
+            
+            //tabPage5.Dispose();
+            
+            
 
         }
-
+        
         private void refreshData(Mercado data)
         {
             //borro los datos
@@ -131,7 +145,7 @@ namespace TP2_PlataformasDeDesarrollo
         private void button2_Click(object sender, EventArgs e)
         {
             merc.guardarTodo();//SI LO HACEMOS BOOLEANO PARA COMPROBAR SI FUE EXITOSO O NO
-            MessageBox.Show("");// MENSAJE CORROBORANDO QUE SE GUARDO EXITOSAMENTE
+            MessageBox.Show("archivos guardados");// MENSAJE CORROBORANDO QUE SE GUARDO EXITOSAMENTE
         }
     }
 }

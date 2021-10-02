@@ -1,0 +1,6 @@
+0,Cerveza,10,20,1-Bebida
+1,Papas,5,20,0-Comida
+2,Palitos,5,20,0-Comida
+3,Cheetos,5,20,0-Comida
+4,TV,5,20,4-Electrodomesticos
+5,PC,5,20,5-Informatica

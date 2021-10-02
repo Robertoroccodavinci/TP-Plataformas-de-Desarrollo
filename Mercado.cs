@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace TP2_PlataformasDeDesarrollo
 {
@@ -14,7 +15,7 @@ namespace TP2_PlataformasDeDesarrollo
         private Categoria[] Categorias;
         private List<Compra> Compras;
 
-        private string[] fileName = { "productos.txt", "usuario.txt", "carro.txt", "compras.txt", "categoria.txt" };
+        public string[] fileName = { "productos.txt", "usuario.txt", "carro.txt", "compras.txt", "categoria.txt" };
         private string sourcePath;
         private string targetPath;
 
@@ -37,121 +38,24 @@ namespace TP2_PlataformasDeDesarrollo
 
             nSourcePath = System.IO.Directory.GetCurrentDirectory() + "/../../Archivos";
             nTargetPath = "C:/ArchivosMercado";
-            Console.WriteLine(nTargetPath);
+
+            string[] lines = System.IO.File.ReadAllLines(nSourcePath+"/"+ fileName[1]);
             
-            //###########################################
-            //  COMPROBACION DE DIRECTORIOS Y ARCHIVOS 
-            //###########################################
-
-            //PREGUNTAMOS SI EXISTE EL DIRECTORIO TARGET
-            if (System.IO.Directory.Exists(nTargetPath))
+            foreach (string s in lines)
             {
-                string[] files = System.IO.Directory.GetFiles(nTargetPath);
-                foreach (string s in fileName)
-                {
-                    int cont = 0;
-                    //PREGUNTAMOS SI EN EL DIRECTORIO TARGET, SE ENCUENTRAN LOS ARCHIVOS
-                    if (!files.Contains(s))
-                    {
-                        //SI NO EXISTEN LOS ARCHIVOS, LOS COPIAMOS DE SOURCE
-                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[cont]), Dest(cont), true);
-                        cont++;
-                    }
-                }
-            }
-            else
-            {
-                //SI NO EXITE EL DIRECTORIO TARGET, LO CREAMOS
-                System.IO.Directory.CreateDirectory(nTargetPath);
-                //COPIAMOS TODOS LOS ARCHIVOS DE SOURCE A TARGET
-                for (int i = 0; i < fileName.Length; i++)
-                {
-                    System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[i]), Dest(i));
-                }
-            }
-            //###########################################
-            //   PASAMOS DE LOS ARCHIVOS A LAS LISTAS 
-            //###########################################
-
-            string[] lines;
-
-            // 4 - Categorias -> ANTES DE PRODUCTOS
-            if (System.IO.File.Exists(Dest(4)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(4));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID
-                    // 1 - Nombre
-                    AgregarCategoria(parts[1]);
-                }
+                string[] parts = s.Split(',');
+                // 0 - ID
+                // 1 - DNI
+                // 2 - NOMBRE
+                // 3 - APELLIDO
+                // 4 - MAIL
+                // 5 - PASSWORD
+                // 6 - CUIT_CUIL
+                // 7 - ROL
+                int n = nUsuarios.Count();
+                Usuarios.Add(new Usuario(n, int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], int.Parse(parts[6]), int.Parse(parts[7])));
             }
 
-            // 0 - Productos
-            if (System.IO.File.Exists(Dest(0))) 
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(0));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID PRODUCTO
-                    // 1 - NOMBRE
-                    // 2 - PRECIO
-                    // 3 - CANTIDAD
-                    // 4 - ID CATEGORIA
-                    AgregarProducto(parts[1], double.Parse(parts[2]), int.Parse(parts[3]), int.Parse(parts[4]));
-                }
-            }
-            // 1 - Usuarios
-            if (System.IO.File.Exists(Dest(1)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(1));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID
-                    // 1 - DNI
-                    // 2 - NOMBRE
-                    // 3 - APELLIDO
-                    // 4 - MAIL
-                    // 5 - PASSWORD
-                    // 6 - CUIT_CUIL
-                    // 7 - ROL
-                    AgregarUsuario(int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], int.Parse(parts[6]), int.Parse(parts[7]));
-                }
-            }
-
-            // 2 - Carro
-            if (System.IO.File.Exists(Dest(2)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(2));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID PRODUCTO
-                    // 1 - CANTIDAD
-                    // 2 - ID USUARIO
-                    AgregarAlCarro(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
-                }
-            }
-
-            // 3 - Compras
-            if (System.IO.File.Exists(Dest(3)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(3));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID COMPRA
-                    // 1 - ID USUARIO
-                    // 3 - PRODUCTO
-                    // 4 - TOTAL
-                    Comprar(int.Parse(parts[1]));
-                }
-            }
-
-            
         }
         // ######################################################################################
         //                                  METODOS SET Y GET
@@ -377,12 +281,14 @@ namespace TP2_PlataformasDeDesarrollo
 
             if (Usuarios[n] != null)
             {
-                Console.WriteLine("Usuario agregado con exito!");
+               
+                StreamWriter file2 = new StreamWriter(System.IO.Path.Combine(nSourcePath, fileName[1]), true);
+                file2.WriteLine(n + "," + DNI + "," + nombre + "," + apellido + "," + Mail + "," + password + "," + CUIT_CUIL + "," + rol);
+                file2.Close();
                 return true;
             }
             else
             {
-                Console.WriteLine("no se pudo agregar al usuario");
                 return false;
             }
         }
@@ -487,7 +393,7 @@ namespace TP2_PlataformasDeDesarrollo
             }
             Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
             return false;
-        } 
+        }
 
         public void MostrarCategoria()
         {
@@ -589,7 +495,7 @@ namespace TP2_PlataformasDeDesarrollo
 
         public bool EliminarCompra(int ID)
         {
-            if (Compras[ID] != null) 
+            if (Compras[ID] != null)
             {
                 Compras[ID] = null;
                 return true;
@@ -600,10 +506,20 @@ namespace TP2_PlataformasDeDesarrollo
         // #######################################################################################
         //                                  INICIAR SESION
         // #######################################################################################
-        public int IniciarSesion(int DNI, string pass) // PARA SEBA  
+        public Usuario IniciarSesion(int DNI, string pass)
         {
-            //SEBA VA A HACER ESTO, sino lo hace le pegamo!
-            return 1;
+            
+            foreach (Usuario u in nUsuarios)
+            {
+                
+                if (u.nDNI == DNI && u.nPassword == pass)
+                {
+
+                    llenarListas();
+                    return nUsuarios[u.nID];
+                }
+            }
+            return null;
         }
         // #######################################################################################
         //                                  ES ADMIN
@@ -654,11 +570,11 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
                 {
-                    file3.WriteLine(c.nComprador + "," + kvp.Key.nIDProd + ","+kvp.Value+ "," + c.nTotal);
+                    file3.WriteLine(c.nComprador + "," + kvp.Key.nIDProd + "," + kvp.Value + "," + c.nTotal);
                 }
             }
             file3.Close();
-            
+
             //GUARDAR CATEGORIAS
             StreamWriter file4 = new StreamWriter(Dest(4));
             foreach (Categoria c in Categorias)
@@ -671,9 +587,124 @@ namespace TP2_PlataformasDeDesarrollo
             file4.Close();
 
         }
+        // #######################################################################################
+        //                                  GUARDAR ARCHIVOS
+        // #######################################################################################
 
+        public void llenarListas ()
+        {
+            //###########################################
+            //  COMPROBACION DE DIRECTORIOS Y ARCHIVOS 
+            //###########################################
 
+            //PREGUNTAMOS SI EXISTE EL DIRECTORIO TARGET
+            if (System.IO.Directory.Exists(nTargetPath))
+            {
+                string[] files = System.IO.Directory.GetFiles(nTargetPath);
+                foreach (string s in fileName)
+                {
+                    int cont = 0;
+                    //PREGUNTAMOS SI EN EL DIRECTORIO TARGET, SE ENCUENTRAN LOS ARCHIVOS
+                    if (!files.Contains(s))
+                    {
+                        //SI NO EXISTEN LOS ARCHIVOS, LOS COPIAMOS DE SOURCE
+                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[cont]), Dest(cont), true);
+                        cont++;
+                    }
+                }
+            }
+            else
+            {
+                //SI NO EXITE EL DIRECTORIO TARGET, LO CREAMOS
+                System.IO.Directory.CreateDirectory(nTargetPath);
+                //COPIAMOS TODOS LOS ARCHIVOS DE SOURCE A TARGET
+                for (int i = 0; i < fileName.Length; i++)
+                {
+                    System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[i]), Dest(i));
+                }
+            }
+            //###########################################
+            //   PASAMOS DE LOS ARCHIVOS A LAS LISTAS 
+            //###########################################
 
+            string[] lines;
+
+            // 4 - Categorias -> ANTES DE PRODUCTOS
+            if (System.IO.File.Exists(Dest(4)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(4));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID
+                    // 1 - Nombre
+                    AgregarCategoria(parts[1]);
+                }
+            }
+
+            // 0 - Productos
+            if (System.IO.File.Exists(Dest(0)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(0));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID PRODUCTO
+                    // 1 - NOMBRE
+                    // 2 - PRECIO
+                    // 3 - CANTIDAD
+                    // 4 - ID CATEGORIA
+                    AgregarProducto(parts[1], double.Parse(parts[2]), int.Parse(parts[3]), int.Parse(parts[4]));
+                }
+            }
+            // 1 - Usuarios
+            /*if (System.IO.File.Exists(Dest(1)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(1));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID
+                    // 1 - DNI
+                    // 2 - NOMBRE
+                    // 3 - APELLIDO
+                    // 4 - MAIL
+                    // 5 - PASSWORD
+                    // 6 - CUIT_CUIL
+                    // 7 - ROL
+                    AgregarUsuario(int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], int.Parse(parts[6]), int.Parse(parts[7]));
+                }
+            }*/
+
+            // 2 - Carro
+            if (System.IO.File.Exists(Dest(2)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(2));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID PRODUCTO
+                    // 1 - CANTIDAD
+                    // 2 - ID USUARIO
+                    AgregarAlCarro(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
+                }
+            }
+
+            // 3 - Compras
+            if (System.IO.File.Exists(Dest(3)))
+            {
+                lines = System.IO.File.ReadAllLines(@"" + Dest(3));
+                foreach (string s in lines)
+                {
+                    string[] parts = s.Split(',');
+                    // 0 - ID COMPRA
+                    // 1 - ID USUARIO
+                    // 3 - PRODUCTO
+                    // 4 - TOTAL
+                    Comprar(int.Parse(parts[1]));
+                }
+            }
+        }
         /* 
         public int compare(Categoria a, Categoria b) {
             if (a is Categoria && b is Categoria)
