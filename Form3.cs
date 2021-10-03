@@ -586,6 +586,17 @@ namespace TP2_PlataformasDeDesarrollo
             MessageBox.Show("archivos guardados");// MENSAJE CORROBORANDO QUE SE GUARDO EXITOSAMENTE
         }
 
-        
+
+
+        //######################################################
+        //             BOTON EXIT
+        //######################################################
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            Form formulario = new Form1();
+            formulario.Show();
+            // Crea otro FORM1...
+        }
+
     }
 }
