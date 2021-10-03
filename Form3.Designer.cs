@@ -33,7 +33,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.ListaProductos = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -175,6 +174,10 @@ namespace TP2_PlataformasDeDesarrollo
             this.button3 = new System.Windows.Forms.Button();
             this.iconButton1 = new FontAwesome.Sharp.IconButton();
             this.iconButton2 = new FontAwesome.Sharp.IconButton();
+            this.button13 = new System.Windows.Forms.Button();
+            this.textBox34 = new System.Windows.Forms.TextBox();
+            this.dataGridView6 = new System.Windows.Forms.DataGridView();
+            this.Categorias = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -206,6 +209,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.ListaCarro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.ModificarCarro.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -249,7 +253,7 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             // ListaProductos
             // 
-            this.ListaProductos.Controls.Add(this.listBox1);
+            this.ListaProductos.Controls.Add(this.dataGridView6);
             this.ListaProductos.Controls.Add(this.dataGridView1);
             this.ListaProductos.Location = new System.Drawing.Point(4, 25);
             this.ListaProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -259,16 +263,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.ListaProductos.TabIndex = 0;
             this.ListaProductos.Text = "ListaProductos";
             this.ListaProductos.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(-1, 0);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(117, 468);
-            this.listBox1.TabIndex = 3;
             // 
             // dataGridView1
             // 
@@ -283,13 +277,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column3,
             this.Column4,
             this.Column5});
-            this.dataGridView1.Location = new System.Drawing.Point(125, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(192, 0);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1059, 470);
+            this.dataGridView1.Size = new System.Drawing.Size(992, 470);
             this.dataGridView1.TabIndex = 2;
             // 
             // Column1
@@ -728,12 +722,12 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
-            this.dataGridView2.Location = new System.Drawing.Point(-1, -6);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(1184, 469);
+            this.dataGridView2.Size = new System.Drawing.Size(1183, 463);
             this.dataGridView2.TabIndex = 2;
             // 
             // dataGridViewTextBoxColumn1
@@ -906,12 +900,12 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column11,
             this.Column12,
             this.Column13});
-            this.dataGridView3.Location = new System.Drawing.Point(-4, 0);
+            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.RowHeadersWidth = 51;
             this.dataGridView3.RowTemplate.Height = 24;
-            this.dataGridView3.Size = new System.Drawing.Size(1197, 469);
+            this.dataGridView3.Size = new System.Drawing.Size(1193, 469);
             this.dataGridView3.TabIndex = 1;
             // 
             // Column6
@@ -1690,7 +1684,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton1.IconSize = 45;
             this.iconButton1.Location = new System.Drawing.Point(9, 11);
-            this.iconButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iconButton1.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton1.Name = "iconButton1";
             this.iconButton1.Size = new System.Drawing.Size(52, 39);
             this.iconButton1.TabIndex = 3;
@@ -1708,12 +1702,57 @@ namespace TP2_PlataformasDeDesarrollo
             this.iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton2.IconSize = 45;
             this.iconButton2.Location = new System.Drawing.Point(1120, 10);
-            this.iconButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iconButton2.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton2.Name = "iconButton2";
             this.iconButton2.Size = new System.Drawing.Size(57, 50);
             this.iconButton2.TabIndex = 6;
             this.iconButton2.UseVisualStyleBackColor = false;
             this.iconButton2.Click += new System.EventHandler(this.iconButton2_Click);
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(1000, 35);
+            this.button13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(61, 36);
+            this.button13.TabIndex = 7;
+            this.button13.Text = "Buscar";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // textBox34
+            // 
+            this.textBox34.Location = new System.Drawing.Point(863, 42);
+            this.textBox34.Name = "textBox34";
+            this.textBox34.Size = new System.Drawing.Size(131, 22);
+            this.textBox34.TabIndex = 8;
+            // 
+            // dataGridView6
+            // 
+            this.dataGridView6.AllowUserToAddRows = false;
+            this.dataGridView6.AllowUserToDeleteRows = false;
+            this.dataGridView6.AllowUserToResizeColumns = false;
+            this.dataGridView6.AllowUserToResizeRows = false;
+            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView6.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Categorias});
+            this.dataGridView6.Location = new System.Drawing.Point(2, 0);
+            this.dataGridView6.Name = "dataGridView6";
+            this.dataGridView6.RowHeadersVisible = false;
+            this.dataGridView6.RowHeadersWidth = 51;
+            this.dataGridView6.RowTemplate.Height = 24;
+            this.dataGridView6.Size = new System.Drawing.Size(184, 470);
+            this.dataGridView6.TabIndex = 3;
+            // 
+            // Categorias
+            // 
+            this.Categorias.HeaderText = "Categorias";
+            this.Categorias.MinimumWidth = 6;
+            this.Categorias.Name = "Categorias";
+            this.Categorias.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Categorias.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Categorias.UseColumnTextForButtonValue = true;
+            this.Categorias.Width = 125;
             // 
             // Form3
             // 
@@ -1721,7 +1760,9 @@ namespace TP2_PlataformasDeDesarrollo
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1189, 569);
+            this.Controls.Add(this.textBox34);
             this.Controls.Add(this.iconButton2);
+            this.Controls.Add(this.button13);
             this.Controls.Add(this.iconButton1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -1774,6 +1815,7 @@ namespace TP2_PlataformasDeDesarrollo
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.ModificarCarro.ResumeLayout(false);
             this.ModificarCarro.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1794,7 +1836,6 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage ListaProductos;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
@@ -1927,5 +1968,9 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.Button button12;
         private FontAwesome.Sharp.IconButton iconButton1;
         private FontAwesome.Sharp.IconButton iconButton2;
+        private System.Windows.Forms.TextBox textBox34;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.DataGridViewButtonColumn Categorias;
     }
 }

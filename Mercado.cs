@@ -200,16 +200,23 @@ namespace TP2_PlataformasDeDesarrollo
         }
 
 
-        public void BuscarProducto(String Query)
+        public void BuscarProducto(string Query)
         {
             Productos.Sort();
-            /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
-            if (Productos.Equals(Query))
-            {
+            // COPIAMOS LA LISTA DE PRODUCTOS
+            List<Producto> p = new List<Producto>();
+            p = nProductos;
+            // LIMPIAMOS LA LISTA DE PRODUCTOS
+            nProductos = new List<Producto>();
 
-                Console.WriteLine("Existe");
+            foreach (Producto pro in p) 
+            {
+                if (pro.nNombre.ToUpper().Contains(Query.ToUpper()) ) 
+                {
+                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
+                    AgregarProducto(pro.nNombre,pro.nPrecio,pro.nCantidad,pro.nCategoria.nID);
+                }
             }
-            /* FALTA CORREGIR, DE TODAS FORMAS TODAVIA NO LO IMPLEMENTAMOS ************************************************** */
         }
 
 
@@ -612,6 +619,13 @@ namespace TP2_PlataformasDeDesarrollo
 
         public void llenarListas()
         {
+            //LIMPIAMOS LAS LISTAS
+            nProductos = new List<Producto>();
+            //nUsuarios = new List<Usuario>();
+            nCompras = new List<Compra>();
+            nCategorias = new Categoria[MaxCategorias];
+            CantCategorias = 0;
+
             //###########################################
             //  COMPROBACION DE DIRECTORIOS Y ARCHIVOS 
             //###########################################

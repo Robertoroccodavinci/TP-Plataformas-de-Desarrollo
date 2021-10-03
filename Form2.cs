@@ -13,8 +13,6 @@ namespace TP2_PlataformasDeDesarrollo
 {
     public partial class Form2 : Form
     {
-        private bool logued;
-        private string[] argumentos;
         private int DNI;
         private string pass;
         public delegate void TransfDelegado(int ID, string nombre, Object m);
@@ -22,13 +20,7 @@ namespace TP2_PlataformasDeDesarrollo
         Mercado m=new Mercado();
         public Form2()
         {
-            
-            
-            logued = false;
             InitializeComponent();
-            //argumentos = args;
-            //m = new Mercado();
-
             textBox8.Text = m.nTargetPath;
         }
 
@@ -54,7 +46,6 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 MessageBox.Show("Te damos la bienvenida!");
                 this.TrasfEvento(u.nID,u.nNombre, m);
-                this.Close();
             }
             else
                 MessageBox.Show("Debes registrarte");

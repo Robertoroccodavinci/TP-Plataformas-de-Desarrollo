@@ -31,7 +31,7 @@ namespace TP2_PlataformasDeDesarrollo
 
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;
-
+            
             hijoLogin.Show();
             touched = false;
         }
@@ -39,8 +39,19 @@ namespace TP2_PlataformasDeDesarrollo
         {
                 hijoLogin.Close();
                 hijoMain = new Form3(ID,nombre,m);
+                hijoMain.TrasfEvento += TransfDelegado2;
                 hijoMain.MdiParent = this;
                 hijoMain.Show();
+        }
+
+        private void TransfDelegado2()
+        {
+            hijoMain.Close();
+
+            hijoLogin = new Form2();
+            hijoLogin.MdiParent = this;
+            hijoLogin.TrasfEvento += TransfDelegado;
+            hijoLogin.Show();
         }
 
         private void Form1_Load(object sender, EventArgs e)

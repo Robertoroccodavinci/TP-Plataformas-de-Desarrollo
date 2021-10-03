@@ -12,12 +12,11 @@ namespace TP2_PlataformasDeDesarrollo
 {
     public partial class Form3 : Form
     {
-
-        public string[] argumentos;
         Mercado merc;
         int ID;
-        int rol;
-        List<string> producto = new List<string>();
+
+        public delegate void TransfDelegado2();
+        public TransfDelegado2 TrasfEvento;
 
         public Form3(int ID, string nombre,Object m)
         {
@@ -25,18 +24,25 @@ namespace TP2_PlataformasDeDesarrollo
             this.ID = ID;
             label2.Text = nombre;
             merc = (Mercado) m;
-                        
-            rol = merc.nUsuarios[ID].nRol;
-
-            //  SI EL USUARIO ES CLIENTE O EMPRESA
-            //  ESCONDEMOS LAS PESTAÑAS DE COMPRAS, USUARIOS 
-            // MOSTRAR EL RESTO
-
-            // SI ES ADMIN ESCONDER MI CARRO
-            //tabPage5.Dispose();
-            
             refreshData(merc);
 
+            
+            int contCat = 0;
+            foreach (Categoria c in merc.nCategorias) 
+            {
+                if (c != null) 
+                {
+                    Button botonCategoria = new Button();
+                    botonCategoria.Text = c.nNombre;
+                    botonCategoria.Name = "boton"+c.nNombre;
+                    dataGridView6.Rows.Add(botonCategoria);
+                    contCat++; 
+                    
+                    
+                }
+            }
+            //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
+            //dataGridView6.CellClick += dataGridView6_CellClick
         }
         //######################################################
         //           ACTUALIZAR DATOS DE LAS TABLAS
@@ -270,7 +276,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button5_Click(object sender, EventArgs e)
         {
-            if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(label9.Text), ID)) 
+            if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID)) 
             {
                 tabControl2.SelectedTab = ListaProductos;
             }
@@ -575,6 +581,9 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Text = "Actualizar Datos";
+            textBox34.Text = "";
+            merc.llenarListas();
             refreshData(merc); //RECARGA LAS LISTAS
         }
         //######################################################
@@ -598,13 +607,23 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 merc.guardarTodo();
             }
+            this.TrasfEvento();
             
-            Form formulario = new Form1();
-            formulario.Show();
             // Crea otro FORM1...
 
 
         }
+        //######################################################
+        //             BOTON BUSCAR PRODUCTO
+        //######################################################
+        private void button13_Click(object sender, EventArgs e)
+        {
+            merc.BuscarProducto(textBox34.Text);
+            refreshData(merc);
+            button1.Text = "Restablecer Datos";
+            tabControl1.SelectedTab = tabPage1;
+            tabControl2.SelectedTab = ListaProductos;
 
+        }
     }
 }
