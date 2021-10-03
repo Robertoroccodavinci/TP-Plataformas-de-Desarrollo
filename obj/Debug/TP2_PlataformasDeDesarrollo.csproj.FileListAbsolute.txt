@@ -36,3 +36,17 @@ D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_
 D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form1.resources
 D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\FontAwesome.Sharp.dll
 D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CopyComplete
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe.config
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.pdb
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\FontAwesome.Sharp.dll
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.AssemblyReference.cache
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form1.resources
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form2.resources
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form3.resources
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Properties.Resources.resources
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.GenerateResource.cache
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CoreCompileInputs.cache
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CopyComplete
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb

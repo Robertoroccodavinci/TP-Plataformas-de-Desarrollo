@@ -541,7 +541,10 @@ namespace TP2_PlataformasDeDesarrollo
             StreamWriter file0 = new StreamWriter(Dest(0));
             foreach (Producto p in Productos)
             {
-                file0.WriteLine(p.nIDProd + "," + p.nNombre + "," + p.nPrecio + "," + p.nCantidad + "," + p.nCategoria);
+                if (p != null)
+                {
+                    file0.WriteLine(p.nIDProd + "," + p.nNombre + "," + p.nPrecio + "," + p.nCantidad + "," + p.nCategoria.nID);
+                }
             }
             file0.Close();
 
@@ -549,7 +552,10 @@ namespace TP2_PlataformasDeDesarrollo
             StreamWriter file1 = new StreamWriter(Dest(1));
             foreach (Usuario u in Usuarios)
             {
-                file1.WriteLine(u.nID + "," + u.nDNI + "," + u.nNombre + "," + u.nApellido + "," + u.nMail + "," + u.nPassword + "," + u.nCUIT_CUIL + "," + u.nRol);
+                if (u != null)
+                {
+                    file1.WriteLine(u.nID + "," + u.nDNI + "," + u.nNombre + "," + u.nApellido + "," + u.nMail + "," + u.nPassword + "," + u.nCUIT_CUIL + "," + u.nRol);
+                }
             }
             file1.Close();
 
@@ -557,10 +563,17 @@ namespace TP2_PlataformasDeDesarrollo
             StreamWriter file2 = new StreamWriter(Dest(2));
             foreach (Usuario u in Usuarios)
             {
-                foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos)
+                if (u != null)
                 {
-                    file2.WriteLine(u.nID + "," + kvp.Key.nIDProd + "," + kvp.Value);
+                    foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos)
+                    {
+                        if (kvp.Key != null)
+                        {
+                            file2.WriteLine(u.nID + "," + kvp.Key.nIDProd + "," + kvp.Value);
+                        }
+                    }
                 }
+
             }
             file2.Close();
 
@@ -568,9 +581,15 @@ namespace TP2_PlataformasDeDesarrollo
             StreamWriter file3 = new StreamWriter(Dest(3));
             foreach (Compra c in Compras)
             {
-                foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
+                if (c != null)
                 {
-                    file3.WriteLine(c.nComprador + "," + kvp.Key.nIDProd + "," + kvp.Value + "," + c.nTotal);
+                    foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
+                    {
+                        if (kvp.Key != null)
+                        {
+                            file3.WriteLine(c.nComprador + "," + kvp.Key.nIDProd + "," + kvp.Value + "," + c.nTotal);
+                        }
+                    }
                 }
             }
             file3.Close();
@@ -591,7 +610,7 @@ namespace TP2_PlataformasDeDesarrollo
         //                                  GUARDAR ARCHIVOS
         // #######################################################################################
 
-        public void llenarListas ()
+        public void llenarListas()
         {
             //###########################################
             //  COMPROBACION DE DIRECTORIOS Y ARCHIVOS 
@@ -600,19 +619,19 @@ namespace TP2_PlataformasDeDesarrollo
             //PREGUNTAMOS SI EXISTE EL DIRECTORIO TARGET
             if (System.IO.Directory.Exists(nTargetPath))
             {
-                string[] files = System.IO.Directory.GetFiles(nTargetPath);
+                //string[] files = System.IO.Directory.GetFiles(nTargetPath);
                 int cont = 0;
                 foreach (string s in fileName)
                 {
 
                     //PREGUNTAMOS SI EN EL DIRECTORIO TARGET, SE ENCUENTRAN LOS ARCHIVOS
-                    if (!files.Contains(s)) 
+                    if (!File.Exists(Dest(cont)))
                     {
-                        Console.WriteLine(s+" --- "+files[cont]);
                         //SI NO EXISTEN LOS ARCHIVOS, LOS COPIAMOS DE SOURCE
-                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, s), Dest(cont),true);
-                        cont++;
+                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, s), Dest(cont), true);
+
                     }
+                    cont++;
                 }
             }
             else

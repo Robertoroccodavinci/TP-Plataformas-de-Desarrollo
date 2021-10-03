@@ -593,9 +593,17 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void iconButton2_Click(object sender, EventArgs e)
         {
+            DialogResult respuesta = MessageBox.Show("Antes de Salir, ¿Deseas guardar todos los cambios?", "", MessageBoxButtons.YesNo);
+            if (respuesta == DialogResult.Yes)
+            {
+                merc.guardarTodo();
+            }
+            
             Form formulario = new Form1();
             formulario.Show();
             // Crea otro FORM1...
+
+
         }
 
     }
