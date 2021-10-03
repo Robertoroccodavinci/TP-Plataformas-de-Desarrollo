@@ -34,3 +34,5 @@ D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_
 D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
 D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb
 D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form1.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\FontAwesome.Sharp.dll
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.csproj.CopyComplete

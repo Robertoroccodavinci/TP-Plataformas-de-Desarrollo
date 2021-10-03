@@ -58,11 +58,34 @@ namespace TP2_PlataformasDeDesarrollo
             else
                 MessageBox.Show("Debes registrarte");
         }
-       
+
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.FromArgb(169, 169, 169);
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.Transparent;
+        }
+
+
         //######################################################
         //           BOTON VER - OCULTAR CONTRASEÑA
         //            FORMULARIO INICIO DE SESION
         //######################################################
+
+        //private void button4_Click(object sender, EventArgs e)
+        //{
+        //    if (inputPass.UseSystemPasswordChar == true)
+        //    {
+        //        inputPass.UseSystemPasswordChar = false;
+        //    }
+        //    else if (inputPass.UseSystemPasswordChar == false)
+        //    {
+        //        inputPass.UseSystemPasswordChar = true;
+        //    }
+        //} by Seba
         private void button4_Click(object sender, EventArgs e)
         {
             if (inputPass.UseSystemPasswordChar == true)
@@ -73,6 +96,7 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 inputPass.UseSystemPasswordChar = true;
             }
+
         }
         //######################################################
         //                  BOTON REGISTRARSE
@@ -132,6 +156,18 @@ namespace TP2_PlataformasDeDesarrollo
         //           BOTON VER - OCULTAR CONTRASEÑA
         //        FORMULARIO REGISTRO DE USUARIO NUEVO
         //######################################################
+        //private void button6_Click(object sender, EventArgs e)
+        //{
+        //    if (textPass.UseSystemPasswordChar == true)
+        //    {
+        //        textPass.UseSystemPasswordChar = false;
+        //    }
+        //    else if (textPass.UseSystemPasswordChar == false)
+        //    {
+        //        textPass.UseSystemPasswordChar = true;
+        //    }
+        //} by Seba   iconButton1_Click
+
         private void button6_Click(object sender, EventArgs e)
         {
             if (textPass.UseSystemPasswordChar == true)
@@ -199,16 +235,6 @@ namespace TP2_PlataformasDeDesarrollo
         private void button10_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage1;
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         
