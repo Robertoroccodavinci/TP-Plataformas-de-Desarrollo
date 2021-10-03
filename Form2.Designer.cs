@@ -227,7 +227,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(1192, 571);
+            this.tabPage2.Size = new System.Drawing.Size(1192, 574);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Registrarse";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -453,7 +453,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox8.Location = new System.Drawing.Point(341, 211);
             this.textBox8.Margin = new System.Windows.Forms.Padding(4);
             this.textBox8.Name = "textBox8";
-            this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(528, 30);
             this.textBox8.TabIndex = 22;
             // 
