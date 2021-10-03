@@ -15,7 +15,7 @@ namespace TP2_PlataformasDeDesarrollo
         private Categoria[] Categorias;
         private List<Compra> Compras;
 
-        public string[] fileName = { "productos.txt", "usuario.txt", "carro.txt", "compras.txt", "categoria.txt" };
+        public string[] fileName = { "1productos.txt", "2usuario.txt", "3carro.txt", "4compras.txt", "5categoria.txt" };// A CORREGIR
         private string sourcePath;
         private string targetPath;
 
@@ -601,14 +601,16 @@ namespace TP2_PlataformasDeDesarrollo
             if (System.IO.Directory.Exists(nTargetPath))
             {
                 string[] files = System.IO.Directory.GetFiles(nTargetPath);
+                int cont = 0;
                 foreach (string s in fileName)
                 {
-                    int cont = 0;
+
                     //PREGUNTAMOS SI EN EL DIRECTORIO TARGET, SE ENCUENTRAN LOS ARCHIVOS
-                    if (!files.Contains(s))
+                    if (!files.Contains(s)) 
                     {
+                        Console.WriteLine(s+" --- "+files[cont]);
                         //SI NO EXISTEN LOS ARCHIVOS, LOS COPIAMOS DE SOURCE
-                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[cont]), Dest(cont), true);
+                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, s), Dest(cont),true);
                         cont++;
                     }
                 }
@@ -638,6 +640,7 @@ namespace TP2_PlataformasDeDesarrollo
                     string[] parts = s.Split(',');
                     // 0 - ID
                     // 1 - Nombre
+                    //nCategorias += new Categoria(parts[1]);
                     AgregarCategoria(parts[1]);
                 }
             }

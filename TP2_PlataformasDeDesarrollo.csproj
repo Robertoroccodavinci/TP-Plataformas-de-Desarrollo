@@ -109,11 +109,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Archivos\carro.txt" />
-    <Content Include="Archivos\categoria.txt" />
-    <Content Include="Archivos\compras.txt" />
-    <Content Include="Archivos\productos.txt" />
-    <Content Include="Archivos\usuario.txt" />
+    <Content Include="Archivos\3carro.txt" />
+    <Content Include="Archivos\5categoria.txt" />
+    <Content Include="Archivos\4compras.txt" />
+    <Content Include="Archivos\1productos.txt" />
+    <Content Include="Archivos\2usuario.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="carpetadeprueba\" />

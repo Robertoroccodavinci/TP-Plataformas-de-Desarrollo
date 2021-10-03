@@ -223,7 +223,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Size = new System.Drawing.Size(892, 462);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Registrarse";
@@ -447,10 +447,10 @@ namespace TP2_PlataformasDeDesarrollo
             // textBox8
             // 
             this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(255, 171);
+            this.textBox8.Location = new System.Drawing.Point(193, 171);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(397, 24);
+            this.textBox8.Size = new System.Drawing.Size(528, 24);
             this.textBox8.TabIndex = 22;
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

@@ -47,10 +47,11 @@ namespace TP2_PlataformasDeDesarrollo
         {
             DNI = int.Parse(textBox1.Text);
             pass = inputPass.Text;
-            
-            if (m.IniciarSesion(DNI,pass)!=null)
+            m.nTargetPath = textBox8.Text;
+
+            Usuario u;
+            if (( u=m.IniciarSesion(DNI,pass))!=null)
             {
-                Usuario u = m.IniciarSesion(DNI, pass);
                 MessageBox.Show("Te damos la bienvenida!");
                 this.TrasfEvento(u.nID,u.nNombre, m);
                 this.Close();
