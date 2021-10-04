@@ -223,11 +223,18 @@ namespace TP2_PlataformasDeDesarrollo
         public void BuscarProductoPorPrecio(string Query)
         {
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
-            foreach (Producto p in Productos)
+            // COPIAMOS LA LISTA DE PRODUCTOS
+            List<Producto> p = new List<Producto>();
+            p = nProductos;
+            // LIMPIAMOS LA LISTA DE PRODUCTOS
+            nProductos = new List<Producto>();
+
+            foreach (Producto pro in p)
             {
-                if (p.nNombre == Query)
+                if (pro.nPrecio <= int.Parse(Query))
                 {
-                    Console.WriteLine(p);
+                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
+                    AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
                 }
             }
         }
@@ -236,41 +243,32 @@ namespace TP2_PlataformasDeDesarrollo
         public void BuscarProductoPorCategoria(int ID_Categoria)
         {
             Productos.Sort();
-            foreach (Producto p in Productos)
+            // COPIAMOS LA LISTA DE PRODUCTOS
+            List<Producto> p = new List<Producto>();
+            p = nProductos;
+            // LIMPIAMOS LA LISTA DE PRODUCTOS
+            nProductos = new List<Producto>();
+
+            foreach (Producto pro in p)
             {
-                if (p.nCategoria.nID == ID_Categoria)
+                if (pro.nCategoria.nID== ID_Categoria)
                 {
-                    Console.WriteLine(p);
+                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
+                    AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
                 }
             }
+
         }
 
 
         public void MostrarTodosProductosPorPrecio()
         {
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
-            foreach (Producto p in Productos)
-            {
-                Console.WriteLine(p);
-            }
         }
 
         public void MostrarTodosProductosPorCategoria()
         {
-            foreach (Categoria c in Categorias)
-            {
-                if (c != null)
-                {
-                    Console.WriteLine(c);
-                    foreach (Producto p in Productos)
-                    {
-                        if (c.nID == p.nCategoria.nID)
-                        {
-                            Console.WriteLine(p);
-                        }
-                    }
-                }
-            }
+            Productos.Sort(delegate (Producto a, Producto b) { return a.nCategoria.nID.CompareTo(b.nCategoria.nID); });
         }
 
         // ######################################################################################
@@ -423,13 +421,13 @@ namespace TP2_PlataformasDeDesarrollo
 
         public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
-            if (Productos[ID_Producto].nCantidad >= Cantidad)
+            if (Productos[ID_Producto].nCantidad >= Cantidad && Cantidad!=0)
             {
                 Usuarios[ID_Usuario].nCarro.AgregarProducto(Productos[ID_Producto], Cantidad);
-                Console.WriteLine("Producto agregada con exito al Carro.");
+                MessageBox.Show("Producto agregada con exito al Carro.");
                 return true;
             }
-            Console.WriteLine("ERROR: el Producto no se pudo agregar al carro al Carro.");
+            MessageBox.Show("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
         public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)

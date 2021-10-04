@@ -17,32 +17,31 @@ namespace TP2_PlataformasDeDesarrollo
 
         public delegate void TransfDelegado2();
         public TransfDelegado2 TrasfEvento;
+        
+        
 
         public Form3(int ID, string nombre,Object m)
         {
+            
             InitializeComponent();
             this.ID = ID;
             label2.Text = nombre;
             merc = (Mercado) m;
             refreshData(merc);
-
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
+            tabControl1.SelectedIndexChanged += new EventHandler(ocultarComboBox);
             
-            int contCat = 0;
+            
             foreach (Categoria c in merc.nCategorias) 
             {
                 if (c != null) 
                 {
-                    Button botonCategoria = new Button();
-                    botonCategoria.Text = c.nNombre;
-                    botonCategoria.Name = "boton"+c.nNombre;
-                    dataGridView6.Rows.Add(botonCategoria);
-                    contCat++; 
-                    
-                    
+                    dataGridView6.Rows.Add(c.nNombre);
                 }
             }
             //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
-            //dataGridView6.CellClick += dataGridView6_CellClick
+            dataGridView6.CellClick += dataGridView6_CellClick;
         }
         //######################################################
         //           ACTUALIZAR DATOS DE LAS TABLAS
@@ -62,7 +61,7 @@ namespace TP2_PlataformasDeDesarrollo
             dataGridView3.CellClick += dataGridView3_CellClick; //EVENTO TABLA USUARIOS
             dataGridView4.CellClick += dataGridView4_CellClick; //EVENTO TABLA COMPRAS
             dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
-
+            
             if (merc.esAdmin(ID))
             {
                 foreach (Categoria c in data.nCategorias)
@@ -179,12 +178,13 @@ namespace TP2_PlataformasDeDesarrollo
                     if (kvp.Key != null)
                     {
                         string[] prods = { kvp.Key.nIDProd.ToString(),
-                                        kvp.Value.ToString(),
-                                        kvp.Key.nPrecio.ToString() };
+                                           kvp.Key.nNombre,
+                                           kvp.Value.ToString(),
+                                           kvp.Key.nPrecio.ToString() };
                         dataGridView5.Rows.Add(prods);
                     }
                 }
-                if (dataGridView5.Columns["botonBorrar"] == null) 
+                if (dataGridView5.Columns["botonBorrarDelCarro"] == null) 
                 {
                     DataGridViewButtonColumn borrarDelCarro = new DataGridViewButtonColumn();
                     borrarDelCarro.HeaderText = "Borrar";
@@ -278,6 +278,8 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID)) 
             {
+                
+                refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }
         }
@@ -535,31 +537,80 @@ namespace TP2_PlataformasDeDesarrollo
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //######################################################
-        //                  BOTON AGREGAR
+        //             OCULTAR COMBO BOX
         //######################################################
+        private void ocultarComboBox(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                comboBox1.Show();
+                comboBox2.Show();
+                label46.Show();
+                button13.Show();
+                textBox34.Show();
+            }
+            else
+            {
+                comboBox1.Hide();
+                comboBox2.Hide();
+                label46.Hide();
+                button13.Hide();
+                textBox34.Hide();
+            }
+        }
 
-        private void button3_Click(object sender, EventArgs e)
+        //##########################################
+
+        private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            button1.Text = "Reestablecer datos";
+            merc.llenarListas();
+            foreach (DataGridViewRow row in dataGridView6.Rows)
+            {
+                if (e.RowIndex == row.Index)
+                {
+                    //CREAMOS LISTA PARA GUARDAR LOS PRODUCTOS
+                    List<Producto> p = new List<Producto>();
+                    p = merc.nProductos;
+                    // LIMPIAMOS LA LISTA DE PRODUCTOS
+                    merc.nProductos = new List<Producto>();
+
+                    foreach (Producto pro in p)
+                    {
+                        if (pro.nCategoria.nNombre == row.Cells[0].Value.ToString())
+                        {
+                            //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
+                            merc.AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
+                        }
+                    }
+                    refreshData(merc);
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //######################################################
+            //                  BOTON AGREGAR
+            //######################################################
+
+            private void button3_Click(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab.Text == "Productos")
             {
@@ -618,12 +669,72 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button13_Click(object sender, EventArgs e)
         {
-            merc.BuscarProducto(textBox34.Text);
-            refreshData(merc);
-            button1.Text = "Restablecer Datos";
-            tabControl1.SelectedTab = tabPage1;
-            tabControl2.SelectedTab = ListaProductos;
+            if  (int.TryParse(textBox34.Text, out int result))
+            {
+                merc.llenarListas();
+                merc.BuscarProductoPorPrecio(textBox34.Text);
+                refreshData(merc);
+                button1.Text = "Restablecer Datos";
+                tabControl1.SelectedTab = tabPage1;
+                tabControl2.SelectedTab = ListaProductos;
+            }
+            else
+            {
+                merc.llenarListas();
+                merc.BuscarProducto(textBox34.Text);
+                refreshData(merc);
+                button1.Text = "Restablecer Datos";
+                tabControl1.SelectedTab = tabPage1;
+                tabControl2.SelectedTab = ListaProductos;
+            }
+            
 
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.Text == "Nombre")
+            {
+                merc.nProductos.Sort();
+                refreshData(merc);
+            }
+            else if (comboBox1.Text == "Precio")
+            {
+                merc.MostrarTodosProductosPorPrecio();
+                refreshData(merc);
+            }
+            else if (comboBox1.Text == "Categoria")
+            {
+                merc.MostrarTodosProductosPorCategoria();
+                refreshData(merc);
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox2.SelectedIndex == 0)
+            {
+                if (comboBox1.Text == "Precio")
+                {
+                    merc.MostrarTodosProductosPorPrecio();
+                    refreshData(merc);
+                }
+                else if (comboBox1.Text == "Categoria")
+                {
+                    merc.MostrarTodosProductosPorCategoria();
+                    refreshData(merc);
+                }
+                else
+                {
+                    merc.nProductos.Sort();
+                    refreshData(merc);
+                }
+            }
+            else if (comboBox2.SelectedIndex == 1)
+            {
+                merc.nProductos.Reverse();
+                refreshData(merc);
+            }
         }
     }
 }
