@@ -1,15 +1,6 @@
-0,Gaseosa,30,100,1
-1,Cerveza,45,50,1
-2,Agua,20,50,1
-3,Papas,50,20,0
-4,Palitos,40,20,0
-5,Cheetos,40,20,0
-6,Papas,40,20,0
-7,TV,1000000,20,4
-8,PC,80000,20,5
-9,Pantalones Deportivo,1000,20,2
-10,Camiseta Deportivo,1000,20,2
-11,Lavandina,100,20,3
-12,Escoba,100,50,3
-13,Mouse,500,20,5
-14,Teclado,500,20,5
+0,Cerveza,10,20,1
+1,Papas,5,20,0
+2,Palitos,5,20,0
+3,Cheetos,5,20,0
+4,TV,5,20,4
+5,PC,5,20,5
