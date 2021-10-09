@@ -100,24 +100,18 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            int indice = int.Parse(dataGridView1[0, e.RowIndex].Value.ToString());
+            foreach (Producto p in merc.nProductos) 
             {
-                if (e.RowIndex == row.Index)
+                if (p.nIDProd == indice) 
                 {
-                    int indice = int.Parse(row.Cells[0].Value.ToString());
-                    foreach (Producto p in merc.nProductos) 
-                    {
-                        if (p.nIDProd == indice) 
-                        {
-                            label20.Text = p.nIDProd.ToString();
-                            label7.Text = p.nNombre;
-                            label8.Text = p.nPrecio.ToString();
-                            label9.Text = p.nCantidad.ToString();
-                            label10.Text = p.nCategoria.nID.ToString();
-                            numericUpDown1.Maximum = p.nCantidad;
-                            tabControl2.SelectedTab = MostrarProducto;
-                        }
-                    }
+                    label20.Text = p.nIDProd.ToString();
+                    label7.Text = p.nNombre;
+                    label8.Text = p.nPrecio.ToString();
+                    label9.Text = p.nCantidad.ToString();
+                    label10.Text = p.nCategoria.nID.ToString();
+                    numericUpDown1.Maximum = p.nCantidad;
+                    tabControl2.SelectedTab = MostrarProducto;
                 }
             }
         }
@@ -147,27 +141,22 @@ namespace TP2_PlataformasDeDesarrollo
         {
             button1.Text = "Restablecer datos";
             merc.llenarListas();
-            foreach (DataGridViewRow row in dataGridView6.Rows)
-            {
-                if (e.RowIndex == row.Index)
-                {
-                    //CREAMOS LISTA PARA GUARDAR LOS PRODUCTOS
-                    List<Producto> p = new List<Producto>();
-                    p = merc.nProductos;
-                    // LIMPIAMOS LA LISTA DE PRODUCTOS
-                    merc.nProductos = new List<Producto>();
 
-                    foreach (Producto pro in p)
-                    {
-                        if (pro.nCategoria.nNombre == row.Cells[0].Value.ToString())
-                        {
-                            //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
-                            merc.AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
-                        }
-                    }
-                    refreshData(merc);
+            //CREAMOS LISTA PARA GUARDAR LOS PRODUCTOS
+            List<Producto> p = new List<Producto>();
+            p = merc.nProductos;
+            // LIMPIAMOS LA LISTA DE PRODUCTOS
+            merc.nProductos = new List<Producto>();
+
+            foreach (Producto pro in p)
+            {
+                if (pro.nCategoria.nNombre == dataGridView6[0, e.RowIndex].Value.ToString())
+                {
+                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
+                    merc.AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
                 }
             }
+            refreshData(merc);
         }
 
         //######################################################
@@ -289,9 +278,8 @@ namespace TP2_PlataformasDeDesarrollo
                 DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar el producto de tu Carro?", "", MessageBoxButtons.YesNo);
                 if (resutl == DialogResult.Yes)
                 {
-
-                    int idprod = int.Parse(dataGridView5.CurrentRow.Cells[0].Value.ToString());
-                    int cantidad = int.Parse(dataGridView5.CurrentRow.Cells[2].Value.ToString());
+                    int idprod = int.Parse(dataGridView5[0, e.RowIndex].Value.ToString());
+                    int cantidad = int.Parse(dataGridView5[2, e.RowIndex].Value.ToString());
                     merc.nUsuarios[ID].nCarro.QuitarProducto(merc.nProductos[idprod], cantidad);
                     dataGridView5.Rows.RemoveAt(e.RowIndex);
                 }
@@ -299,14 +287,11 @@ namespace TP2_PlataformasDeDesarrollo
             else
             {
                 //MODIFICAR CANTIDAD DE PRODUCTO DEL CARRO
-                textBox31.Text = dataGridView5.CurrentRow.Cells[0].Value.ToString();
-                textBox32.Text = dataGridView5.CurrentRow.Cells[1].Value.ToString();
-                textBox33.Text = dataGridView5.CurrentRow.Cells[2].Value.ToString();
-
+                textBox31.Text = dataGridView5[0, e.RowIndex].Value.ToString();
+                textBox32.Text = dataGridView5[1, e.RowIndex].Value.ToString();
+                textBox33.Text = dataGridView5[2, e.RowIndex].Value.ToString();
                 tabControl6.SelectedTab = ModificarCarro;
-
             }
-
         }
         //######################################################
         //             MODIFICAR CARRO

@@ -5,7 +5,7 @@
 4,Palitos,40,20,0
 5,Cheetos,40,20,0
 6,Papas,40,20,0
-7,TV,1000000,20,4
+7,TV,100000,20,4
 8,PC,80000,20,5
 9,Pantalones Deportivo,1000,20,2
 10,Camiseta Deportivo,1000,20,2

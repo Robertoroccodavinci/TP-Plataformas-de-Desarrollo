@@ -257,7 +257,6 @@ namespace TP2_PlataformasDeDesarrollo
                     AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
                 }
             }
-
         }
 
 

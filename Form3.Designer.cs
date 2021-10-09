@@ -57,8 +57,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabControl6 = new System.Windows.Forms.TabControl();
             this.ListaCarro = new System.Windows.Forms.TabPage();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,6 +71,8 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox31 = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -103,7 +103,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(-5, 44);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(901, 422);
@@ -113,9 +113,9 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             this.tabPage1.Controls.Add(this.tabControl2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(893, 396);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Productos";
@@ -126,7 +126,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabControl2.Controls.Add(this.ListaProductos);
             this.tabControl2.Controls.Add(this.MostrarProducto);
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(898, 398);
@@ -137,9 +137,9 @@ namespace TP2_PlataformasDeDesarrollo
             this.ListaProductos.Controls.Add(this.dataGridView6);
             this.ListaProductos.Controls.Add(this.dataGridView1);
             this.ListaProductos.Location = new System.Drawing.Point(4, 22);
-            this.ListaProductos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ListaProductos.Margin = new System.Windows.Forms.Padding(2);
             this.ListaProductos.Name = "ListaProductos";
-            this.ListaProductos.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ListaProductos.Padding = new System.Windows.Forms.Padding(2);
             this.ListaProductos.Size = new System.Drawing.Size(890, 372);
             this.ListaProductos.TabIndex = 0;
             this.ListaProductos.Text = "ListaProductos";
@@ -155,7 +155,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView6.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Categorias});
             this.dataGridView6.Location = new System.Drawing.Point(2, 0);
-            this.dataGridView6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView6.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.ReadOnly = true;
             this.dataGridView6.RowHeadersVisible = false;
@@ -187,7 +187,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column4,
             this.Column5});
             this.dataGridView1.Location = new System.Drawing.Point(144, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
@@ -250,9 +250,9 @@ namespace TP2_PlataformasDeDesarrollo
             this.MostrarProducto.Controls.Add(this.label4);
             this.MostrarProducto.Controls.Add(this.label3);
             this.MostrarProducto.Location = new System.Drawing.Point(4, 22);
-            this.MostrarProducto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MostrarProducto.Margin = new System.Windows.Forms.Padding(2);
             this.MostrarProducto.Name = "MostrarProducto";
-            this.MostrarProducto.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MostrarProducto.Padding = new System.Windows.Forms.Padding(2);
             this.MostrarProducto.Size = new System.Drawing.Size(890, 372);
             this.MostrarProducto.TabIndex = 1;
             this.MostrarProducto.Text = "MostrarProducto";
@@ -281,7 +281,7 @@ namespace TP2_PlataformasDeDesarrollo
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(72, 136);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Minimum = new decimal(new int[] {
             1,
             0,
@@ -299,7 +299,7 @@ namespace TP2_PlataformasDeDesarrollo
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(44, 164);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(97, 24);
             this.button5.TabIndex = 8;
@@ -391,9 +391,9 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             this.tabPage5.Controls.Add(this.tabControl6);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage5.Size = new System.Drawing.Size(893, 396);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Mi Carro";
@@ -404,7 +404,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabControl6.Controls.Add(this.ListaCarro);
             this.tabControl6.Controls.Add(this.ModificarCarro);
             this.tabControl6.Location = new System.Drawing.Point(2, 0);
-            this.tabControl6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl6.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl6.Name = "tabControl6";
             this.tabControl6.SelectedIndex = 0;
             this.tabControl6.Size = new System.Drawing.Size(896, 398);
@@ -414,33 +414,13 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             this.ListaCarro.Controls.Add(this.dataGridView5);
             this.ListaCarro.Location = new System.Drawing.Point(4, 22);
-            this.ListaCarro.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ListaCarro.Margin = new System.Windows.Forms.Padding(2);
             this.ListaCarro.Name = "ListaCarro";
-            this.ListaCarro.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ListaCarro.Padding = new System.Windows.Forms.Padding(2);
             this.ListaCarro.Size = new System.Drawing.Size(888, 372);
             this.ListaCarro.TabIndex = 0;
             this.ListaCarro.Text = "ListaCarro";
             this.ListaCarro.UseVisualStyleBackColor = true;
-            // 
-            // button15
-            // 
-            this.button15.Location = new System.Drawing.Point(334, 9);
-            this.button15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(90, 29);
-            this.button15.TabIndex = 13;
-            this.button15.Text = "Vaciar Carro";
-            this.button15.UseVisualStyleBackColor = true;
-            // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(428, 9);
-            this.button14.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(90, 29);
-            this.button14.TabIndex = 12;
-            this.button14.Text = "Comprar";
-            this.button14.UseVisualStyleBackColor = true;
             // 
             // dataGridView5
             // 
@@ -456,8 +436,9 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column20,
             this.Column21});
             this.dataGridView5.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView5.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.ReadOnly = true;
             this.dataGridView5.RowHeadersWidth = 51;
             this.dataGridView5.RowTemplate.Height = 24;
             this.dataGridView5.Size = new System.Drawing.Size(890, 381);
@@ -508,9 +489,9 @@ namespace TP2_PlataformasDeDesarrollo
             this.ModificarCarro.Controls.Add(this.label43);
             this.ModificarCarro.Controls.Add(this.button12);
             this.ModificarCarro.Location = new System.Drawing.Point(4, 22);
-            this.ModificarCarro.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ModificarCarro.Margin = new System.Windows.Forms.Padding(2);
             this.ModificarCarro.Name = "ModificarCarro";
-            this.ModificarCarro.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ModificarCarro.Padding = new System.Windows.Forms.Padding(2);
             this.ModificarCarro.Size = new System.Drawing.Size(888, 372);
             this.ModificarCarro.TabIndex = 1;
             this.ModificarCarro.Text = "ModificarCarro";
@@ -519,7 +500,7 @@ namespace TP2_PlataformasDeDesarrollo
             // textBox33
             // 
             this.textBox33.Location = new System.Drawing.Point(122, 96);
-            this.textBox33.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox33.Margin = new System.Windows.Forms.Padding(2);
             this.textBox33.Name = "textBox33";
             this.textBox33.Size = new System.Drawing.Size(166, 20);
             this.textBox33.TabIndex = 57;
@@ -537,7 +518,7 @@ namespace TP2_PlataformasDeDesarrollo
             // textBox32
             // 
             this.textBox32.Location = new System.Drawing.Point(122, 73);
-            this.textBox32.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox32.Margin = new System.Windows.Forms.Padding(2);
             this.textBox32.Name = "textBox32";
             this.textBox32.ReadOnly = true;
             this.textBox32.Size = new System.Drawing.Size(166, 20);
@@ -556,7 +537,7 @@ namespace TP2_PlataformasDeDesarrollo
             // textBox31
             // 
             this.textBox31.Location = new System.Drawing.Point(122, 50);
-            this.textBox31.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox31.Margin = new System.Windows.Forms.Padding(2);
             this.textBox31.Name = "textBox31";
             this.textBox31.ReadOnly = true;
             this.textBox31.Size = new System.Drawing.Size(166, 20);
@@ -575,7 +556,7 @@ namespace TP2_PlataformasDeDesarrollo
             // button12
             // 
             this.button12.Location = new System.Drawing.Point(153, 125);
-            this.button12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button12.Margin = new System.Windows.Forms.Padding(2);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(97, 23);
             this.button12.TabIndex = 51;
@@ -583,10 +564,30 @@ namespace TP2_PlataformasDeDesarrollo
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(334, 9);
+            this.button15.Margin = new System.Windows.Forms.Padding(2);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(90, 29);
+            this.button15.TabIndex = 13;
+            this.button15.Text = "Vaciar Carro";
+            this.button15.UseVisualStyleBackColor = true;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(428, 9);
+            this.button14.Margin = new System.Windows.Forms.Padding(2);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(90, 29);
+            this.button14.TabIndex = 12;
+            this.button14.Text = "Comprar";
+            this.button14.UseVisualStyleBackColor = true;
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(236, 9);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 1;
@@ -655,7 +656,7 @@ namespace TP2_PlataformasDeDesarrollo
             // button13
             // 
             this.button13.Location = new System.Drawing.Point(750, 32);
-            this.button13.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button13.Margin = new System.Windows.Forms.Padding(2);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(52, 29);
             this.button13.TabIndex = 7;
@@ -665,7 +666,7 @@ namespace TP2_PlataformasDeDesarrollo
             // textBox34
             // 
             this.textBox34.Location = new System.Drawing.Point(647, 37);
-            this.textBox34.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox34.Margin = new System.Windows.Forms.Padding(2);
             this.textBox34.Name = "textBox34";
             this.textBox34.Size = new System.Drawing.Size(99, 20);
             this.textBox34.TabIndex = 8;
@@ -726,7 +727,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form3";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form3";

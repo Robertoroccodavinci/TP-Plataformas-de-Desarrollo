@@ -350,12 +350,14 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column3,
             this.Column4,
             this.Column5});
+            this.dataGridView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.dataGridView1.Location = new System.Drawing.Point(144, 0);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(744, 382);
             this.dataGridView1.TabIndex = 2;
             // 
@@ -852,6 +854,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView3.Location = new System.Drawing.Point(0, 0);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersWidth = 51;
             this.dataGridView3.RowTemplate.Height = 24;
             this.dataGridView3.Size = new System.Drawing.Size(895, 381);
@@ -862,6 +865,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column6.HeaderText = "ID";
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
             this.Column6.Width = 125;
             // 
             // Column7
@@ -869,6 +873,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column7.HeaderText = "DNI";
             this.Column7.MinimumWidth = 6;
             this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
             this.Column7.Width = 125;
             // 
             // Column8
@@ -876,6 +881,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column8.HeaderText = "Nombre";
             this.Column8.MinimumWidth = 6;
             this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
             this.Column8.Width = 125;
             // 
             // Column9
@@ -883,6 +889,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column9.HeaderText = "Apellido";
             this.Column9.MinimumWidth = 6;
             this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
             this.Column9.Width = 125;
             // 
             // Column10
@@ -890,6 +897,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column10.HeaderText = "Mail";
             this.Column10.MinimumWidth = 6;
             this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
             this.Column10.Width = 125;
             // 
             // Column11
@@ -897,6 +905,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column11.HeaderText = "Password";
             this.Column11.MinimumWidth = 6;
             this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
             this.Column11.Width = 125;
             // 
             // Column12
@@ -904,6 +913,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column12.HeaderText = "CUIT_CUIL";
             this.Column12.MinimumWidth = 6;
             this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
             this.Column12.Width = 125;
             // 
             // Column13
@@ -911,6 +921,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column13.HeaderText = "Rol";
             this.Column13.MinimumWidth = 6;
             this.Column13.Name = "Column13";
+            this.Column13.ReadOnly = true;
             this.Column13.Width = 125;
             // 
             // AgregarUsuario
@@ -1308,6 +1319,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView4.Location = new System.Drawing.Point(0, 0);
             this.dataGridView4.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersWidth = 51;
             this.dataGridView4.RowTemplate.Height = 24;
             this.dataGridView4.Size = new System.Drawing.Size(892, 381);
@@ -1476,6 +1488,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView5.Location = new System.Drawing.Point(0, 0);
             this.dataGridView5.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.ReadOnly = true;
             this.dataGridView5.RowHeadersWidth = 51;
             this.dataGridView5.RowTemplate.Height = 24;
             this.dataGridView5.Size = new System.Drawing.Size(890, 381);
