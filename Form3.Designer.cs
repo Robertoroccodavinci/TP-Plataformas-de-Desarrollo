@@ -162,6 +162,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModificarCarro = new System.Windows.Forms.TabPage();
             this.textBox33 = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -182,7 +183,8 @@ namespace TP2_PlataformasDeDesarrollo
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label46 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button14 = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1529,6 +1531,8 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             // ListaCarro
             // 
+            this.ListaCarro.Controls.Add(this.button15);
+            this.ListaCarro.Controls.Add(this.button14);
             this.ListaCarro.Controls.Add(this.dataGridView5);
             this.ListaCarro.Location = new System.Drawing.Point(4, 25);
             this.ListaCarro.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -1587,6 +1591,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column20.MinimumWidth = 6;
             this.Column20.Name = "Column20";
             this.Column20.Width = 125;
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Total";
+            this.Column21.MinimumWidth = 6;
+            this.Column21.Name = "Column21";
+            this.Column21.Width = 125;
             // 
             // ModificarCarro
             // 
@@ -1736,7 +1747,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton1.IconSize = 45;
             this.iconButton1.Location = new System.Drawing.Point(9, 11);
-            this.iconButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iconButton1.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton1.Name = "iconButton1";
             this.iconButton1.Size = new System.Drawing.Size(52, 39);
             this.iconButton1.TabIndex = 3;
@@ -1754,7 +1765,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.iconButton2.IconSize = 45;
             this.iconButton2.Location = new System.Drawing.Point(1120, 10);
-            this.iconButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iconButton2.Margin = new System.Windows.Forms.Padding(4);
             this.iconButton2.Name = "iconButton2";
             this.iconButton2.Size = new System.Drawing.Size(57, 50);
             this.iconButton2.TabIndex = 6;
@@ -1789,7 +1800,7 @@ namespace TP2_PlataformasDeDesarrollo
             "Categoria",
             "Precio"});
             this.comboBox1.Location = new System.Drawing.Point(863, 10);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(131, 24);
             this.comboBox1.TabIndex = 9;
@@ -1813,19 +1824,32 @@ namespace TP2_PlataformasDeDesarrollo
             "Asc",
             "Desc"});
             this.comboBox2.Location = new System.Drawing.Point(1000, 11);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(68, 24);
             this.comboBox2.TabIndex = 11;
             this.comboBox2.Tag = "";
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
-            // Column21
+            // button14
             // 
-            this.Column21.HeaderText = "Total";
-            this.Column21.MinimumWidth = 6;
-            this.Column21.Name = "Column21";
-            this.Column21.Width = 125;
+            this.button14.Location = new System.Drawing.Point(1063, 2);
+            this.button14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(120, 36);
+            this.button14.TabIndex = 12;
+            this.button14.Text = "Comprar";
+            this.button14.UseVisualStyleBackColor = true;
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(1063, 53);
+            this.button15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(120, 36);
+            this.button15.TabIndex = 13;
+            this.button15.Text = "Vaciar";
+            this.button15.UseVisualStyleBackColor = true;
             // 
             // Form3
             // 
@@ -2053,5 +2077,7 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button14;
     }
 }

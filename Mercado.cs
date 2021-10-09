@@ -421,13 +421,17 @@ namespace TP2_PlataformasDeDesarrollo
 
         public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
-            if (Productos[ID_Producto].nCantidad >= Cantidad && Cantidad!=0)
+            foreach (Producto p in nProductos) 
             {
-                Usuarios[ID_Usuario].nCarro.AgregarProducto(Productos[ID_Producto], Cantidad);
-                MessageBox.Show("Producto agregada con exito al Carro.");
-                return true;
+                if (p.nIDProd == ID_Producto) 
+                {
+                    if (p.nCantidad >= Cantidad && Cantidad > 0)
+                    {
+                        Usuarios[ID_Usuario].nCarro.AgregarProducto(p, Cantidad);
+                        return true;
+                    }
+                }
             }
-            MessageBox.Show("ERROR: el Producto no se pudo agregar al carro al Carro.");
             return false;
         }
         public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
@@ -544,6 +548,9 @@ namespace TP2_PlataformasDeDesarrollo
         {
             //GUARDAR PRODUCTOS
             StreamWriter file0 = new StreamWriter(Dest(0));
+            
+            //  ORDENAMOS LISTA DE PRODUCTOS POR ID
+            Productos.Sort(delegate (Producto a, Producto b) { return a.nIDProd.CompareTo(b.nIDProd); });
             foreach (Producto p in Productos)
             {
                 if (p != null)
@@ -673,6 +680,7 @@ namespace TP2_PlataformasDeDesarrollo
                     // 1 - Nombre
                     //nCategorias += new Categoria(parts[1]);
                     AgregarCategoria(parts[1]);
+
                 }
             }
 
@@ -720,7 +728,7 @@ namespace TP2_PlataformasDeDesarrollo
                     // 0 - ID PRODUCTO
                     // 1 - CANTIDAD
                     // 2 - ID USUARIO
-                    AgregarAlCarro(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
+                    AgregarAlCarro(int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[0]));
                 }
             }
 

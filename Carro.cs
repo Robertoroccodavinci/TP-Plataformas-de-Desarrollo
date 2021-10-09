@@ -10,11 +10,11 @@ namespace TP2_PlataformasDeDesarrollo
     {
 
         private int ID;
-        private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
+        public Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
 
         public Carro(int ID)
         {
-            this.ID = ID;
+            nID = ID;
         }
 
         public int nID
@@ -29,18 +29,26 @@ namespace TP2_PlataformasDeDesarrollo
             set { Productos = value; }
         }
 
-
-        public bool AgregarProducto(Producto P, int Cantidad)
+        public void Set(Producto key, int value)
         {
-            if (Productos.ContainsKey(P))
+            if (Productos.ContainsKey(key))
             {
-                Productos[P] = Productos[P] + Cantidad;
+                Productos[key] = value;
             }
             else
             {
-                Productos.Add(P, Cantidad);
+                Productos.Add(key, value);
             }
-            return true;
+        }
+
+
+        public bool AgregarProducto(Producto P, int Cantidad)
+        {
+            Set(P, Cantidad);
+            return true;    
+            
+            //######################################################################
+            //VER COMO PONER EL FALSE
         }
         public bool QuitarProducto(Producto P, int Cantidad)
         {
