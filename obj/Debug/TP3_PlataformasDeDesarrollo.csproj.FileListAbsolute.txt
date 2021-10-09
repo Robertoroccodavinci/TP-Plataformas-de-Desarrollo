@@ -14,3 +14,4 @@ C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_Plat
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\System.Data.SqlClient.dll
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\System.Data.SqlClient.xml
+C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form4.resources

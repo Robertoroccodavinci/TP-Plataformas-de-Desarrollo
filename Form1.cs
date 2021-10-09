@@ -12,42 +12,47 @@ namespace TP2_PlataformasDeDesarrollo
 {
     public partial class Form1 : Form
     {
-        Form2 hijoLogin;
-        Form3 hijoMain;
-        
-        bool logued;
+        private Form2 hijoLogin;
+        private Form3 hijoCliente;
+        private Form4 hijoAdmin;
+        private Mercado merc;
 
-        internal string texto;
-        string usuario;
-        public bool touched;
-        Mercado merc;
         public Form1()
         {
             InitializeComponent();
             
-
-            logued = false;
             hijoLogin = new Form2();
-
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;
-            
             hijoLogin.Show();
-            touched = false;
+            
         }
         private void TransfDelegado(int ID, string nombre,Object m)
         {
+            merc = (Mercado)m;
+            if (merc.esAdmin(ID))
+            {
                 hijoLogin.Close();
-                hijoMain = new Form3(ID,nombre,m);
-                hijoMain.TrasfEvento += TransfDelegado2;
-                hijoMain.MdiParent = this;
-                hijoMain.Show();
+                hijoAdmin = new Form4(ID, nombre, m);
+                hijoAdmin.TrasfEvento += TransfDelegado2;
+                hijoAdmin.MdiParent = this;
+                hijoAdmin.Show();
+            }
+            else 
+            {
+                hijoLogin.Close();
+                hijoCliente = new Form3(ID, nombre, m);
+                hijoCliente.TrasfEvento += TransfDelegado2;
+                hijoCliente.MdiParent = this;
+                hijoCliente.Show();
+            }
+            
+            
         }
 
         private void TransfDelegado2()
         {
-            hijoMain.Close();
-
+            hijoCliente.Close();
             hijoLogin = new Form2();
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;

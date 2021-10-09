@@ -17,7 +17,8 @@ namespace TP2_PlataformasDeDesarrollo
         private string pass;
         public delegate void TransfDelegado(int ID, string nombre, Object m);
         public TransfDelegado TrasfEvento;
-        Mercado m=new Mercado();
+        private Mercado m=new Mercado();
+
         public Form2()
         {
             InitializeComponent();
@@ -67,17 +68,6 @@ namespace TP2_PlataformasDeDesarrollo
         //            FORMULARIO INICIO DE SESION
         //######################################################
 
-        //private void button4_Click(object sender, EventArgs e)
-        //{
-        //    if (inputPass.UseSystemPasswordChar == true)
-        //    {
-        //        inputPass.UseSystemPasswordChar = false;
-        //    }
-        //    else if (inputPass.UseSystemPasswordChar == false)
-        //    {
-        //        inputPass.UseSystemPasswordChar = true;
-        //    }
-        //} by Seba
         private void button4_Click(object sender, EventArgs e)
         {
             if (inputPass.UseSystemPasswordChar == true)
@@ -148,18 +138,7 @@ namespace TP2_PlataformasDeDesarrollo
         //           BOTON VER - OCULTAR CONTRASEÑA
         //        FORMULARIO REGISTRO DE USUARIO NUEVO
         //######################################################
-        //private void button6_Click(object sender, EventArgs e)
-        //{
-        //    if (textPass.UseSystemPasswordChar == true)
-        //    {
-        //        textPass.UseSystemPasswordChar = false;
-        //    }
-        //    else if (textPass.UseSystemPasswordChar == false)
-        //    {
-        //        textPass.UseSystemPasswordChar = true;
-        //    }
-        //} by Seba   iconButton1_Click
-
+        
         private void button6_Click(object sender, EventArgs e)
         {
             if (textPass.UseSystemPasswordChar == true)
