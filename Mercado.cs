@@ -338,10 +338,10 @@ namespace TP2_PlataformasDeDesarrollo
         public void MostrarUsuarios()
         {
             Usuarios.Sort();
-            foreach (Usuario u in Usuarios)
+            /*foreach (Usuario u in Usuarios)
             {
                 Console.WriteLine(u);
-            }
+            }*/
         }
 
         // #######################################################################################
@@ -612,7 +612,7 @@ namespace TP2_PlataformasDeDesarrollo
 
         }
         // #######################################################################################
-        //                                  GUARDAR ARCHIVOS
+        //                                  LLENAR LISTAS
         // #######################################################################################
 
         public void llenarListas()

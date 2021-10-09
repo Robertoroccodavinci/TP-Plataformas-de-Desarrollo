@@ -255,6 +255,7 @@ namespace TP2_PlataformasDeDesarrollo
                         label8.Text = merc.nProductos[indice].nPrecio.ToString();
                         label9.Text = merc.nProductos[indice].nCantidad.ToString();
                         label10.Text = merc.nProductos[indice].nCategoria.nID.ToString();
+                        numericUpDown1.Maximum= merc.nProductos[indice].nCantidad;
                         tabControl2.SelectedTab = MostrarProducto;
                     }
                 }
@@ -276,6 +277,9 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button5_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("Valor");
+            Console.WriteLine(numericUpDown1.Value);
+            
             if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID)) 
             {
                 
@@ -411,11 +415,6 @@ namespace TP2_PlataformasDeDesarrollo
                    
 
                 }
-            }
-            else
-            {
-                //MOSTRAR CATEGORIA
-              // SE PODRIA IMPLEMENTAR PASO A PRODUCTOS DE UNA CATEGORIA EN PARTICULAR
             }
         }
         //######################################################
@@ -560,11 +559,13 @@ namespace TP2_PlataformasDeDesarrollo
             }
         }
 
-        //##########################################
+        //######################################################
+        //             OCULTAR COMBO BOX
+        //######################################################
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            button1.Text = "Reestablecer datos";
+            button1.Text = "Restablecer datos";
             merc.llenarListas();
             foreach (DataGridViewRow row in dataGridView6.Rows)
             {
@@ -648,22 +649,7 @@ namespace TP2_PlataformasDeDesarrollo
 
 
 
-        //######################################################
-        //             BOTON EXIT
-        //######################################################
-        private void iconButton2_Click(object sender, EventArgs e)
-        {
-            DialogResult respuesta = MessageBox.Show("Antes de Salir, ¿Deseas guardar todos los cambios?", "", MessageBoxButtons.YesNo);
-            if (respuesta == DialogResult.Yes)
-            {
-                merc.guardarTodo();
-            }
-            this.TrasfEvento();
-            
-            // Crea otro FORM1...
-
-
-        }
+        
         //######################################################
         //             BOTON BUSCAR PRODUCTO
         //######################################################
@@ -690,7 +676,11 @@ namespace TP2_PlataformasDeDesarrollo
             
 
         }
-
+        //######################################################
+        //                COMBO BOX DE ORDEN
+        //   COMBO BOX 1 -> ORDEN POR NOMBRE, CATEGORIA O PRECIO
+        //   COMBO BOX 2 -> ORDEN ASCENDENTE O DESCENDENTE
+        //######################################################
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.Text == "Nombre")
@@ -708,13 +698,25 @@ namespace TP2_PlataformasDeDesarrollo
                 merc.MostrarTodosProductosPorCategoria();
                 refreshData(merc);
             }
+            // SI ESTA SELECCIONADO EL ORDEN DESCENDENTE
+            if (comboBox2.SelectedIndex == 1)
+            {
+                merc.nProductos.Reverse();
+                refreshData(merc);
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox2.SelectedIndex == 0)
             {
-                if (comboBox1.Text == "Precio")
+                //EN CASO DE ESTAR PREVIAMENTE SELECCIONADO EL ORDEN DESCENDENTE, SE VUELVE A ORDENAR
+                if (comboBox1.Text == "Nombre")
+                {
+                    merc.nProductos.Sort();
+                    refreshData(merc);
+                }
+                else if (comboBox1.Text == "Precio")
                 {
                     merc.MostrarTodosProductosPorPrecio();
                     refreshData(merc);
@@ -724,11 +726,6 @@ namespace TP2_PlataformasDeDesarrollo
                     merc.MostrarTodosProductosPorCategoria();
                     refreshData(merc);
                 }
-                else
-                {
-                    merc.nProductos.Sort();
-                    refreshData(merc);
-                }
             }
             else if (comboBox2.SelectedIndex == 1)
             {
@@ -736,5 +733,19 @@ namespace TP2_PlataformasDeDesarrollo
                 refreshData(merc);
             }
         }
+        //######################################################
+        //             BOTON EXIT
+        //######################################################
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("Antes de Salir, ¿Deseas guardar todos los cambios?", "", MessageBoxButtons.YesNo);
+            if (respuesta == DialogResult.Yes)
+            {
+                merc.guardarTodo();
+            }
+            this.TrasfEvento();
+
+        }
+
     }
 }
