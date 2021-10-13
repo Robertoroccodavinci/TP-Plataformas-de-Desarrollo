@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Plataformas_de_Desarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
     class Compra : IComparable<Compra>
     {
@@ -51,7 +51,7 @@ namespace TP_Plataformas_de_Desarrollo
             return nIDCompra.CompareTo(otro.nIDCompra);
         }
 
-        public string ToString()
+        public override string ToString()
         {
 
             string leer = "";
@@ -60,10 +60,8 @@ namespace TP_Plataformas_de_Desarrollo
                 leer += "Key = " + kvp.Key + ", Value = " + kvp.Value + "\n";
             }
 
-            return nIDCompra + "-"+ nComprador + "-"+ nTotal + "-" + leer;
+            return nIDCompra + "-" + nComprador + "-" + nTotal + "-" + leer;
 
         }
     }
 }
-
-

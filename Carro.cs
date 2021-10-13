@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace TP_Plataformas_de_Desarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
-    class Carro 
+    class Carro
     {
-        
+
         private int ID;
-        private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
+        public Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
 
         public Carro(int ID)
         {
-            this.ID = ID;
+            nID = ID;
         }
 
         public int nID
@@ -30,20 +29,28 @@ namespace TP_Plataformas_de_Desarrollo
             set { Productos = value; }
         }
 
-        
+        public void Set(Producto key, int value)
+        {
+            if (Productos.ContainsKey(key))
+            {
+                Productos[key] = value;
+            }
+            else
+            {
+                Productos.Add(key, value);
+            }
+        }
+
+
         public bool AgregarProducto(Producto P, int Cantidad)
         {
-            if (Productos.ContainsKey(P))
-            {
-                Productos[P] = Productos[P] + Cantidad;
-            }
-            else 
-            { 
-                Productos.Add(P, Cantidad);
-            }
-            return true;
+            Set(P, Cantidad);
+            return true;    
+            
+            //######################################################################
+            //VER COMO PONER EL FALSE
         }
-        public bool QuitarProducto(Producto P, int Cantidad) 
+        public bool QuitarProducto(Producto P, int Cantidad)
         {
             if (Productos.ContainsKey(P))
             {
@@ -58,7 +65,7 @@ namespace TP_Plataformas_de_Desarrollo
                 }
                 return true;
             }
-            else 
+            else
             {
                 Console.WriteLine("El producto no se encuentra en la lista");
                 return false;
@@ -71,18 +78,18 @@ namespace TP_Plataformas_de_Desarrollo
 
         }
 
-        public string ToString()
+        public override string ToString()
         {
-            
-            string leer="";
+
+            string leer = "";
             foreach (KeyValuePair<Producto, int> kvp in Productos)
             {
                 //Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-                leer+="Key = " + kvp.Key + ", Value = " + kvp.Value+"\n";
+                leer += "Key = " + kvp.Key + ", Value = " + kvp.Value + "\n";
             }
 
             return "ID Carro: " + ID + " - " + leer;
-            
+
         }
     }
 }

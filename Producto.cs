@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Plataformas_de_Desarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
     class Producto : IComparable<Producto>
     {
@@ -59,7 +59,7 @@ namespace TP_Plataformas_de_Desarrollo
             return nNombre.CompareTo(otro.nNombre);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return nIDProd + "-" + nNombre + "-" + nPrecio + "-" + nCantidad + "-" + nCategoria.ToString();
         }

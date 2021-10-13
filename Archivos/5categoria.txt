@@ -1,0 +1,6 @@
+0,Comida
+1,Bebida
+2,Ropa
+3,Articulos de limpieza
+4,Electrodomesticos
+5,Informatica

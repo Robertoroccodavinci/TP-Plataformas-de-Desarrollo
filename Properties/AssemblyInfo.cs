@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
-// asociada a un ensamblado.
-[assembly: AssemblyTitle("TP-Plataformas-de-Desarrollo")]
+// asociada con un ensamblado.
+[assembly: AssemblyTitle("TP2_PlataformasDeDesarrollo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TP-Plataformas-de-Desarrollo")]
+[assembly: AssemblyProduct("TP2_PlataformasDeDesarrollo")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-[assembly: Guid("3fa0abaf-9af5-42f7-9266-c9b47c5e639f")]
+[assembly: Guid("529edcea-6dc4-49b1-9c44-007001f7b04f")]
 
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //

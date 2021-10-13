@@ -4,19 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Plataformas_de_Desarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
-    abstract class Usuario : IComparable<Usuario>
+    class Usuario : IComparable<Usuario>
     {
-        private int ID = 0;
+        private int ID;
         private int DNI;
         private string Nombre;
         private string Apellido;
         private string Mail;
         private string Password;
+        private int CUIT_CUIL;
         private Carro MiCarro;
+        private int rol; // 1-Cliente 2-Empresa 3-Administrador
 
-        public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password)
+        public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, int CUIT_CUIL, int rol)
         {
             nDNI = DNI;
             nID = ID;
@@ -25,15 +27,17 @@ namespace TP_Plataformas_de_Desarrollo
             nMail = Mail;
             nPassword = Password;
             nCarro = new Carro(nID);
+            nCUIT_CUIL = CUIT_CUIL;
+            nRol = rol;
         }
 
-            public int nID
-            {
-                get { return ID; }
-                set { ID = value; }
-            }
+        public int nID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
 
-            public int nDNI
+        public int nDNI
         {
             get { return DNI; }
             set { DNI = value; }
@@ -63,20 +67,33 @@ namespace TP_Plataformas_de_Desarrollo
             set { Password = value; }
         }
 
-  
+
         public Carro nCarro
         {
             get { return MiCarro; }
             set { MiCarro = value; }
         }
 
-        public int CompareTo(Usuario otro) {
+        public int nCUIT_CUIL
+        {
+            get { return CUIT_CUIL; }
+            set { CUIT_CUIL = value; }
+        }
+
+        public int nRol
+        {
+            get { return rol; }
+            set { rol = value; }
+        }
+
+        public int CompareTo(Usuario otro)
+        {
             return DNI.CompareTo(otro.DNI);
         }
 
-        public string ToString()
+        public override string ToString()
         {
-            return nID+"-"+nDNI+ "-" + nNombre+"-"+nApellido+"-"+nMail+"-"+nPassword;
+            return nID + "-" + nDNI + "-" + nNombre + "-" + nApellido + "-" + nMail + "-" + nPassword;
         }
     }
 }

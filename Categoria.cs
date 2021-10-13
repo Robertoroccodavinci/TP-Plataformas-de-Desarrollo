@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP_Plataformas_de_Desarrollo
+namespace TP2_PlataformasDeDesarrollo
 {
-    class Categoria 
+    class Categoria
     {
         private int ID;
         private string Nombre;
 
-        public Categoria(int ID, string Nombre) {
+        public Categoria(int ID, string Nombre)
+        {
             nID = ID;
             nNombre = Nombre;
         }
@@ -26,14 +27,11 @@ namespace TP_Plataformas_de_Desarrollo
             get { return Nombre; }
             set { Nombre = value; }
         }
-        
 
-        public string ToString()
+
+        public override string ToString()
         {
             return nID + "-" + nNombre;
         }
-
-
     }
-
 }
