@@ -32,6 +32,8 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 if (c != null)
                 {
+                    //Rellenamos la lista de categorias(SOLO NOMBRES) en la Grilla de la izquierda en la pestaña de PRODUCTOS
+                    //Para poder usar la grilla como filtro
                     dataGridView6.Rows.Add(c.nNombre);
                 }
             }
@@ -295,7 +297,7 @@ namespace TP2_PlataformasDeDesarrollo
         //   COMBO BOX 1 -> ORDEN POR NOMBRE, CATEGORIA O PRECIO
         //   COMBO BOX 2 -> ORDEN ASCENDENTE O DESCENDENTE
         //######################################################
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void OrdenNPC() //Se repite en ambos eventos COMBOBOX entonces hago una sola funcion
         {
             if (comboBox1.Text == "Nombre")
             {
@@ -312,11 +314,23 @@ namespace TP2_PlataformasDeDesarrollo
                 merc.MostrarTodosProductosPorCategoria();
                 refreshData(merc);
             }
+        }
+
+        // Variable que arregla error del REVERSE, si COMBOBOX es DESC (1), no vuelve a ejecutar el REVERSE
+        int cambio = 0;  
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OrdenNPC();
+            //Permite ejecutar el DESC
+            cambio = 1;
+
             // SI ESTA SELECCIONADO EL ORDEN DESCENDENTE
-            if (comboBox2.SelectedIndex == 1)
+            if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
                 merc.nProductos.Reverse();
                 refreshData(merc);
+                //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
+                cambio = 0; 
             }
         }
 
@@ -325,26 +339,16 @@ namespace TP2_PlataformasDeDesarrollo
             if (comboBox2.SelectedIndex == 0)
             {
                 //EN CASO DE ESTAR PREVIAMENTE SELECCIONADO EL ORDEN DESCENDENTE, SE VUELVE A ORDENAR
-                if (comboBox1.Text == "Nombre")
-                {
-                    merc.nProductos.Sort();
-                    refreshData(merc);
-                }
-                else if (comboBox1.Text == "Precio")
-                {
-                    merc.MostrarTodosProductosPorPrecio();
-                    refreshData(merc);
-                }
-                else if (comboBox1.Text == "Categoria")
-                {
-                    merc.MostrarTodosProductosPorCategoria();
-                    refreshData(merc);
-                }
+                OrdenNPC();
+                //Permite ejecutar el DESC
+                cambio = 1;
             }
-            else if (comboBox2.SelectedIndex == 1)
+            else if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
                 merc.nProductos.Reverse();
                 refreshData(merc);
+                //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
+                cambio = 0; 
             }
         }
 
@@ -354,7 +358,7 @@ namespace TP2_PlataformasDeDesarrollo
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-           
+           MessageBox.Show("Solo hiciste click");
             if (e.ColumnIndex == dataGridView2.Columns["botonBorrar"].Index)
             {
                 // ELIMINAR

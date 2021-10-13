@@ -449,6 +449,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column18.HeaderText = "ID Producto";
             this.Column18.MinimumWidth = 6;
             this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
             this.Column18.Width = 125;
             // 
             // Nombre
@@ -456,6 +457,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Nombre.HeaderText = "Nombre";
             this.Nombre.MinimumWidth = 6;
             this.Nombre.Name = "Nombre";
+            this.Nombre.ReadOnly = true;
             this.Nombre.Width = 125;
             // 
             // Column19
@@ -463,6 +465,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column19.HeaderText = "Precio";
             this.Column19.MinimumWidth = 6;
             this.Column19.Name = "Column19";
+            this.Column19.ReadOnly = true;
             this.Column19.Width = 125;
             // 
             // Column20
@@ -470,6 +473,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column20.HeaderText = "Cantidad";
             this.Column20.MinimumWidth = 6;
             this.Column20.Name = "Column20";
+            this.Column20.ReadOnly = true;
             this.Column20.Width = 125;
             // 
             // Column21
@@ -477,6 +481,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column21.HeaderText = "Total";
             this.Column21.MinimumWidth = 6;
             this.Column21.Name = "Column21";
+            this.Column21.ReadOnly = true;
             this.Column21.Width = 125;
             // 
             // ModificarCarro
@@ -683,6 +688,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(99, 21);
             this.comboBox1.TabIndex = 9;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label46
             // 
