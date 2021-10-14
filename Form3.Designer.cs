@@ -112,6 +112,7 @@ namespace TP2_PlataformasDeDesarrollo
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.tabControl2);
+            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
@@ -449,6 +450,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column18.HeaderText = "ID Producto";
             this.Column18.MinimumWidth = 6;
             this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
             this.Column18.Width = 125;
             // 
             // Nombre
@@ -456,6 +458,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Nombre.HeaderText = "Nombre";
             this.Nombre.MinimumWidth = 6;
             this.Nombre.Name = "Nombre";
+            this.Nombre.ReadOnly = true;
             this.Nombre.Width = 125;
             // 
             // Column19
@@ -463,6 +466,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column19.HeaderText = "Precio";
             this.Column19.MinimumWidth = 6;
             this.Column19.Name = "Column19";
+            this.Column19.ReadOnly = true;
             this.Column19.Width = 125;
             // 
             // Column20
@@ -470,6 +474,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column20.HeaderText = "Cantidad";
             this.Column20.MinimumWidth = 6;
             this.Column20.Name = "Column20";
+            this.Column20.ReadOnly = true;
             this.Column20.Width = 125;
             // 
             // Column21
@@ -477,6 +482,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column21.HeaderText = "Total";
             this.Column21.MinimumWidth = 6;
             this.Column21.Name = "Column21";
+            this.Column21.ReadOnly = true;
             this.Column21.Width = 125;
             // 
             // ModificarCarro

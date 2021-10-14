@@ -52,6 +52,26 @@ namespace TP2_PlataformasDeDesarrollo
                 MessageBox.Show("Debes registrarte");
         }
 
+        //Iniciar sesión con tecla Enter (repite implementación anterior de "button1_Click")
+        private void inputPass_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                DNI = int.Parse(textBox1.Text);
+                pass = inputPass.Text;
+                m.nTargetPath = textBox8.Text;
+
+                Usuario u;
+                if ((u = m.IniciarSesion(DNI, pass)) != null)
+                {
+                    MessageBox.Show("Te damos la bienvenida!");
+                    this.TrasfEvento(u.nID, u.nNombre, m);
+                }
+                else
+                    MessageBox.Show("Debes registrarte");
+            }
+        }
+
         private void button1_MouseHover(object sender, EventArgs e)
         {
             button1.BackColor = Color.FromArgb(169, 169, 169);

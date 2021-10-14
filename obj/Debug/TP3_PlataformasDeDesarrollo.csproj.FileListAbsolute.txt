@@ -15,3 +15,20 @@ C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_Plat
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\System.Data.SqlClient.dll
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\System.Data.SqlClient.xml
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form4.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe.config
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.pdb
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\FontAwesome.Sharp.dll
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\System.Data.SqlClient.dll
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\bin\Debug\System.Data.SqlClient.xml
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.AssemblyReference.cache
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form1.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form2.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form3.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Form4.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Properties.Resources.resources
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.GenerateResource.cache
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.CoreCompileInputs.cache
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.CopyComplete
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
+D:\DaVinci\Plataformas de Desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb
