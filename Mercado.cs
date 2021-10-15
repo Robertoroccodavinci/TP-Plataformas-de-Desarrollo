@@ -138,7 +138,7 @@ namespace TP2_PlataformasDeDesarrollo
                 {/* ********************************************************************* */
                     Console.WriteLine("ERROR: ya existe ese producto");
                     return false;
-                }
+                } 
             }
             /* *****************************************   VER QUE PASA SI NO HAY NINGUN ***NULL***         */
             for (int i = 0; i < MaxCategorias; i++)
@@ -433,7 +433,7 @@ namespace TP2_PlataformasDeDesarrollo
             }
             return false;
         }
-        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
+        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
         {
             if (Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad))
             {
@@ -753,8 +753,8 @@ namespace TP2_PlataformasDeDesarrollo
                 char[] arr = (a.nNombre.ToUpper()).ToCharArray();
                 char first = arr[0];
 
-                char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
-                int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
+        //        char[] arr2 = (b.nNombre.ToUpper()).ToCharArray();
+        //        int cant = (arr.Length > arr2.Length) ? arr2.Length : arr.Length;
 
                 for (int i = 0; i < cant; i++) 
                 { 
