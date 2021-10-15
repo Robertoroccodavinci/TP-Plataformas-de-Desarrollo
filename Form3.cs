@@ -14,7 +14,7 @@ namespace TP2_PlataformasDeDesarrollo
     {
         private Mercado merc;
         private int ID;
-        public delegate void TransfDelegado2();
+        public delegate void TransfDelegado2(string rol); // Metodo
         public TransfDelegado2 TrasfEvento;
 
 
@@ -324,7 +324,7 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 merc.guardarTodo();
             }
-            this.TrasfEvento();
+            this.TrasfEvento("Cliente");
 
         }
 
