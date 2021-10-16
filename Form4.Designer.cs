@@ -18,6 +18,7 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 components.Dispose();
             }
+            
             base.Dispose(disposing);
         }
 
@@ -167,7 +168,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.label46 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox34 = new System.Windows.Forms.TextBox();
-            this.button13 = new System.Windows.Forms.Button();
+            this.buttonB = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1678,15 +1679,16 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox34.Size = new System.Drawing.Size(99, 20);
             this.textBox34.TabIndex = 14;
             // 
-            // button13
+            // buttonB
             // 
-            this.button13.Location = new System.Drawing.Point(759, 32);
-            this.button13.Margin = new System.Windows.Forms.Padding(2);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(52, 29);
-            this.button13.TabIndex = 13;
-            this.button13.Text = "Buscar";
-            this.button13.UseVisualStyleBackColor = true;
+            this.buttonB.Location = new System.Drawing.Point(759, 32);
+            this.buttonB.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonB.Name = "buttonB";
+            this.buttonB.Size = new System.Drawing.Size(52, 29);
+            this.buttonB.TabIndex = 13;
+            this.buttonB.Text = "Buscar";
+            this.buttonB.UseVisualStyleBackColor = true;
+            this.buttonB.Click += new System.EventHandler(this.buttonB_Click);
             // 
             // Form4
             // 
@@ -1698,7 +1700,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Controls.Add(this.label46);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox34);
-            this.Controls.Add(this.button13);
+            this.Controls.Add(this.buttonB);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.iconButton2);
@@ -1709,6 +1711,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Name = "Form4";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form4";
+            this.Click += new System.EventHandler(this.buttonB_Click);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
@@ -1892,6 +1895,6 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox34;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button buttonB;
     }
 }

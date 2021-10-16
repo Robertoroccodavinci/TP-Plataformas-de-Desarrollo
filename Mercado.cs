@@ -36,10 +36,10 @@ namespace TP2_PlataformasDeDesarrollo
             nCompras = new List<Compra>();
             nCategorias = new Categoria[MaxCategorias];
 
-            nSourcePath = System.IO.Directory.GetCurrentDirectory() + "/../../Archivos";
+            nSourcePath = Directory.GetCurrentDirectory() + "/../../Archivos";
             nTargetPath = "C:/ArchivosMercado";
 
-            string[] lines = System.IO.File.ReadAllLines(nSourcePath+"/"+ fileName[1]);
+            string[] lines = File.ReadAllLines(nSourcePath+"/"+ fileName[1]);
             
             foreach (string s in lines)
             {
@@ -130,17 +130,15 @@ namespace TP2_PlataformasDeDesarrollo
         public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria)
         {
 
-            foreach (Producto p in nProductos)
-            {   /* **********************************************************************      Cambiamos el foreach por el metodo Exists */
-                bool nom = Productos.Exists(x => x.nNombre == nombre);
+            bool nom = Productos.Exists(x => x.nNombre == nombre);
 
-                if (p != null && (nom || nombre == "" || nombre == null))
-                {/* ********************************************************************* */
-                    Console.WriteLine("ERROR: ya existe ese producto");
-                    return false;
-                } 
-            }
-            /* *****************************************   VER QUE PASA SI NO HAY NINGUN ***NULL***         */
+            if (nom || nombre == "" || nombre == null)
+            {
+                Console.WriteLine("ERROR: ya existe ese producto");
+                return false;
+            } 
+            
+            
             for (int i = 0; i < MaxCategorias; i++)
             {
                 if (Categorias[i] != null && Categorias[i].nID == ID_Categoria)
@@ -200,74 +198,64 @@ namespace TP2_PlataformasDeDesarrollo
         }
 
 
-        public void BuscarProducto(string Query)
+        public List<Producto> BuscarProducto(string Query)
         {
-            Productos.Sort();
-            // COPIAMOS LA LISTA DE PRODUCTOS
+            
             List<Producto> p = new List<Producto>();
-            p = nProductos;
-            // LIMPIAMOS LA LISTA DE PRODUCTOS
-            nProductos = new List<Producto>();
-
-            foreach (Producto pro in p) 
+            foreach (Producto pro in Productos) 
             {
                 if (pro.nNombre.ToUpper().Contains(Query.ToUpper()) ) 
                 {
-                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
-                    AgregarProducto(pro.nNombre,pro.nPrecio,pro.nCantidad,pro.nCategoria.nID);
+                    p.Add(pro);
                 }
             }
+                p.Sort();
+                return p;
         }
 
 
-        public void BuscarProductoPorPrecio(string Query)
+        public List<Producto> BuscarProductoPorPrecio(string Query)
         {
-            Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
-            // COPIAMOS LA LISTA DE PRODUCTOS
+            
             List<Producto> p = new List<Producto>();
-            p = nProductos;
-            // LIMPIAMOS LA LISTA DE PRODUCTOS
-            nProductos = new List<Producto>();
-
-            foreach (Producto pro in p)
+            foreach (Producto pro in Productos)
             {
                 if (pro.nPrecio <= int.Parse(Query))
                 {
-                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
-                    AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
+                    p.Add(pro);
                 }
             }
+            p.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
+            return p;
         }
 
 
-        public void BuscarProductoPorCategoria(int ID_Categoria)
+        public List<Producto> BuscarProductoPorCategoria(string nombre)
         {
-            Productos.Sort();
-            // COPIAMOS LA LISTA DE PRODUCTOS
             List<Producto> p = new List<Producto>();
-            p = nProductos;
-            // LIMPIAMOS LA LISTA DE PRODUCTOS
-            nProductos = new List<Producto>();
 
-            foreach (Producto pro in p)
+            foreach (Producto pro in Productos)
             {
-                if (pro.nCategoria.nID== ID_Categoria)
+                if (pro.nCategoria.nNombre== nombre)
                 {
-                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
-                    AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
+                     p.Add(pro); 
                 }
             }
+            p.Sort();
+            return p;
         }
 
 
-        public void MostrarTodosProductosPorPrecio()
+        public List<Producto> MostrarTodosProductosPorPrecio()
         {
             Productos.Sort(delegate (Producto a, Producto b) { return a.nPrecio.CompareTo(b.nPrecio); });
+            return Productos;
         }
 
-        public void MostrarTodosProductosPorCategoria()
+        public List<Producto> MostrarTodosProductosPorCategoria()
         {
             Productos.Sort(delegate (Producto a, Producto b) { return a.nCategoria.nID.CompareTo(b.nCategoria.nID); });
+            return Productos;
         }
 
         // ######################################################################################
@@ -334,13 +322,11 @@ namespace TP2_PlataformasDeDesarrollo
             return false;
         }
 
-        public void MostrarUsuarios()
+        public List<Usuario> MostrarUsuarios()
         {
             Usuarios.Sort();
-            /*foreach (Usuario u in Usuarios)
-            {
-                Console.WriteLine(u);
-            }*/
+            return nUsuarios;
+            
         }
 
         // #######################################################################################
@@ -399,15 +385,10 @@ namespace TP2_PlataformasDeDesarrollo
             return false;
         }
 
-        public void MostrarCategoria()
+        public Categoria[] MostrarCategoria()
         {
-            for (int i = 0; i < MaxCategorias; i++)
-            {
-                if (Categorias[i] != null)
-                {
-                    Console.WriteLine(Categorias[i].ToString());
-                }
-            }
+            
+            return nCategorias;
         }
 
         // #######################################################################################

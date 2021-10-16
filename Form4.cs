@@ -14,7 +14,7 @@ namespace TP2_PlataformasDeDesarrollo
     {
         private Mercado merc;
         private int ID;
-        public delegate void TransfDelegado2(string rol); // Metodo
+        public delegate void TransfDelegado2(); // Metodo
         public TransfDelegado2 TrasfEvento;
 
         public Form4(int ID, string nombre, Object m)
@@ -223,25 +223,20 @@ namespace TP2_PlataformasDeDesarrollo
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             button1.Text = "Restablecer datos";
-            merc.llenarListas();
-
-            //CREAMOS LISTA PARA GUARDAR LOS PRODUCTOS
-            List<Producto> p = new List<Producto>();
-            p = merc.nProductos;
-            // LIMPIAMOS LA LISTA DE PRODUCTOS
-            merc.nProductos = new List<Producto>();
-
-            foreach (Producto pro in p)
+            dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
+            foreach (Producto p in merc.BuscarProductoPorCategoria(dataGridView6[0, e.RowIndex].Value.ToString()))
             {
-                if (pro.nCategoria.nNombre == dataGridView6[0, e.RowIndex].Value.ToString())
+                if (p != null)
                 {
-                    //AGREGAMOS LOS PRODUCTOS QUE CUMPLAN CON LA QUERY
-                    merc.AgregarProducto(pro.nNombre, pro.nPrecio, pro.nCantidad, pro.nCategoria.nID);
+                    string[] prods = { p.nIDProd.ToString(),
+                                       p.nNombre,
+                                       p.nPrecio.ToString(),
+                                       p.nCantidad.ToString(),
+                                       p.nCategoria.nID.ToString() };
+                    dataGridView1.Rows.Add(prods);
                 }
             }
-            refreshData(merc);
         }
-
 
         //######################################################
         //             OCULTAR COMBO BOX
@@ -253,7 +248,7 @@ namespace TP2_PlataformasDeDesarrollo
                 comboBox1.Show();
                 comboBox2.Show();
                 label46.Show();
-                button13.Show();
+                buttonB.Show();
                 textBox34.Show();
             }
             else
@@ -261,7 +256,7 @@ namespace TP2_PlataformasDeDesarrollo
                 comboBox1.Hide();
                 comboBox2.Hide();
                 label46.Hide();
-                button13.Hide();
+                buttonB.Hide();
                 textBox34.Hide();
             }
         }
@@ -269,28 +264,67 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         //             BOTON BUSCAR PRODUCTO
         //######################################################
-        private void button13_Click(object sender, EventArgs e)
+        private void buttonB_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(textBox34.Text, out int result))
+            if (textBox34.Text != "")
             {
-                merc.llenarListas();
-                merc.BuscarProductoPorPrecio(textBox34.Text);
-                refreshData(merc);
-                button1.Text = "Restablecer Datos";
-                tabControl1.SelectedTab = tabPage1;
-                tabControl2.SelectedTab = ListaProductos;
-            }
-            else
-            {
-                merc.llenarListas();
-                merc.BuscarProducto(textBox34.Text);
-                refreshData(merc);
-                button1.Text = "Restablecer Datos";
-                tabControl1.SelectedTab = tabPage1;
-                tabControl2.SelectedTab = ListaProductos;
-            }
+                //Se intenta parsear el texto, si lo logra, busca Producto por precio.
+                if (int.TryParse(textBox34.Text, out int result))
+                {
+                    button1.Text = "Restablecer datos";
+                    dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
 
+                    if (merc.BuscarProductoPorPrecio(textBox34.Text).Count == 0)
+                    {
+                        MessageBox.Show("No existe el producto: " + textBox34.Text);
+                        refreshData(merc);
+                        button1.Text = "Actualizar Datos";
+                    }
+                    else
+                    {
+                        foreach (Producto p in merc.BuscarProductoPorPrecio(textBox34.Text))
+                        {
+                            if (p != null)
+                            {
+                                string[] prods = { p.nIDProd.ToString(),
+                                               p.nNombre,
+                                               p.nPrecio.ToString(),
+                                               p.nCantidad.ToString(),
+                                               p.nCategoria.nID.ToString() };
+                                dataGridView1.Rows.Add(prods);
+                            }
+                        }
+                    }
+                }
+                //Busca producto por Nombre
+                else
+                {
+                    button1.Text = "Restablecer datos";
+                    dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
 
+                    if (merc.BuscarProducto(textBox34.Text).Count == 0)
+                    {
+                        MessageBox.Show("No existe el producto: " + textBox34.Text);
+                        refreshData(merc);
+                        button1.Text = "Actualizar Datos";
+                    }
+                    else
+                    {
+                        foreach (Producto p in merc.BuscarProducto(textBox34.Text))
+                        {
+                            if (p != null)
+                            {
+                                string[] prods = { p.nIDProd.ToString(),
+                                               p.nNombre,
+                                               p.nPrecio.ToString(),
+                                               p.nCantidad.ToString(),
+                                               p.nCategoria.nID.ToString() };
+                                dataGridView1.Rows.Add(prods);
+                            }
+                        }
+                    }
+                }
+            }
         }
         //######################################################
         //                COMBO BOX DE ORDEN
@@ -301,18 +335,54 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (comboBox1.Text == "Nombre")
             {
+                dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
                 merc.nProductos.Sort();
-                refreshData(merc);
+                foreach (Producto p in merc.nProductos)
+                {
+                    if (p != null)
+                    {
+                        string[] prods = { p.nIDProd.ToString(),
+                                           p.nNombre,
+                                           p.nPrecio.ToString(),
+                                           p.nCantidad.ToString(),
+                                           p.nCategoria.nID.ToString() };
+                        dataGridView1.Rows.Add(prods);
+                    }
+                }
             }
             else if (comboBox1.Text == "Precio")
             {
-                merc.MostrarTodosProductosPorPrecio();
-                refreshData(merc);
+                
+                dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
+                foreach (Producto p in merc.MostrarTodosProductosPorPrecio())
+                {
+                    if (p != null)
+                    {
+                        string[] prods = { p.nIDProd.ToString(),
+                                           p.nNombre,
+                                           p.nPrecio.ToString(),
+                                           p.nCantidad.ToString(),
+                                           p.nCategoria.nID.ToString() };
+                        dataGridView1.Rows.Add(prods);
+                    }
+                }
             }
             else if (comboBox1.Text == "Categoria")
             {
-                merc.MostrarTodosProductosPorCategoria();
-                refreshData(merc);
+               
+                dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
+                foreach (Producto p in merc.MostrarTodosProductosPorCategoria())
+                {
+                    if (p != null)
+                    {
+                        string[] prods = { p.nIDProd.ToString(),
+                                           p.nNombre,
+                                           p.nPrecio.ToString(),
+                                           p.nCantidad.ToString(),
+                                           p.nCategoria.nID.ToString() };
+                        dataGridView1.Rows.Add(prods);
+                    }
+                }
             }
         }
 
@@ -323,7 +393,7 @@ namespace TP2_PlataformasDeDesarrollo
             OrdenNPC();
             //Permite ejecutar el DESC
             cambio = 1;
-
+            
             // SI ESTA SELECCIONADO EL ORDEN DESCENDENTE
             if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
@@ -358,7 +428,7 @@ namespace TP2_PlataformasDeDesarrollo
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-           MessageBox.Show("Solo hiciste click");
+           
             if (e.ColumnIndex == dataGridView2.Columns["botonBorrar"].Index)
             {
                 // ELIMINAR
@@ -549,8 +619,8 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 merc.guardarTodo();
             }
-            this.TrasfEvento("Admin");
-
+            this.TrasfEvento();
+            this.Close();
         }
 
 

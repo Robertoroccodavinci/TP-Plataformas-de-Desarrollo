@@ -46,20 +46,10 @@ namespace TP2_PlataformasDeDesarrollo
                 hijoCliente.MdiParent = this;
                 hijoCliente.Show();
             }
-            
-            
         }
 
-        private void TransfDelegado2(string rol)
+        private void TransfDelegado2()
         {
-            if(rol == "Cliente")
-            {
-                hijoCliente.Close();
-            }
-            else
-            {
-                hijoAdmin.Close();
-            }            
             hijoLogin = new Form2();
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;
