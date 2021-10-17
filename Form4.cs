@@ -102,10 +102,9 @@ namespace TP2_PlataformasDeDesarrollo
                 if (u != null)
                 {
                     string r;
-                    if (u.nRol == 1) r = "Cliente";
-                    else
-                    if (u.nRol == 2) r = "Empresa";
-                    else r = "Admin";
+                    if (u.nRol == 0) r = "Cliente";
+                    else if (u.nRol == 1) r = "Administrador";
+                    else r = "Empresa";     //Preguntar si seguimos necesitando empresa
 
                     string[] users = { u.nID.ToString(),
                                 u.nDNI.ToString(),
@@ -493,6 +492,7 @@ namespace TP2_PlataformasDeDesarrollo
             else
             {
                 //MODIFICAR
+                tabControl4.SelectedTab = ModificarUsuario;
                 int indice = int.Parse(dataGridView3[0, e.RowIndex].Value.ToString());
                 textBox20.Text = merc.nUsuarios[indice].nID.ToString();
                 textBox21.Text = merc.nUsuarios[indice].nDNI.ToString();
@@ -502,13 +502,13 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox25.Text = merc.nUsuarios[indice].nPassword;
                 textBox26.Text = merc.nUsuarios[indice].nCUIT_CUIL.ToString();
                 textBox27.Text = merc.nUsuarios[indice].nRol.ToString();
-                tabControl3.SelectedTab = ModificarUsuario;
+
             }
         }
         //######################################################
         //             MODIFICAR USUARIO
         //######################################################
-        private void button10_Click(object sender, EventArgs e)
+        private void buttonModificarUsuario_Click(object sender, EventArgs e)
         {
             if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
                                       textBox24.Text, textBox25.Text, int.Parse(textBox26.Text), int.Parse(textBox21.Text)))
@@ -519,10 +519,10 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         //             AGREGAR USUARIO NUEVO
         //######################################################
-        private void button9_Click(object sender, EventArgs e)
+        private void buttonAgregar_Click(object sender, EventArgs e)
         {
-            if (merc.AgregarUsuario(int.Parse(textBox13.Text), textBox14.Text, textBox15.Text, textBox16.Text,
-                                    textBox17.Text, int.Parse(textBox18.Text), int.Parse(textBox19.Text)))
+            if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
+                                    textPass.Text, int.Parse(textCUILCUIT.Text), comboBoxrRol.SelectedIndex))
             {
                 tabControl4.SelectedTab = ListaUsuarios;
             }
@@ -622,7 +622,5 @@ namespace TP2_PlataformasDeDesarrollo
             this.TrasfEvento();
             this.Close();
         }
-
-
     }
 }

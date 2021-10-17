@@ -97,20 +97,20 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AgregarUsuario = new System.Windows.Forms.TabPage();
-            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.comboBoxrRol = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.textCUILCUIT = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.textMail = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.textPass = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.textApellido = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textNombre = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.button9 = new System.Windows.Forms.Button();
+            this.textDNI = new System.Windows.Forms.TextBox();
+            this.buttonAgregar = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
             this.ModificarUsuario = new System.Windows.Forms.TabPage();
             this.textBox27 = new System.Windows.Forms.TextBox();
@@ -128,7 +128,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox25 = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
             this.textBox26 = new System.Windows.Forms.TextBox();
-            this.button10 = new System.Windows.Forms.Button();
+            this.buttonModificarUsuario = new System.Windows.Forms.Button();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl5 = new System.Windows.Forms.TabControl();
@@ -927,20 +927,20 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             // AgregarUsuario
             // 
-            this.AgregarUsuario.Controls.Add(this.textBox19);
+            this.AgregarUsuario.Controls.Add(this.comboBoxrRol);
             this.AgregarUsuario.Controls.Add(this.label31);
-            this.AgregarUsuario.Controls.Add(this.textBox18);
+            this.AgregarUsuario.Controls.Add(this.textCUILCUIT);
             this.AgregarUsuario.Controls.Add(this.label30);
-            this.AgregarUsuario.Controls.Add(this.textBox16);
+            this.AgregarUsuario.Controls.Add(this.textMail);
             this.AgregarUsuario.Controls.Add(this.label28);
-            this.AgregarUsuario.Controls.Add(this.textBox17);
+            this.AgregarUsuario.Controls.Add(this.textPass);
             this.AgregarUsuario.Controls.Add(this.label29);
-            this.AgregarUsuario.Controls.Add(this.textBox15);
+            this.AgregarUsuario.Controls.Add(this.textApellido);
             this.AgregarUsuario.Controls.Add(this.label27);
-            this.AgregarUsuario.Controls.Add(this.textBox14);
+            this.AgregarUsuario.Controls.Add(this.textNombre);
             this.AgregarUsuario.Controls.Add(this.label26);
-            this.AgregarUsuario.Controls.Add(this.textBox13);
-            this.AgregarUsuario.Controls.Add(this.button9);
+            this.AgregarUsuario.Controls.Add(this.textDNI);
+            this.AgregarUsuario.Controls.Add(this.buttonAgregar);
             this.AgregarUsuario.Controls.Add(this.label25);
             this.AgregarUsuario.Location = new System.Drawing.Point(4, 22);
             this.AgregarUsuario.Margin = new System.Windows.Forms.Padding(2);
@@ -951,13 +951,17 @@ namespace TP2_PlataformasDeDesarrollo
             this.AgregarUsuario.Text = "AgregarUsuario";
             this.AgregarUsuario.UseVisualStyleBackColor = true;
             // 
-            // textBox19
+            // comboBoxrRol
             // 
-            this.textBox19.Location = new System.Drawing.Point(134, 171);
-            this.textBox19.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(166, 20);
-            this.textBox19.TabIndex = 32;
+            this.comboBoxrRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxrRol.FormattingEnabled = true;
+            this.comboBoxrRol.Items.AddRange(new object[] {
+            "Cliente",
+            "Administrador"});
+            this.comboBoxrRol.Location = new System.Drawing.Point(134, 171);
+            this.comboBoxrRol.Name = "comboBoxrRol";
+            this.comboBoxrRol.Size = new System.Drawing.Size(166, 21);
+            this.comboBoxrRol.TabIndex = 33;
             // 
             // label31
             // 
@@ -969,13 +973,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.label31.TabIndex = 31;
             this.label31.Text = "Rol";
             // 
-            // textBox18
+            // textCUILCUIT
             // 
-            this.textBox18.Location = new System.Drawing.Point(134, 148);
-            this.textBox18.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(166, 20);
-            this.textBox18.TabIndex = 30;
+            this.textCUILCUIT.Location = new System.Drawing.Point(134, 148);
+            this.textCUILCUIT.Margin = new System.Windows.Forms.Padding(2);
+            this.textCUILCUIT.Name = "textCUILCUIT";
+            this.textCUILCUIT.Size = new System.Drawing.Size(166, 20);
+            this.textCUILCUIT.TabIndex = 30;
             // 
             // label30
             // 
@@ -987,13 +991,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.label30.TabIndex = 29;
             this.label30.Text = "CUIL/CUIT";
             // 
-            // textBox16
+            // textMail
             // 
-            this.textBox16.Location = new System.Drawing.Point(134, 102);
-            this.textBox16.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(166, 20);
-            this.textBox16.TabIndex = 28;
+            this.textMail.Location = new System.Drawing.Point(134, 102);
+            this.textMail.Margin = new System.Windows.Forms.Padding(2);
+            this.textMail.Name = "textMail";
+            this.textMail.Size = new System.Drawing.Size(166, 20);
+            this.textMail.TabIndex = 28;
             // 
             // label28
             // 
@@ -1005,13 +1009,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.label28.TabIndex = 27;
             this.label28.Text = "Contraseña";
             // 
-            // textBox17
+            // textPass
             // 
-            this.textBox17.Location = new System.Drawing.Point(134, 125);
-            this.textBox17.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(166, 20);
-            this.textBox17.TabIndex = 26;
+            this.textPass.Location = new System.Drawing.Point(134, 125);
+            this.textPass.Margin = new System.Windows.Forms.Padding(2);
+            this.textPass.Name = "textPass";
+            this.textPass.Size = new System.Drawing.Size(166, 20);
+            this.textPass.TabIndex = 26;
             // 
             // label29
             // 
@@ -1023,13 +1027,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.label29.TabIndex = 25;
             this.label29.Text = "Mail";
             // 
-            // textBox15
+            // textApellido
             // 
-            this.textBox15.Location = new System.Drawing.Point(134, 80);
-            this.textBox15.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(166, 20);
-            this.textBox15.TabIndex = 24;
+            this.textApellido.Location = new System.Drawing.Point(134, 80);
+            this.textApellido.Margin = new System.Windows.Forms.Padding(2);
+            this.textApellido.Name = "textApellido";
+            this.textApellido.Size = new System.Drawing.Size(166, 20);
+            this.textApellido.TabIndex = 24;
             // 
             // label27
             // 
@@ -1041,13 +1045,13 @@ namespace TP2_PlataformasDeDesarrollo
             this.label27.TabIndex = 23;
             this.label27.Text = "Apellido";
             // 
-            // textBox14
+            // textNombre
             // 
-            this.textBox14.Location = new System.Drawing.Point(134, 57);
-            this.textBox14.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(166, 20);
-            this.textBox14.TabIndex = 22;
+            this.textNombre.Location = new System.Drawing.Point(134, 57);
+            this.textNombre.Margin = new System.Windows.Forms.Padding(2);
+            this.textNombre.Name = "textNombre";
+            this.textNombre.Size = new System.Drawing.Size(166, 20);
+            this.textNombre.TabIndex = 22;
             // 
             // label26
             // 
@@ -1059,23 +1063,24 @@ namespace TP2_PlataformasDeDesarrollo
             this.label26.TabIndex = 21;
             this.label26.Text = "Nombre";
             // 
-            // textBox13
+            // textDNI
             // 
-            this.textBox13.Location = new System.Drawing.Point(134, 34);
-            this.textBox13.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(166, 20);
-            this.textBox13.TabIndex = 20;
+            this.textDNI.Location = new System.Drawing.Point(134, 34);
+            this.textDNI.Margin = new System.Windows.Forms.Padding(2);
+            this.textDNI.Name = "textDNI";
+            this.textDNI.Size = new System.Drawing.Size(166, 20);
+            this.textDNI.TabIndex = 20;
             // 
-            // button9
+            // buttonAgregar
             // 
-            this.button9.Location = new System.Drawing.Point(165, 202);
-            this.button9.Margin = new System.Windows.Forms.Padding(2);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(97, 22);
-            this.button9.TabIndex = 19;
-            this.button9.Text = "Agregar";
-            this.button9.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Location = new System.Drawing.Point(165, 202);
+            this.buttonAgregar.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonAgregar.Name = "buttonAgregar";
+            this.buttonAgregar.Size = new System.Drawing.Size(97, 22);
+            this.buttonAgregar.TabIndex = 19;
+            this.buttonAgregar.Text = "Agregar";
+            this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregar_Click);
             // 
             // label25
             // 
@@ -1104,7 +1109,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.ModificarUsuario.Controls.Add(this.textBox25);
             this.ModificarUsuario.Controls.Add(this.label37);
             this.ModificarUsuario.Controls.Add(this.textBox26);
-            this.ModificarUsuario.Controls.Add(this.button10);
+            this.ModificarUsuario.Controls.Add(this.buttonModificarUsuario);
             this.ModificarUsuario.Controls.Add(this.label38);
             this.ModificarUsuario.Location = new System.Drawing.Point(4, 22);
             this.ModificarUsuario.Margin = new System.Windows.Forms.Padding(2);
@@ -1250,15 +1255,16 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox26.Size = new System.Drawing.Size(166, 20);
             this.textBox26.TabIndex = 35;
             // 
-            // button10
+            // buttonModificarUsuario
             // 
-            this.button10.Location = new System.Drawing.Point(143, 215);
-            this.button10.Margin = new System.Windows.Forms.Padding(2);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(97, 22);
-            this.button10.TabIndex = 34;
-            this.button10.Text = "Modificar";
-            this.button10.UseVisualStyleBackColor = true;
+            this.buttonModificarUsuario.Location = new System.Drawing.Point(143, 215);
+            this.buttonModificarUsuario.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonModificarUsuario.Name = "buttonModificarUsuario";
+            this.buttonModificarUsuario.Size = new System.Drawing.Size(97, 22);
+            this.buttonModificarUsuario.TabIndex = 34;
+            this.buttonModificarUsuario.Text = "Modificar";
+            this.buttonModificarUsuario.UseVisualStyleBackColor = true;
+            this.buttonModificarUsuario.Click += new System.EventHandler(this.buttonModificarUsuario_Click);
             // 
             // label38
             // 
@@ -1824,20 +1830,19 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.TabPage AgregarUsuario;
-        private System.Windows.Forms.TextBox textBox19;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.TextBox textCUILCUIT;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.TextBox textMail;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.TextBox textPass;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox textApellido;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox textNombre;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TextBox textDNI;
+        private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TabPage ModificarUsuario;
         private System.Windows.Forms.TextBox textBox27;
@@ -1855,7 +1860,7 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.TextBox textBox25;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.TextBox textBox26;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button buttonModificarUsuario;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabControl tabControl5;
@@ -1896,5 +1901,6 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox34;
         private System.Windows.Forms.Button buttonB;
+        private System.Windows.Forms.ComboBox comboBoxrRol;
     }
 }

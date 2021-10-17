@@ -287,22 +287,17 @@ namespace TP2_PlataformasDeDesarrollo
 
         public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
         {
-            foreach (Usuario u in Usuarios)
-            {
-                if (Usuarios[ID] != null)
+        
+            //Podriamos usar el metodo eliminar para despues agregar uno nuevo.
+                if (nUsuarios.Exists(x => x.nID == ID))
                 {
-                    Usuario e = (Usuario)u;
-                    e.nDNI = DNI;
-                    e.nNombre = nombre;
-                    e.nApellido = apellido;
-                    e.nMail = Mail;
-                    e.nPassword = password;
-                    e.nCUIT_CUIL = CUIT_CUIL;
-                    e.nRol = rol;
+                    Usuarios.Remove(nUsuarios.Find(x => x.nID == ID));
+                    int n = Usuarios.Count();
+                    Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol)); 
                     Console.WriteLine("Usuario modificado con exito!");
                     return true;
                 }
-            }
+            
             Console.WriteLine("ERROR: no hay Usuario con ese ID: " + ID);
             return false;
         }
@@ -515,7 +510,7 @@ namespace TP2_PlataformasDeDesarrollo
         // #######################################################################################
         public Boolean esAdmin(int ID)
         {
-            if (Usuarios[ID] != null && Usuarios[ID].nRol == 3) //preguntamos si usuario con ID es admin
+            if (Usuarios[ID] != null && Usuarios[ID].nRol == 1) //preguntamos si usuario con ID es admin
             { return true; }
             else
             { return false; }
