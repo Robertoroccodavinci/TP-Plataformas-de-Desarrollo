@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace TP2_PlataformasDeDesarrollo
 {
-    public partial class Form4 : Form
+    public partial class FormAdmin : Form
     {
         private Mercado merc;
         private int ID;
         public delegate void TransfDelegado2(); // Metodo
         public TransfDelegado2 TrasfEvento;
 
-        public Form4(int ID, string nombre, Object m)
+        public FormAdmin(int ID, string nombre, Object m)
         {
             InitializeComponent();
             this.ID = ID;
@@ -76,6 +76,7 @@ namespace TP2_PlataformasDeDesarrollo
                 borrarCategoria.UseColumnTextForButtonValue = true;
                 dataGridView2.Columns.Add(borrarCategoria);
             }
+            data.nProductos.Sort();
             foreach (Producto p in data.nProductos)
             {
                 if (p != null)
@@ -97,6 +98,7 @@ namespace TP2_PlataformasDeDesarrollo
                 borrarProducto.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(borrarProducto);
             }
+            data.nUsuarios.Sort();
             foreach (Usuario u in data.nUsuarios)
             {
                 if (u != null)
@@ -177,7 +179,8 @@ namespace TP2_PlataformasDeDesarrollo
                     {
 
                         //MODIFICAR 
-                        int indice = int.Parse(dataGridView1[0, e.RowIndex].Value.ToString());
+ 
+                        int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(dataGridView1[0, e.RowIndex].Value.ToString()));
                         textBox9.Text = merc.nProductos[indice].nIDProd.ToString();
                         textBox5.Text = merc.nProductos[indice].nNombre;
                         textBox6.Text = merc.nProductos[indice].nPrecio.ToString();
@@ -199,11 +202,15 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button7_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("estoy en formAdmin");
             if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
                                        int.Parse(textBox7.Text), int.Parse(textBox8.Text)))
             {
+                MessageBox.Show("vamos a la lista de productos");
                 tabControl2.SelectedTab = ListaProductos;
             }
+
+            //FALTA GUARDAR
         }
         //######################################################
         //             AGREGAR PRODUCTO NUEVO
@@ -214,6 +221,7 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 tabControl2.SelectedTab = ListaProductos;
             }
+            //FALTA GUARDAR
         }
         //######################################################
         //              SELECCIONAR CATEGORIA 
@@ -604,7 +612,6 @@ namespace TP2_PlataformasDeDesarrollo
         {
             button1.Text = "Actualizar Datos";
             textBox34.Text = "";
-            merc.llenarListas();
             refreshData(merc); //RECARGA LAS LISTAS
         }
 
@@ -622,5 +629,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.TrasfEvento();
             this.Close();
         }
+
+       
     }
 }

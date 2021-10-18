@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace TP2_PlataformasDeDesarrollo
 {
-    public partial class Form3 : Form
+    public partial class FormCliente : Form
     {
         private Mercado merc;
         private int ID;
@@ -13,7 +13,7 @@ namespace TP2_PlataformasDeDesarrollo
 
 
 
-        public Form3(int ID, string nombre, Object m)
+        public FormCliente(int ID, string nombre, Object m)
         {
 
             InitializeComponent();
@@ -48,7 +48,8 @@ namespace TP2_PlataformasDeDesarrollo
             //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
             dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
             dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
-
+            
+            data.nProductos.Sort();
             foreach (Producto p in data.nProductos)
             {
                 if (p != null)
@@ -94,7 +95,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int indice = int.Parse(dataGridView1[0, e.RowIndex].Value.ToString());
+            int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(dataGridView1[0, e.RowIndex].Value.ToString()));
             foreach (Producto p in merc.nProductos) 
             {
                 if (p.nIDProd == indice) 
@@ -115,7 +116,9 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button5_Click(object sender, EventArgs e)
         {
-            if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID))
+         
+            int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(label20.Text));
+            if (merc.AgregarAlCarro(indice, int.Parse(numericUpDown1.Value.ToString()), ID))
             {
                 MessageBox.Show("Producto agregada con exito al Carro.");
                 refreshData(merc);

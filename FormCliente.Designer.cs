@@ -1,7 +1,7 @@
 ﻿
 namespace TP2_PlataformasDeDesarrollo
 {
-    partial class Form3
+    partial class FormCliente
     {
         /// <summary>
         /// Required designer variable.

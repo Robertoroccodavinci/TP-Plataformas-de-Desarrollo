@@ -1,7 +1,7 @@
 ﻿
 namespace TP2_PlataformasDeDesarrollo
 {
-    partial class Form4
+    partial class FormAdmin
     {
         /// <summary>
         /// Required designer variable.
@@ -463,6 +463,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.button6.TabIndex = 13;
             this.button6.Text = "Agregar";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // label11
             // 
@@ -586,6 +587,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.button7.TabIndex = 22;
             this.button7.Text = "Modificar";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // label15
             // 
@@ -1696,7 +1698,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.buttonB.UseVisualStyleBackColor = true;
             this.buttonB.Click += new System.EventHandler(this.buttonB_Click);
             // 
-            // Form4
+            // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1714,7 +1716,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Form4";
+            this.Name = "FormAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form4";
             this.Click += new System.EventHandler(this.buttonB_Click);

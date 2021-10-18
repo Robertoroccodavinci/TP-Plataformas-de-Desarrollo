@@ -174,13 +174,13 @@ namespace TP2_PlataformasDeDesarrollo
                 {
                     if (Categorias[i].nID == ID_Categoria)
                     {
-                        Productos[i].nCategoria = Categorias[i];
-                        Console.WriteLine("Producto modificado correctamente!");
+                        Productos[IDProd].nCategoria = Categorias[i];
+                        MessageBox.Show("Producto modificado correctamente!");
                         return true;
                     }
                 }
             }
-            Console.WriteLine("ERROR: producto no encontrado.");
+            MessageBox.Show("ERROR: producto no encontrado.");
             return false;
         }
 
@@ -703,7 +703,7 @@ namespace TP2_PlataformasDeDesarrollo
                     // 0 - ID PRODUCTO
                     // 1 - CANTIDAD
                     // 2 - ID USUARIO
-                    AgregarAlCarro(int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[0]));
+                    AgregarAlCarro(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
                 }
             }
 

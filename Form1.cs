@@ -13,8 +13,8 @@ namespace TP2_PlataformasDeDesarrollo
     public partial class Form1 : Form
     {
         private Form2 hijoLogin;
-        private Form3 hijoCliente;
-        private Form4 hijoAdmin;
+        private FormCliente hijoCliente;
+        private FormAdmin hijoAdmin;
         private Mercado merc;
 
         public Form1()
@@ -33,7 +33,7 @@ namespace TP2_PlataformasDeDesarrollo
             if (merc.esAdmin(ID))
             {
                 hijoLogin.Close();
-                hijoAdmin = new Form4(ID, nombre, m);
+                hijoAdmin = new FormAdmin(ID, nombre, m);
                 hijoAdmin.TrasfEvento += TransfDelegado2;
                 hijoAdmin.MdiParent = this;
                 hijoAdmin.Show();
@@ -41,7 +41,7 @@ namespace TP2_PlataformasDeDesarrollo
             else 
             {
                 hijoLogin.Close();
-                hijoCliente = new Form3(ID, nombre, m);
+                hijoCliente = new FormCliente(ID, nombre, m);
                 hijoCliente.TrasfEvento += TransfDelegado2;
                 hijoCliente.MdiParent = this;
                 hijoCliente.Show();
