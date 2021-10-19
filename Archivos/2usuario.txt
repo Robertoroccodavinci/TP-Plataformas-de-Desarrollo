@@ -3,3 +3,6 @@
 2,32154869,José,Perez,joseperez@hotmail.com,123456,20321548,0
 3,123456,seba,tolaba,seba@gmail.com,987789,12332145,1
 4,55566677,tito,palito,palito@gmail.com,963369,32112325,0
+5,52879654,juan,pepe,asdasd,555666,528796545,0
+6,45875987,pepe,juan,asdasd,555666,45875987451,0
+7,41825102,sebastian,rodrigo,seba@gmail.com,444666,41825102987,1

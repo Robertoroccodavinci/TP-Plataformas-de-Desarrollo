@@ -53,7 +53,7 @@ namespace TP2_PlataformasDeDesarrollo
                 // 6 - CUIT_CUIL
                 // 7 - ROL
                 int n = nUsuarios.Count();
-                Usuarios.Add(new Usuario(n, int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], int.Parse(parts[6]), int.Parse(parts[7])));
+                Usuarios.Add(new Usuario(n, int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], long.Parse(parts[6]), int.Parse(parts[7])));
             }
 
         }
@@ -266,7 +266,7 @@ namespace TP2_PlataformasDeDesarrollo
         //                                  ELIMINAR USUARIO
         //                                  MOSTRAR USUARIO
         // ######################################################################################
-        public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
+        public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, long CUIT_CUIL, int rol)
         {
             int n = Usuarios.Count();
             Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol));
@@ -285,24 +285,33 @@ namespace TP2_PlataformasDeDesarrollo
             }
         }
 
-        public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
+        public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, long CUIT_CUIL, int rol)
         {
         
             //Podriamos usar el metodo eliminar para despues agregar uno nuevo.
                 if (nUsuarios.Exists(x => x.nID == ID))
                 {
-                    Usuarios.Remove(nUsuarios.Find(x => x.nID == ID));
-                    int n = Usuarios.Count();
-                    Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol)); 
-                    Console.WriteLine("Usuario modificado con exito!");
+                    int indice = nUsuarios.FindIndex(x => x.nID == ID);
+                    Usuarios[indice]  =  null;
+                    //Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol));
+                    Usuarios[indice] = new Usuario(ID, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol);
+                    /*Usuarios[indice].nDNI = DNI;
+                    Usuarios[indice].nNombre = nombre;
+                    Usuarios[indice].nApellido = apellido;
+                    Usuarios[indice].nMail = Mail;
+                    Usuarios[indice].nPassword = password;
+                    Usuarios[indice].nCUIT_CUIL = CUIT_CUIL;
+                    Usuarios[indice].nRol = rol;*/
+
+                    MessageBox.Show("Usuario modificado con exito!");
                     return true;
                 }
-            
-            Console.WriteLine("ERROR: no hay Usuario con ese ID: " + ID);
+
+            MessageBox.Show("ERROR: no hay Usuario con ese ID: " + ID);
             return false;
         }
 
-        public bool EliminarUsuario(int ID)
+        public bool EliminarUsuario(int ID) // FALTA PROGRAMARLA BIEN, JUNTO A LA BASE DE DATOS
         {
             foreach (Usuario u in Usuarios)
             {
@@ -319,9 +328,9 @@ namespace TP2_PlataformasDeDesarrollo
 
         public List<Usuario> MostrarUsuarios()
         {
-            Usuarios.Sort();
+            nUsuarios.Sort(delegate (Usuario a, Usuario b) { return a.nID.CompareTo(b.nID); });
+            //Usuarios.Sort();
             return nUsuarios;
-            
         }
 
         // #######################################################################################

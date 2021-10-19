@@ -26,19 +26,19 @@ namespace TP2_PlataformasDeDesarrollo
             refreshData(merc);
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
-            tabControl1.SelectedIndexChanged += new EventHandler(ocultarComboBox);
+            //tabControl1.SelectedIndexChanged += new EventHandler(ocultarMostrar);
 
-            foreach (Categoria c in merc.nCategorias)
-            {
-                if (c != null)
-                {
-                    //Rellenamos la lista de categorias(SOLO NOMBRES) en la Grilla de la izquierda en la pestaña de PRODUCTOS
-                    //Para poder usar la grilla como filtro
-                    dataGridView6.Rows.Add(c.nNombre);
-                }
-            }
+            //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
+            dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
+            dataGridView2.CellClick += dataGridView2_CellClick; //EVENTO TABLA CATEGORIAS
+            dataGridView3.CellClick += dataGridView3_CellClick; //EVENTO TABLA USUARIOS
+            dataGridView4.CellClick += dataGridView4_CellClick; //EVENTO TABLA COMPRAS
+            //dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
+
             //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
             dataGridView6.CellClick += dataGridView6_CellClick;
+
+
         }
 
         private void refreshData(Mercado data)
@@ -49,15 +49,8 @@ namespace TP2_PlataformasDeDesarrollo
             dataGridView3.Rows.Clear(); //LIMPIAMOS TABLA USUARIOS
             dataGridView4.Rows.Clear(); //LIMPIAMOS TABLA COMPRAS
             dataGridView5.Rows.Clear(); //LIMPIAMOS TABLA MI CARRO
+            dataGridView6.Rows.Clear(); //LIMPIAMOS TABLA CATEGORIA DE PRODUCTOS
 
-            //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
-            dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
-            dataGridView2.CellClick += dataGridView2_CellClick; //EVENTO TABLA CATEGORIAS
-            dataGridView3.CellClick += dataGridView3_CellClick; //EVENTO TABLA USUARIOS
-            dataGridView4.CellClick += dataGridView4_CellClick; //EVENTO TABLA COMPRAS
-            //dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
-
-         
             foreach (Categoria c in data.nCategorias)
             {
                 if (c != null)
@@ -76,7 +69,19 @@ namespace TP2_PlataformasDeDesarrollo
                 borrarCategoria.UseColumnTextForButtonValue = true;
                 dataGridView2.Columns.Add(borrarCategoria);
             }
-            data.nProductos.Sort();
+
+            // LISTADO DE CATEGORIAS DE LA LISTA DE PRODUCTOS
+            foreach (Categoria c in merc.nCategorias)
+            {
+                if (c != null)
+                {
+                    //Rellenamos la lista de categorias(SOLO NOMBRES) en la Grilla de la izquierda en la pestaña de PRODUCTOS
+                    //Para poder usar la grilla como filtro
+                    dataGridView6.Rows.Add(c.nNombre);
+                }
+            }
+
+            //data.nProductos.Sort();
             foreach (Producto p in data.nProductos)
             {
                 if (p != null)
@@ -98,8 +103,8 @@ namespace TP2_PlataformasDeDesarrollo
                 borrarProducto.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(borrarProducto);
             }
-            data.nUsuarios.Sort();
-            foreach (Usuario u in data.nUsuarios)
+            
+            foreach (Usuario u in data.MostrarUsuarios())
             {
                 if (u != null)
                 {
@@ -202,11 +207,10 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button7_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("estoy en formAdmin");
             if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
                                        int.Parse(textBox7.Text), int.Parse(textBox8.Text)))
             {
-                MessageBox.Show("vamos a la lista de productos");
+                refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }
 
@@ -219,6 +223,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
             {
+                refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }
             //FALTA GUARDAR
@@ -245,28 +250,7 @@ namespace TP2_PlataformasDeDesarrollo
             }
         }
 
-        //######################################################
-        //             OCULTAR COMBO BOX
-        //######################################################
-        private void ocultarComboBox(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedTab == tabPage1)
-            {
-                comboBox1.Show();
-                comboBox2.Show();
-                label46.Show();
-                buttonB.Show();
-                textBox34.Show();
-            }
-            else
-            {
-                comboBox1.Hide();
-                comboBox2.Hide();
-                label46.Hide();
-                buttonB.Hide();
-                textBox34.Hide();
-            }
-        }
+        
 
         //######################################################
         //             BOTON BUSCAR PRODUCTO
@@ -438,13 +422,17 @@ namespace TP2_PlataformasDeDesarrollo
            
             if (e.ColumnIndex == dataGridView2.Columns["botonBorrar"].Index)
             {
-                // ELIMINAR
-                DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar esta Categoria?", "", MessageBoxButtons.YesNo);
-                if (resutl == DialogResult.Yes)
+
+                int indice = int.Parse(dataGridView2[0, e.RowIndex].Value.ToString());
+                if (merc.nCategorias[indice] != null)
                 {
-                    int indice = int.Parse(dataGridView2[0, e.RowIndex].Value.ToString());
-                    merc.EliminarCategoria(indice);
-                    dataGridView2.Rows.RemoveAt(e.RowIndex);
+                    // ELIMINAR
+                    DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar esta Categoria?", "", MessageBoxButtons.YesNo);
+                    if (resutl == DialogResult.Yes)
+                    {
+                        merc.EliminarCategoria(indice);
+                        dataGridView2.Rows.RemoveAt(e.RowIndex);
+                    }
                 }
             }
             else
@@ -464,6 +452,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.ModificarCategoria(int.Parse(textBox11.Text), textBox12.Text))
             {
+                refreshData(merc);
                 tabControl3.SelectedTab = ListaCategoria;
             }
         }
@@ -474,6 +463,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.AgregarCategoria(textBox10.Text))
             {
+                refreshData(merc);
                 tabControl3.SelectedTab = ListaCategoria;
             }
         }
@@ -482,7 +472,7 @@ namespace TP2_PlataformasDeDesarrollo
         //                                       PESTAÑA USUARIOS
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //######################################################
-        //           MOSTRAR Y MODIFICAR USUARIOS
+        //           MOSTRAR Y ELIMINAR USUARIOS
         //######################################################
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -499,9 +489,11 @@ namespace TP2_PlataformasDeDesarrollo
             }
             else
             {
-                //MODIFICAR
+                //MOSTRAR
                 tabControl4.SelectedTab = ModificarUsuario;
-                int indice = int.Parse(dataGridView3[0, e.RowIndex].Value.ToString());
+                int ID = int.Parse(dataGridView3[0, e.RowIndex].Value.ToString());
+                int indice = merc.nUsuarios.FindIndex(x => x.nID == ID);
+                //int indice = int.Parse(dataGridView3[0, e.RowIndex].Value.ToString());
                 textBox20.Text = merc.nUsuarios[indice].nID.ToString();
                 textBox21.Text = merc.nUsuarios[indice].nDNI.ToString();
                 textBox22.Text = merc.nUsuarios[indice].nNombre;
@@ -509,18 +501,20 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox24.Text = merc.nUsuarios[indice].nMail;
                 textBox25.Text = merc.nUsuarios[indice].nPassword;
                 textBox26.Text = merc.nUsuarios[indice].nCUIT_CUIL.ToString();
-                textBox27.Text = merc.nUsuarios[indice].nRol.ToString();
+                comboBoxModRol.SelectedIndex = int.Parse(merc.nUsuarios[indice].nRol.ToString());
 
             }
         }
         //######################################################
-        //             MODIFICAR USUARIO
+        //            BOTON MODIFICAR USUARIO
         //######################################################
         private void buttonModificarUsuario_Click(object sender, EventArgs e)
         {
             if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
-                                      textBox24.Text, textBox25.Text, int.Parse(textBox26.Text), int.Parse(textBox21.Text)))
+                                      textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex ))
             {
+                MessageBox.Show("usuario modificado");
+                refreshData(merc);
                 tabControl4.SelectedTab = ListaUsuarios;
             }
         }
@@ -530,8 +524,9 @@ namespace TP2_PlataformasDeDesarrollo
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
             if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
-                                    textPass.Text, int.Parse(textCUILCUIT.Text), comboBoxrRol.SelectedIndex))
+                                    textPass.Text, long.Parse(textCUILCUIT.Text), comboBoxRol.SelectedIndex))
             {
+                refreshData(merc);
                 tabControl4.SelectedTab = ListaUsuarios;
             }
         }
@@ -575,11 +570,61 @@ namespace TP2_PlataformasDeDesarrollo
         }
 
 
+
+
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //                                       PESTAÑA MI CARRO
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        //######################################################
+        //                  MODIFICAR CARRO
+        //######################################################
+
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        //                                           OTROS
+        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        //################################4######################
+        //                 OCULTAR MOSTRAR
+        //######################################################
+        private void ocultarMostrar(object sender, EventArgs e)
+        {
+            //Pestaña Usuario
+            if (tabControl1.SelectedTab == tabPage1)
+            {
+                // Mostrar Panel de Orden
+                comboBox1.Show();
+                comboBox2.Show();
+                label46.Show();
+                buttonB.Show();
+                textBox34.Show();
+                // Mostrar Boton Agregar 
+                button2.Show();
+            }
+            else
+            {
+                //Ocultar Panel de Orden
+                comboBox1.Hide();
+                comboBox2.Hide();
+                label46.Hide();
+                buttonB.Hide();
+                textBox34.Hide();
+                // Mostrar Boton Agregar 
+                button2.Show();
+                //Pestaña Carro y Compra
+                if (tabControl1.SelectedTab == tabPage4 || tabControl1.SelectedTab == tabPage5)
+                {
+                    // Quitar Boton Agregar
+                    button2.Hide();
+                }
+            }
+        }
+
         //######################################################
         //                  BOTON AGREGAR
         //######################################################
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab.Text == "Productos")
             {
@@ -591,20 +636,10 @@ namespace TP2_PlataformasDeDesarrollo
             }
             else if (tabControl1.SelectedTab.Text == "Usuarios")
             {
-                tabControl3.SelectedTab = AgregarUsuario;
+                tabControl4.SelectedTab = AgregarUsuario;
             }
         }
 
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        //                                       PESTAÑA MI CARRO
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        //                                           OTROS
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-   
         //######################################################
         //             BOTON ACTUALIZAR DATOS
         //######################################################
@@ -630,6 +665,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.Close();
         }
 
-       
+        
     }
 }

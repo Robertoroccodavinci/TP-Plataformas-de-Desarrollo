@@ -14,11 +14,11 @@ namespace TP2_PlataformasDeDesarrollo
         private string Apellido;
         private string Mail;
         private string Password;
-        private int CUIT_CUIL;
+        private long CUIT_CUIL;
         private Carro MiCarro;
         private int rol; // 1-Cliente 2-Empresa 3-Administrador
 
-        public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, int CUIT_CUIL, int rol)
+        public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, long CUIT_CUIL, int rol)
         {
             nDNI = DNI;
             nID = ID;
@@ -74,7 +74,7 @@ namespace TP2_PlataformasDeDesarrollo
             set { MiCarro = value; }
         }
 
-        public int nCUIT_CUIL
+        public long nCUIT_CUIL
         {
             get { return CUIT_CUIL; }
             set { CUIT_CUIL = value; }

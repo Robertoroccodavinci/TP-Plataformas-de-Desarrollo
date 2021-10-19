@@ -97,7 +97,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AgregarUsuario = new System.Windows.Forms.TabPage();
-            this.comboBoxrRol = new System.Windows.Forms.ComboBox();
+            this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
             this.textCUILCUIT = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -113,7 +113,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
             this.ModificarUsuario = new System.Windows.Forms.TabPage();
-            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.comboBoxModRol = new System.Windows.Forms.ComboBox();
             this.label39 = new System.Windows.Forms.Label();
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
@@ -169,6 +169,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox34 = new System.Windows.Forms.TextBox();
             this.buttonB = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -272,6 +273,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(901, 422);
             this.tabControl1.TabIndex = 11;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.ocultarMostrar);
             // 
             // tabPage1
             // 
@@ -728,6 +730,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.button4.TabIndex = 16;
             this.button4.Text = "Agregar";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label22
             // 
@@ -791,6 +794,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.button8.TabIndex = 19;
             this.button8.Text = "Modificar";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // label23
             // 
@@ -929,7 +933,7 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             // AgregarUsuario
             // 
-            this.AgregarUsuario.Controls.Add(this.comboBoxrRol);
+            this.AgregarUsuario.Controls.Add(this.comboBoxRol);
             this.AgregarUsuario.Controls.Add(this.label31);
             this.AgregarUsuario.Controls.Add(this.textCUILCUIT);
             this.AgregarUsuario.Controls.Add(this.label30);
@@ -953,17 +957,17 @@ namespace TP2_PlataformasDeDesarrollo
             this.AgregarUsuario.Text = "AgregarUsuario";
             this.AgregarUsuario.UseVisualStyleBackColor = true;
             // 
-            // comboBoxrRol
+            // comboBoxRol
             // 
-            this.comboBoxrRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxrRol.FormattingEnabled = true;
-            this.comboBoxrRol.Items.AddRange(new object[] {
+            this.comboBoxRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRol.FormattingEnabled = true;
+            this.comboBoxRol.Items.AddRange(new object[] {
             "Cliente",
             "Administrador"});
-            this.comboBoxrRol.Location = new System.Drawing.Point(134, 171);
-            this.comboBoxrRol.Name = "comboBoxrRol";
-            this.comboBoxrRol.Size = new System.Drawing.Size(166, 21);
-            this.comboBoxrRol.TabIndex = 33;
+            this.comboBoxRol.Location = new System.Drawing.Point(134, 171);
+            this.comboBoxRol.Name = "comboBoxRol";
+            this.comboBoxRol.Size = new System.Drawing.Size(166, 21);
+            this.comboBoxRol.TabIndex = 33;
             // 
             // label31
             // 
@@ -1096,7 +1100,7 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             // ModificarUsuario
             // 
-            this.ModificarUsuario.Controls.Add(this.textBox27);
+            this.ModificarUsuario.Controls.Add(this.comboBoxModRol);
             this.ModificarUsuario.Controls.Add(this.label39);
             this.ModificarUsuario.Controls.Add(this.textBox20);
             this.ModificarUsuario.Controls.Add(this.label32);
@@ -1122,13 +1126,17 @@ namespace TP2_PlataformasDeDesarrollo
             this.ModificarUsuario.Text = "ModificarUsuario";
             this.ModificarUsuario.UseVisualStyleBackColor = true;
             // 
-            // textBox27
+            // comboBoxModRol
             // 
-            this.textBox27.Location = new System.Drawing.Point(114, 184);
-            this.textBox27.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox27.Name = "textBox27";
-            this.textBox27.Size = new System.Drawing.Size(166, 20);
-            this.textBox27.TabIndex = 49;
+            this.comboBoxModRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxModRol.FormattingEnabled = true;
+            this.comboBoxModRol.Items.AddRange(new object[] {
+            "Cliente",
+            "Administrador"});
+            this.comboBoxModRol.Location = new System.Drawing.Point(114, 187);
+            this.comboBoxModRol.Name = "comboBoxModRol";
+            this.comboBoxModRol.Size = new System.Drawing.Size(166, 21);
+            this.comboBoxModRol.TabIndex = 50;
             // 
             // label39
             // 
@@ -1698,12 +1706,24 @@ namespace TP2_PlataformasDeDesarrollo
             this.buttonB.UseVisualStyleBackColor = true;
             this.buttonB.Click += new System.EventHandler(this.buttonB_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(385, 12);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(94, 29);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Agregar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(892, 462);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label46);
             this.Controls.Add(this.comboBox1);
@@ -1847,7 +1867,6 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TabPage ModificarUsuario;
-        private System.Windows.Forms.TextBox textBox27;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.TextBox textBox20;
         private System.Windows.Forms.Label label32;
@@ -1903,6 +1922,8 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox textBox34;
         private System.Windows.Forms.Button buttonB;
-        private System.Windows.Forms.ComboBox comboBoxrRol;
+        private System.Windows.Forms.ComboBox comboBoxRol;
+        private System.Windows.Forms.ComboBox comboBoxModRol;
+        private System.Windows.Forms.Button button2;
     }
 }
