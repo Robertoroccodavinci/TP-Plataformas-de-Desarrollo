@@ -405,22 +405,20 @@ namespace TP2_PlataformasDeDesarrollo
 
         public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
-            foreach (Producto p in nProductos) 
+            int indiceProd = nProductos.FindIndex(x => x.nIDProd == ID_Producto);
+            
+            if (nProductos[indiceProd].nCantidad >= Cantidad && Cantidad > 0)
             {
-                if (p.nIDProd == ID_Producto) 
-                {
-                    if (p.nCantidad >= Cantidad && Cantidad > 0)
-                    {
-                        Usuarios[ID_Usuario].nCarro.AgregarProducto(p, Cantidad);
-                        return true;
-                    }
-                }
+                Usuarios[ID_Usuario].nCarro.AgregarProducto(nProductos[indiceProd], Cantidad);
+                return true;
             }
+             
             return false;
         }
         public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
         {
-            if (Usuarios[ID_Usuario].nCarro.QuitarProducto(Productos[ID_Producto], Cantidad))
+            int indiceProd = nProductos.FindIndex(x => x.nIDProd == ID_Producto);
+            if (Usuarios[ID_Usuario].nCarro.QuitarProducto(nProductos[indiceProd], Cantidad))
             {
                 return true;
             }

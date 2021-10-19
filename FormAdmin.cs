@@ -26,6 +26,7 @@ namespace TP2_PlataformasDeDesarrollo
             refreshData(merc);
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
+            comboBoxRol.SelectedIndex = 0;
             //tabControl1.SelectedIndexChanged += new EventHandler(ocultarMostrar);
 
             //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
@@ -223,6 +224,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
             {
+                
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }

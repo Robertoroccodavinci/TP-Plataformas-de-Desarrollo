@@ -11,8 +11,6 @@ namespace TP2_PlataformasDeDesarrollo
         public delegate void TransfDelegado2(); // Metodo
         public TransfDelegado2 TrasfEvento;
 
-
-
         public FormCliente(int ID, string nombre, Object m)
         {
 
@@ -23,16 +21,15 @@ namespace TP2_PlataformasDeDesarrollo
             refreshData(merc);
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
-            tabControl1.SelectedIndexChanged += new EventHandler(ocultarComboBox);
 
+            tabControl1.SelectedIndexChanged += new EventHandler(ocultarMostrar);
+            button15.Hide();
+            button14.Hide();
 
-            foreach (Categoria c in merc.nCategorias)
-            {
-                if (c != null)
-                {
-                    dataGridView6.Rows.Add(c.nNombre);
-                }
-            }
+            //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
+            dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
+            dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
+
             //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
             dataGridView6.CellClick += dataGridView6_CellClick;
         }
@@ -44,12 +41,16 @@ namespace TP2_PlataformasDeDesarrollo
             //borro los datos
             dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
             dataGridView5.Rows.Clear(); //LIMPIAMOS TABLA MI CARRO
+            dataGridView6.Rows.Clear(); //LIMPIAMOS TABLA CATEGORIAS DE PRODUCTOS
 
-            //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
-            dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
-            dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
+            foreach (Categoria c in merc.nCategorias)
+            {
+                if (c != null)
+                {
+                    dataGridView6.Rows.Add(c.nNombre);
+                }
+            }
             
-            data.nProductos.Sort();
             foreach (Producto p in data.nProductos)
             {
                 if (p != null)
@@ -68,9 +69,10 @@ namespace TP2_PlataformasDeDesarrollo
                 if (kvp.Key != null)
                 {
                     string[] prods = { kvp.Key.nIDProd.ToString(),
-                                        kvp.Key.nNombre,
-                                        kvp.Key.nPrecio.ToString(),
-                                        kvp.Value.ToString()};
+                                       kvp.Key.nNombre,
+                                       kvp.Key.nPrecio.ToString(),
+                                       kvp.Value.ToString(),
+                                      (kvp.Key.nPrecio * kvp.Value).ToString() };
                     dataGridView5.Rows.Add(prods);
                 }
             }
@@ -96,19 +98,16 @@ namespace TP2_PlataformasDeDesarrollo
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(dataGridView1[0, e.RowIndex].Value.ToString()));
-            foreach (Producto p in merc.nProductos) 
-            {
-                if (p.nIDProd == indice) 
-                {
-                    label20.Text = p.nIDProd.ToString();
-                    label7.Text = p.nNombre;
-                    label8.Text = p.nPrecio.ToString();
-                    label9.Text = p.nCantidad.ToString();
-                    label10.Text = p.nCategoria.nID.ToString();
-                    numericUpDown1.Maximum = p.nCantidad;
-                    tabControl2.SelectedTab = MostrarProducto;
-                }
-            }
+
+            label20.Text = merc.nProductos[indice].nIDProd.ToString();
+            label7.Text = merc.nProductos[indice].nNombre;
+            label8.Text = merc.nProductos[indice].nPrecio.ToString();
+            label9.Text = merc.nProductos[indice].nCantidad.ToString();
+            label10.Text = merc.nProductos[indice].nCategoria.nID.ToString();
+            numericUpDown1.Maximum = merc.nProductos[indice].nCantidad;
+            tabControl2.SelectedTab = MostrarProducto;
+            
+            
         }
        
         //######################################################
@@ -153,9 +152,9 @@ namespace TP2_PlataformasDeDesarrollo
         }
 
         //######################################################
-        //             OCULTAR COMBO BOX
+        //             OCULTAR MOSTRAR
         //######################################################
-        private void ocultarComboBox(object sender, EventArgs e)
+        private void ocultarMostrar(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tabPage1)
             {
@@ -164,6 +163,8 @@ namespace TP2_PlataformasDeDesarrollo
                 label46.Show();
                 button13.Show();
                 textBox34.Show();
+                button15.Hide();
+                button14.Hide();
             }
             else
             {
@@ -172,6 +173,8 @@ namespace TP2_PlataformasDeDesarrollo
                 label46.Hide();
                 button13.Hide();
                 textBox34.Hide();
+                button15.Show();
+                button14.Show();
             }
         }
 
@@ -363,10 +366,10 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button12_Click(object sender, EventArgs e)
         {
-            /*if (merc.QuitarAlCarro(int.Parse(textBox31.Text), )) 
+            if (merc.QuitarAlCarro(int.Parse(textBox31.Text), int.Parse(textBox33.Text), ID)) 
             {
                 tabControl6.SelectedTab = ListaCarro;
-            }*/
+            }
         }
 
         //######################################################
@@ -376,7 +379,6 @@ namespace TP2_PlataformasDeDesarrollo
         {
             button1.Text = "Actualizar Datos";
             textBox34.Text = "";
-            merc.llenarListas();
             refreshData(merc); //RECARGA LAS LISTAS
         }
         

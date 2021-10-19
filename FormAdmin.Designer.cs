@@ -963,7 +963,8 @@ namespace TP2_PlataformasDeDesarrollo
             this.comboBoxRol.FormattingEnabled = true;
             this.comboBoxRol.Items.AddRange(new object[] {
             "Cliente",
-            "Administrador"});
+            "Administrador",
+            "Empresa"});
             this.comboBoxRol.Location = new System.Drawing.Point(134, 171);
             this.comboBoxRol.Name = "comboBoxRol";
             this.comboBoxRol.Size = new System.Drawing.Size(166, 21);
@@ -1132,7 +1133,8 @@ namespace TP2_PlataformasDeDesarrollo
             this.comboBoxModRol.FormattingEnabled = true;
             this.comboBoxModRol.Items.AddRange(new object[] {
             "Cliente",
-            "Administrador"});
+            "Administrador",
+            "Empresa"});
             this.comboBoxModRol.Location = new System.Drawing.Point(114, 187);
             this.comboBoxModRol.Name = "comboBoxModRol";
             this.comboBoxModRol.Size = new System.Drawing.Size(166, 21);
