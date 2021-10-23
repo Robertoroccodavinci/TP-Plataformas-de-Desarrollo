@@ -456,13 +456,14 @@ namespace TP2_PlataformasDeDesarrollo
                 Dictionary<Producto, int> Prod = new Dictionary<Producto, int>();
                 Prod = Usuarios[indiceUsuario].nCarro.nProductos;
 
-                Compras.Add(new Compra(n, Usuarios[indiceUsuario], total));
+                Compras.Add(new Compra(n, Usuarios[indiceUsuario], Usuarios[ID_Usuario].nCarro.nProductos, total));
 
+                /*                      ***********************************  ELIMINAR ****************************************
                 foreach (KeyValuePair<Producto, int> kvp in Prod) 
                 {
                     Compras[n].nProductos.Add(kvp.Key,kvp.Value);
                 }
-                
+                                        *************************************************************************************** */
                 
                 int indice = nCompras.FindIndex(x => x.nComprador == Usuarios[indiceUsuario]);
 

@@ -13,10 +13,14 @@ namespace TP2_PlataformasDeDesarrollo
         private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
         private double Total;
 
-        public Compra(int ID, Usuario Comprador, double Total)
+        public Compra(int ID, Usuario Comprador,Dictionary<Producto, int> Producto, double Total)
         {
             nIDCompra = ID;
             nComprador = Comprador;
+            foreach (KeyValuePair<Producto, int> kvp in Producto)
+            {
+                nProductos.Add(kvp.Key, kvp.Value);
+            }
             nTotal = Total;
 
 
