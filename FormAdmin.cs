@@ -123,6 +123,26 @@ namespace TP2_PlataformasDeDesarrollo
                                 u.nCUIT_CUIL.ToString(),
                                 r };
                     dataGridView3.Rows.Add(users);
+
+                    if (r == "Cliente"|| r == "Empresa")
+                    {
+                        
+                        string prods = "";
+                        double total = 0;
+                        foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos)
+                        { if (kvp.Key != null)
+                            prods += kvp.Key.nNombre + "*" + kvp.Value + ", ";
+                            total += kvp.Key.nPrecio * kvp.Value;
+
+                        }
+                        string[] carro = { u.nID.ToString(),
+                                           prods.ToString(),
+                                           total.ToString() 
+                                         };
+                        if (total != 0 && prods != "") {
+                            dataGridView5.Rows.Add(carro);
+                        }
+                    }
                 }
             }
             if (dataGridView3.Columns["botonBorrar"] == null)
@@ -135,12 +155,30 @@ namespace TP2_PlataformasDeDesarrollo
                 dataGridView3.Columns.Add(borrarUsuario);
             }
 
+
             foreach (Compra c in data.nCompras)
             {
+               
                 if (c != null)
                 {
+                    MessageBox.Show("EXISTEEEEE");
+                    string prods = "";
+                    //int indice = data.nCompras.FindIndex(x => x.nComprador == data.nUsuarios[]);
+                   
+                    
+                    foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
+                    {
+                        MessageBox.Show(kvp.Key.ToString() + " " + kvp.Value);
+                        MessageBox.Show("Entro a productos de compra");
+                        prods += kvp.Key.nNombre + "*" + kvp.Value + ", ";
+                    }
+                                       
+
                     string[] comp = { c.nIDCompra.ToString(),
-                                        c.nComprador.ToString() };
+                                      c.nComprador.nID.ToString(),
+                                      prods.ToString(),
+                                      c.nTotal.ToString()
+                                    };
                     dataGridView4.Rows.Add(comp);
                 }
             }

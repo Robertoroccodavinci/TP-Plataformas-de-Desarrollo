@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace TP2_PlataformasDeDesarrollo
 {
     class Carro
@@ -26,18 +27,20 @@ namespace TP2_PlataformasDeDesarrollo
         public Dictionary<Producto, int> nProductos
         {
             get { return Productos; }
-            set { Productos = value; }
+            set { Productos = value;}
         }
 
         public void Set(Producto key, int value)
         {
-            if (Productos.ContainsKey(key))
+            
+            if (nProductos.ContainsKey(key))
             {
-                Productos[key] = value;
+                nProductos[key] += value;
             }
             else
             {
-                Productos.Add(key, value);
+                nProductos.Add(key, value);
+
             }
         }
 
@@ -45,6 +48,7 @@ namespace TP2_PlataformasDeDesarrollo
         public bool AgregarProducto(Producto P, int Cantidad)
         {
             Set(P, Cantidad);
+            
             return true;    
             
             //######################################################################
@@ -52,16 +56,16 @@ namespace TP2_PlataformasDeDesarrollo
         }
         public bool QuitarProducto(Producto P, int Cantidad)
         {
-            if (Productos.ContainsKey(P))
+            if (nProductos.ContainsKey(P))
             {
-                if (Productos[P] > Cantidad)
+                if (nProductos[P] > Cantidad)
                 {
-                    Productos[P] = Productos[P] - Cantidad;
+                    nProductos[P] = nProductos[P] - Cantidad;
 
                 }
                 else
                 {
-                    Productos.Remove(P);
+                    nProductos.Remove(P);
                 }
                 return true;
             }
@@ -74,7 +78,7 @@ namespace TP2_PlataformasDeDesarrollo
         }
         public void Vaciar()
         {
-            Productos.Clear();
+            nProductos.Clear();
 
         }
 

@@ -150,11 +150,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabControl6 = new System.Windows.Forms.TabControl();
             this.ListaCarro = new System.Windows.Forms.TabPage();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModificarCarro = new System.Windows.Forms.TabPage();
             this.textBox33 = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -170,6 +165,9 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox34 = new System.Windows.Forms.TextBox();
             this.buttonB = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.ID_Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1503,10 +1501,8 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView5.AllowUserToResizeRows = false;
             this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView5.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID_Usuario,
             this.Column18,
-            this.Nombre,
-            this.Column19,
-            this.Column20,
             this.Column21});
             this.dataGridView5.Location = new System.Drawing.Point(0, 0);
             this.dataGridView5.Margin = new System.Windows.Forms.Padding(2);
@@ -1516,46 +1512,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView5.RowTemplate.Height = 24;
             this.dataGridView5.Size = new System.Drawing.Size(890, 381);
             this.dataGridView5.TabIndex = 2;
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "ID Producto";
-            this.Column18.MinimumWidth = 6;
-            this.Column18.Name = "Column18";
-            this.Column18.ReadOnly = true;
-            this.Column18.Width = 125;
-            // 
-            // Nombre
-            // 
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.MinimumWidth = 6;
-            this.Nombre.Name = "Nombre";
-            this.Nombre.ReadOnly = true;
-            this.Nombre.Width = 125;
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Precio";
-            this.Column19.MinimumWidth = 6;
-            this.Column19.Name = "Column19";
-            this.Column19.ReadOnly = true;
-            this.Column19.Width = 125;
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Cantidad";
-            this.Column20.MinimumWidth = 6;
-            this.Column20.Name = "Column20";
-            this.Column20.ReadOnly = true;
-            this.Column20.Width = 125;
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Total";
-            this.Column21.MinimumWidth = 6;
-            this.Column21.Name = "Column21";
-            this.Column21.ReadOnly = true;
-            this.Column21.Width = 125;
             // 
             // ModificarCarro
             // 
@@ -1718,6 +1674,28 @@ namespace TP2_PlataformasDeDesarrollo
             this.button2.Text = "Agregar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // ID_Usuario
+            // 
+            this.ID_Usuario.HeaderText = "ID Usuario";
+            this.ID_Usuario.Name = "ID_Usuario";
+            this.ID_Usuario.ReadOnly = true;
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "Productos";
+            this.Column18.MinimumWidth = 6;
+            this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
+            this.Column18.Width = 400;
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Total";
+            this.Column21.MinimumWidth = 6;
+            this.Column21.Name = "Column21";
+            this.Column21.ReadOnly = true;
+            this.Column21.Width = 125;
             // 
             // FormAdmin
             // 
@@ -1905,11 +1883,6 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.TabControl tabControl6;
         private System.Windows.Forms.TabPage ListaCarro;
         private System.Windows.Forms.DataGridView dataGridView5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
         private System.Windows.Forms.TabPage ModificarCarro;
         private System.Windows.Forms.TextBox textBox33;
         private System.Windows.Forms.Label label45;
@@ -1927,5 +1900,11 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.ComboBox comboBoxRol;
         private System.Windows.Forms.ComboBox comboBoxModRol;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID_Usuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
     }
 }

@@ -13,12 +13,12 @@ namespace TP2_PlataformasDeDesarrollo
         private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
         private double Total;
 
-        public Compra(int ID, Usuario Comprador, Dictionary<Producto, int> Productos, double Total)
+        public Compra(int ID, Usuario Comprador, double Total)
         {
             nIDCompra = ID;
             nComprador = Comprador;
-            nProductos = Productos;
             nTotal = Total;
+
 
         }
 
@@ -33,11 +33,11 @@ namespace TP2_PlataformasDeDesarrollo
             get { return Comprador; }
             set { Comprador = value; }
         }
-        //DUDAS
+
         public Dictionary<Producto, int> nProductos
         {
             get { return Productos; }
-            set { Productos = value; }
+            set { Productos = value;}
         }
 
         public double nTotal

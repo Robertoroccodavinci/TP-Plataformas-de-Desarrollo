@@ -13,13 +13,11 @@ namespace TP2_PlataformasDeDesarrollo
         private const int MaxCategorias = 10;
         private int CantCategorias = 0;
         private Categoria[] Categorias;
-        private List<Compra> Compras;
+        private List<Compra> Compras = new List<Compra>();
 
-        public string[] fileName = { "1productos.txt", "2usuario.txt", "3carro.txt", "4compras.txt", "5categoria.txt" };// A CORREGIR
+        public string[] fileName = { "1productos.txt", "2usuario.txt", "3carro.txt", "4compras.txt", "5categoria.txt" };
         private string sourcePath;
         private string targetPath;
-
-
 
         // #######################################################################################
         //                                  CONSTRUCTOR
@@ -33,7 +31,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             nProductos = new List<Producto>();
             nUsuarios = new List<Usuario>();
-            nCompras = new List<Compra>();
+            //nCompras = new List<Compra>();
             nCategorias = new Categoria[MaxCategorias];
 
             nSourcePath = Directory.GetCurrentDirectory() + "/../../Archivos";
@@ -273,7 +271,6 @@ namespace TP2_PlataformasDeDesarrollo
 
             if (Usuarios[n] != null)
             {
-               
                 StreamWriter file2 = new StreamWriter(System.IO.Path.Combine(nSourcePath, fileName[1]), true);
                 file2.WriteLine(n + "," + DNI + "," + nombre + "," + apellido + "," + Mail + "," + password + "," + CUIT_CUIL + "," + rol);
                 file2.Close();
@@ -406,10 +403,10 @@ namespace TP2_PlataformasDeDesarrollo
         public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
             int indiceProd = nProductos.FindIndex(x => x.nIDProd == ID_Producto);
-            
+            int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
             if (nProductos[indiceProd].nCantidad >= Cantidad && Cantidad > 0)
             {
-                Usuarios[ID_Usuario].nCarro.AgregarProducto(nProductos[indiceProd], Cantidad);
+                nUsuarios[indiceUsuario].nCarro.AgregarProducto(nProductos[indiceProd], Cantidad);
                 return true;
             }
              
@@ -418,7 +415,8 @@ namespace TP2_PlataformasDeDesarrollo
         public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
         {
             int indiceProd = nProductos.FindIndex(x => x.nIDProd == ID_Producto);
-            if (Usuarios[ID_Usuario].nCarro.QuitarProducto(nProductos[indiceProd], Cantidad))
+            int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
+            if (nUsuarios[indiceUsuario].nCarro.QuitarProducto(nProductos[indiceProd], Cantidad))
             {
                 return true;
             }
@@ -430,7 +428,8 @@ namespace TP2_PlataformasDeDesarrollo
         }
         public bool VaciarCarro(int ID_Usuario)
         {
-            Usuarios[ID_Usuario].nCarro.Vaciar();
+            int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
+            nUsuarios[indiceUsuario].nCarro.Vaciar();
             Console.WriteLine("Carro vaciado con exito!");
             return true;
         }
@@ -447,26 +446,39 @@ namespace TP2_PlataformasDeDesarrollo
         {
             double total = 0;
             int n = Compras.Count();
-            foreach (KeyValuePair<Producto, int> kvp in Usuarios[ID_Usuario].nCarro.nProductos)
+            int indiceUsuario = Usuarios.FindIndex(x => x.nID == ID_Usuario);
+            foreach (KeyValuePair<Producto, int> kvp in Usuarios[indiceUsuario].nCarro.nProductos)
             {
                 total += kvp.Key.nPrecio * kvp.Value;
             }
             if (total > 0)
             {
-                Compras.Add(new Compra(n++, Usuarios[ID_Usuario], Usuarios[ID_Usuario].nCarro.nProductos, total));
+                Dictionary<Producto, int> Prod = new Dictionary<Producto, int>();
+                Prod = Usuarios[indiceUsuario].nCarro.nProductos;
 
-                foreach (KeyValuePair<Producto, int> kvp in Compras[n].nProductos)
+                Compras.Add(new Compra(n, Usuarios[indiceUsuario], total));
+
+                foreach (KeyValuePair<Producto, int> kvp in Prod) 
                 {
+                    Compras[n].nProductos.Add(kvp.Key,kvp.Value);
+                }
+                
+                
+                int indice = nCompras.FindIndex(x => x.nComprador == Usuarios[indiceUsuario]);
+
+                foreach (KeyValuePair<Producto, int> kvp in nCompras[indice].nProductos)
+                {
+                    
                     foreach (Producto p in Productos)
                     {
                         if (kvp.Key == p)
                         {
                             p.nCantidad = p.nCantidad - kvp.Value;
+                            
                         }
                     }
                 }
                 VaciarCarro(ID_Usuario);
-                Compras[n].ToString();
                 Console.WriteLine("Compraste con exito!");
                 return true;
             }
@@ -606,10 +618,12 @@ namespace TP2_PlataformasDeDesarrollo
 
         public void llenarListas()
         {
+            // MODIFICAR RELLENANDO LAS LISTAS CON LOS DATOS DE LA BASE DE DATOS
+            
             //LIMPIAMOS LAS LISTAS
             nProductos = new List<Producto>();
             //nUsuarios = new List<Usuario>();
-            nCompras = new List<Compra>();
+            //nCompras = new List<Compra>();
             nCategorias = new Categoria[MaxCategorias];
             CantCategorias = 0;
 
@@ -707,10 +721,11 @@ namespace TP2_PlataformasDeDesarrollo
                 foreach (string s in lines)
                 {
                     string[] parts = s.Split(',');
-                    // 0 - ID PRODUCTO
-                    // 1 - CANTIDAD
-                    // 2 - ID USUARIO
-                    AgregarAlCarro(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
+                    // 0 - ID CARRO
+                    // 1 - ID PRODUCTO
+                    // 2 - CANTIDAD
+                    // 3 - ID USUARIO
+                    AgregarAlCarro(int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3]));
                 }
             }
 
@@ -723,7 +738,7 @@ namespace TP2_PlataformasDeDesarrollo
                     string[] parts = s.Split(',');
                     // 0 - ID COMPRA
                     // 1 - ID USUARIO
-                    // 3 - PRODUCTO
+                    // 3 - PRODUCTOS
                     // 4 - TOTAL
                     Comprar(int.Parse(parts[1]));
                 }
