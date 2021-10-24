@@ -161,19 +161,11 @@ namespace TP2_PlataformasDeDesarrollo
                
                 if (c != null)
                 {
-                    MessageBox.Show("EXISTEEEEE");
                     string prods = "";
-                    //int indice = data.nCompras.FindIndex(x => x.nComprador == data.nUsuarios[]);
-                   
-                    
                     foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
                     {
-                        MessageBox.Show(kvp.Key.ToString() + " " + kvp.Value);
-                        MessageBox.Show("Entro a productos de compra");
                         prods += kvp.Key.nNombre + "*" + kvp.Value + ", ";
                     }
-                                       
-
                     string[] comp = { c.nIDCompra.ToString(),
                                       c.nComprador.nID.ToString(),
                                       prods.ToString(),
@@ -593,8 +585,8 @@ namespace TP2_PlataformasDeDesarrollo
                 int indice = int.Parse(dataGridView4[0, e.RowIndex].Value.ToString());
                 //MODIFICAR
                 textBox28.Text = merc.nCompras[indice].nIDCompra.ToString();
-                textBox21.Text = merc.nCompras[indice].nComprador.nID.ToString();
-                textBox22.Text = merc.nCompras[indice].nTotal.ToString();
+                textBox29.Text = merc.nCompras[indice].nComprador.nID.ToString();
+                textBox30.Text = merc.nCompras[indice].nTotal.ToString();
                 tabControl5.SelectedTab = ModificarCompra;
             }
         }
@@ -603,8 +595,9 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button11_Click(object sender, EventArgs e)
         {
-            if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox22.Text)))
+            if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
             {
+                refreshData(merc);
                 tabControl5.SelectedTab = ListaCompras;
             }
         }
