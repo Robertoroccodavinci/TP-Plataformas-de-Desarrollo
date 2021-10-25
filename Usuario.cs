@@ -16,7 +16,7 @@ namespace TP2_PlataformasDeDesarrollo
         private string Password;
         private long CUIT_CUIL;
         private Carro MiCarro;
-        private int rol; // 1-Cliente 2-Empresa 3-Administrador
+        private int rol; // 1-Administrador 2-Cliente 3-Empresa
 
         public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, long CUIT_CUIL, int rol)
         {

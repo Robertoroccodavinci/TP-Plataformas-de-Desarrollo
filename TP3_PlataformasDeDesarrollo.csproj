@@ -105,6 +105,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -120,15 +121,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Archivos\3carro.txt" />
-    <Content Include="Archivos\5categoria.txt" />
-    <Content Include="Archivos\4compras.txt" />
-    <Content Include="Archivos\1productos.txt" />
-    <Content Include="Archivos\2usuario.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="carpetadeprueba\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

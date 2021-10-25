@@ -110,8 +110,8 @@ namespace TP2_PlataformasDeDesarrollo
                 if (u != null)
                 {
                     string r;
-                    if (u.nRol == 0) r = "Cliente";
-                    else if (u.nRol == 1) r = "Administrador";
+                    if (u.nRol == 1) r = "Administrador";
+                    else if (u.nRol == 2) r = "Cliente";
                     else r = "Empresa";     //Preguntar si seguimos necesitando empresa
 
                     string[] users = { u.nID.ToString(),
@@ -244,8 +244,6 @@ namespace TP2_PlataformasDeDesarrollo
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }
-
-            //FALTA GUARDAR
         }
         //######################################################
         //             AGREGAR PRODUCTO NUEVO
@@ -253,12 +251,11 @@ namespace TP2_PlataformasDeDesarrollo
         private void button6_Click(object sender, EventArgs e)
         {
             if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
-            {
-                
+            {                
                 refreshData(merc);
-                tabControl2.SelectedTab = ListaProductos;
+                tabControl2.SelectedTab = ListaProductos;                
             }
-            //FALTA GUARDAR
+
         }
         //######################################################
         //              SELECCIONAR CATEGORIA 
@@ -451,28 +448,28 @@ namespace TP2_PlataformasDeDesarrollo
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-           
-            if (e.ColumnIndex == dataGridView2.Columns["botonBorrar"].Index)
+            int indiceBaseCategoria = int.Parse(dataGridView2[0, e.RowIndex].Value.ToString());
+            int indiceArrayCategoria = Array.FindIndex(merc.nCategorias, x => x.nID == indiceBaseCategoria);
+            if (e.ColumnIndex == dataGridView2.Columns["botonBorrar"].Index && merc.nCategorias[indiceArrayCategoria] != null)
             {
-
-                int indice = int.Parse(dataGridView2[0, e.RowIndex].Value.ToString());
-                if (merc.nCategorias[indice] != null)
+                // ELIMINAR
+                DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar esta Categoria?", "", MessageBoxButtons.YesNo);
+                if (resutl == DialogResult.Yes && merc.EliminarCategoria(indiceBaseCategoria))
                 {
-                    // ELIMINAR
-                    DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar esta Categoria?", "", MessageBoxButtons.YesNo);
-                    if (resutl == DialogResult.Yes)
-                    {
-                        merc.EliminarCategoria(indice);
-                        dataGridView2.Rows.RemoveAt(e.RowIndex);
-                    }
+                    dataGridView2.Rows.RemoveAt(e.RowIndex);
                 }
+                else
+                {
+                    MessageBox.Show("No se puede eliminar esta categoria, porque hay productos que dependen de ella");
+                }
+                
+                
             }
             else
             {
                 //MODIFICAR
-                int indice = int.Parse(dataGridView2[0,e.RowIndex].Value.ToString());
-                textBox11.Text = merc.nCategorias[indice].nID.ToString();
-                textBox12.Text = merc.nCategorias[indice].nNombre;
+                textBox11.Text = merc.nCategorias[indiceArrayCategoria].nID.ToString();
+                textBox12.Text = merc.nCategorias[indiceArrayCategoria].nNombre;
                 tabControl3.SelectedTab = ModificarCategoria;
             }
         }
@@ -511,11 +508,10 @@ namespace TP2_PlataformasDeDesarrollo
             if (e.ColumnIndex == dataGridView3.Columns["botonBorrar"].Index)
             {
                 // ELIMINAR
+                int indice = int.Parse(dataGridView3[0, e.RowIndex].Value.ToString());
                 DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar el Usuario?", "", MessageBoxButtons.YesNo);
-                if (resutl == DialogResult.Yes)
+                if (resutl == DialogResult.Yes && merc.EliminarUsuario(indice))
                 {
-                    int indice = int.Parse(dataGridView3[0, e.RowIndex].Value.ToString());
-                    merc.EliminarUsuario(indice);
                     dataGridView3.Rows.RemoveAt(e.RowIndex);
                 }
             }
@@ -533,7 +529,7 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox24.Text = merc.nUsuarios[indice].nMail;
                 textBox25.Text = merc.nUsuarios[indice].nPassword;
                 textBox26.Text = merc.nUsuarios[indice].nCUIT_CUIL.ToString();
-                comboBoxModRol.SelectedIndex = int.Parse(merc.nUsuarios[indice].nRol.ToString());
+                comboBoxModRol.SelectedIndex = int.Parse(merc.nUsuarios[indice].nRol.ToString()) - 1;
 
             }
         }
@@ -543,9 +539,8 @@ namespace TP2_PlataformasDeDesarrollo
         private void buttonModificarUsuario_Click(object sender, EventArgs e)
         {
             if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
-                                      textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex ))
+                                      textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex +1 ))
             {
-                MessageBox.Show("usuario modificado");
                 refreshData(merc);
                 tabControl4.SelectedTab = ListaUsuarios;
             }
@@ -556,7 +551,7 @@ namespace TP2_PlataformasDeDesarrollo
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
             if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
-                                    textPass.Text, long.Parse(textCUILCUIT.Text), comboBoxRol.SelectedIndex))
+                                    textPass.Text, long.Parse(textCUILCUIT.Text), comboBoxRol.SelectedIndex + 1))
             {
                 refreshData(merc);
                 tabControl4.SelectedTab = ListaUsuarios;
@@ -689,13 +684,13 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("Antes de Salir, ¿Deseas guardar todos los cambios?", "", MessageBoxButtons.YesNo);
+            DialogResult respuesta = MessageBox.Show("Desea Salir?", "", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
-            {
-                merc.guardarTodo();
+            {               
+                this.TrasfEvento();
+                this.Close();
             }
-            this.TrasfEvento();
-            this.Close();
+           
         }
 
         

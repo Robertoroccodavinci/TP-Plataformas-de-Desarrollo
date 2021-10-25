@@ -71,7 +71,6 @@ namespace TP2_PlataformasDeDesarrollo
             }
             else
             {
-                Console.WriteLine("El producto no se encuentra en la lista");
                 return false;
             }
 

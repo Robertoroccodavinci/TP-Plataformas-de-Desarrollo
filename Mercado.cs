@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace TP2_PlataformasDeDesarrollo
 {
@@ -31,9 +33,10 @@ namespace TP2_PlataformasDeDesarrollo
         {
             nProductos = new List<Producto>();
             nUsuarios = new List<Usuario>();
-            //nCompras = new List<Compra>();
+            nCompras = new List<Compra>();
             nCategorias = new Categoria[MaxCategorias];
-
+            llenarListas();
+/*
             nSourcePath = Directory.GetCurrentDirectory() + "/../../Archivos";
             nTargetPath = "C:/ArchivosMercado";
 
@@ -52,7 +55,7 @@ namespace TP2_PlataformasDeDesarrollo
                 // 7 - ROL
                 int n = nUsuarios.Count();
                 Usuarios.Add(new Usuario(n, int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], long.Parse(parts[6]), int.Parse(parts[7])));
-            }
+            }*/
 
         }
         // ######################################################################################
@@ -132,67 +135,178 @@ namespace TP2_PlataformasDeDesarrollo
 
             if (nom || nombre == "" || nombre == null)
             {
-                Console.WriteLine("ERROR: ya existe ese producto");
+                MessageBox.Show("ERROR: ya existe ese producto");
                 return false;
-            } 
-            
-            
-            for (int i = 0; i < MaxCategorias; i++)
-            {
-                if (Categorias[i] != null && Categorias[i].nID == ID_Categoria)
-                {
-                    int idProd;
-                    if (Productos.Contains(null))
-                    {
-                        idProd = Productos.IndexOf(null);
-                    }
-                    else
-                    {
-                        idProd = Productos.Count();
-                    }
-                    Productos.Add(new Producto(idProd, nombre, precio, cantidad, Categorias[i]));
+            }
 
-                    Console.WriteLine("Producto agregado correctamente!");
-                    return true;
+            int resultadoQuery = 0;
+            int idNuevoProducto = 0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "INSERT INTO dbo.Producto (nombre, precio, cantidad, idCategoria) VALUES (@nombre, @precio, @cantidad, @idCategoria)";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+            {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@precio", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idCategoria", SqlDbType.Int));
+                command.Parameters["@nombre"].Value = nombre;
+                command.Parameters["@precio"].Value = precio;
+                command.Parameters["@cantidad"].Value = cantidad;
+                command.Parameters["@idCategoria"].Value = ID_Categoria;
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+
+                    string ConsultaID = "SELECT MAX([idProducto]) FROM [dbo].[Producto]";
+                    command = new SqlCommand(ConsultaID, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idNuevoProducto = reader.GetInt16(0);
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
-            Console.WriteLine("ERROR: no se pudo agregar el producto");
+            if (resultadoQuery==1) 
+            {
+                int indiceCategoriaArray = Array.FindIndex(nCategorias, x => x.nID == ID_Categoria);
+                if (Productos.Contains(null))
+                {
+                    int idProd = Productos.IndexOf(null);
+                    nProductos[idProd] = new Producto(idNuevoProducto, nombre, precio, cantidad, nCategorias[indiceCategoriaArray]);
+                    MessageBox.Show("Producto agregado correctamente");
+                    return true;
+                }
+                nProductos.Add(new Producto(idNuevoProducto,nombre,precio,cantidad, nCategorias[indiceCategoriaArray]));
+                MessageBox.Show("Producto agregado correctamente!");
+                return true;            
+            }
+
+            MessageBox.Show("ERROR: no se pudo agregar el producto");
             return false;
         }
 
         public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
         {
-            int IDProd = Productos.FindIndex(x => x.nIDProd == ID);
-            if (IDProd >= 0)
+            int resultadoQuery = 0;
+            int idNuevoProducto = 0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "UPDATE dbo.Producto SET nombre = @nombre, precio = @precio, cantidad = @cantidad, idCategoria = @idCategoria WHERE idProducto = @id";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
-                Productos[IDProd].nNombre = nombre;
-                Productos[IDProd].nPrecio = precio;
-                Productos[IDProd].nCantidad = cantidad;
-                for (int i = 0; i < MaxCategorias; i++)
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)); 
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@precio", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idCategoria", SqlDbType.Int));
+                command.Parameters["@id"].Value = ID;
+                command.Parameters["@nombre"].Value = nombre;
+                command.Parameters["@precio"].Value = precio;
+                command.Parameters["@cantidad"].Value = cantidad;
+                command.Parameters["@idCategoria"].Value = ID_Categoria;
+
+                try
                 {
-                    if (Categorias[i].nID == ID_Categoria)
-                    {
-                        Productos[IDProd].nCategoria = Categorias[i];
-                        MessageBox.Show("Producto modificado correctamente!");
-                        return true;
-                    }
+                    //Abro la conexión
+                    connection.Open();
+                    resultadoQuery = command.ExecuteNonQuery();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            if (resultadoQuery == 1)
+            {
+                int indiceCategoriaArray = Array.FindIndex(nCategorias, x => x.nID == ID_Categoria);
+                int indiceProductosLista = nProductos.FindIndex(x => x.nIDProd == ID);
+
+                nProductos[indiceProductosLista].nNombre = nombre;
+                nProductos[indiceProductosLista].nPrecio = precio;
+                nProductos[indiceProductosLista].nCantidad = cantidad;
+                nProductos[indiceProductosLista].nCategoria = nCategorias[indiceCategoriaArray];
+                MessageBox.Show("Producto modificado correctamente!");
+                return true;
             }
             MessageBox.Show("ERROR: producto no encontrado.");
             return false;
         }
 
-
         public bool EliminarProducto(int ID)
         {
-            if (Productos[ID] != null)
+            int resultadoQuery = 0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "DELETE FROM dbo.Producto WHERE idProducto = @id";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) 
             {
-                Productos[ID] = null;
-                Console.WriteLine("Producto eliminado correctamente.");
-                return true;
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); 
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters["@id"].Value = ID;
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            Console.WriteLine("ERROR: No se encontro el producto con ese ID");
-            return false;
+            if (resultadoQuery == 1)
+            {
+                try
+                {
+                    int indiceProductosLista = nProductos.FindIndex(x => x.nIDProd == ID);
+                    nProductos.RemoveAt(indiceProductosLista);
+                    MessageBox.Show("Producto eliminado correctamente.");
+                    return true;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Producto eliminado correctamente.");
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                MessageBox.Show("ERROR: No se encontro el producto con ese ID");
+                return false;
+            }
         }
 
 
@@ -266,60 +380,172 @@ namespace TP2_PlataformasDeDesarrollo
         // ######################################################################################
         public bool AgregarUsuario(int DNI, string nombre, string apellido, string Mail, string password, long CUIT_CUIL, int rol)
         {
-            int n = Usuarios.Count();
-            Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol));
+            int resultadoQuery = 0;
+            int idNuevoUsuario = 0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
 
-            if (Usuarios[n] != null)
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "INSERT INTO dbo.Usuario (dni, nombre, apellido, mail, password, cuitCuil, rol)"+
+                                  "VALUES (@dni, @nombre, @apellido, @mail, @password, @cuit_cuil, @rol)";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
-                StreamWriter file2 = new StreamWriter(System.IO.Path.Combine(nSourcePath, fileName[1]), true);
-                file2.WriteLine(n + "," + DNI + "," + nombre + "," + apellido + "," + Mail + "," + password + "," + CUIT_CUIL + "," + rol);
-                file2.Close();
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@cuit_cuil", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@rol", SqlDbType.Int));
+                command.Parameters["@dni"].Value = DNI;
+                command.Parameters["@nombre"].Value = nombre;
+                command.Parameters["@apellido"].Value = apellido;
+                command.Parameters["@mail"].Value = Mail;
+                command.Parameters["@password"].Value = password;
+                command.Parameters["@cuit_cuil"].Value = CUIT_CUIL;
+                command.Parameters["@rol"].Value = rol;
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+
+                    string ConsultaID = "SELECT MAX([idUsuario]) FROM [dbo].[Usuario]";
+                    command = new SqlCommand(ConsultaID, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idNuevoUsuario = reader.GetInt16(0);
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            if (resultadoQuery == 1)
+            {
+                if (nUsuarios.Contains(null))
+                {
+                    int idUser = nUsuarios.IndexOf(null);
+                    nUsuarios[idUser] = new Usuario(idNuevoUsuario, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol);
+                    MessageBox.Show("Usuario agregado correctamente");
+                    return true;
+                }
+                nUsuarios.Add(new Usuario(idNuevoUsuario,DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol));
+                MessageBox.Show("Usuario agregado correctamente!");
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            MessageBox.Show("ERROR: No se pudo agregar el Usuario!");
+            return false;
         }
 
         public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, long CUIT_CUIL, int rol)
         {
-        
-            //Podriamos usar el metodo eliminar para despues agregar uno nuevo.
-                if (nUsuarios.Exists(x => x.nID == ID))
+
+            int resultadoQuery = 0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "UPDATE dbo.Usuario SET dni = @dni, nombre = @nombre, apellido = @apellido, " +
+                "mail = @mail, password = @password, cuitCuil = @cuit_cuil, rol = @rol WHERE idUsuario = @id";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+            {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@cuit_cuil", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@rol", SqlDbType.Int));
+                command.Parameters["@id"].Value = ID;
+                command.Parameters["@dni"].Value = DNI;
+                command.Parameters["@nombre"].Value = nombre;
+                command.Parameters["@apellido"].Value = apellido;
+                command.Parameters["@mail"].Value = Mail;
+                command.Parameters["@password"].Value = password;
+                command.Parameters["@cuit_cuil"].Value = CUIT_CUIL;
+                command.Parameters["@rol"].Value = rol;
+
+                try
                 {
-                    int indice = nUsuarios.FindIndex(x => x.nID == ID);
-                    Usuarios[indice]  =  null;
-                    //Usuarios.Add(new Usuario(n, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol));
-                    Usuarios[indice] = new Usuario(ID, DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol);
-                    /*Usuarios[indice].nDNI = DNI;
-                    Usuarios[indice].nNombre = nombre;
-                    Usuarios[indice].nApellido = apellido;
-                    Usuarios[indice].nMail = Mail;
-                    Usuarios[indice].nPassword = password;
-                    Usuarios[indice].nCUIT_CUIL = CUIT_CUIL;
-                    Usuarios[indice].nRol = rol;*/
-
-                    MessageBox.Show("Usuario modificado con exito!");
-                    return true;
+                    //Abro la conexión
+                    connection.Open();
+                    resultadoQuery = command.ExecuteNonQuery();
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            if (resultadoQuery == 1)
+            {
+                int indiceUsuarioLista = nUsuarios.FindIndex(x=> x.nID == ID);
+                nUsuarios[indiceUsuarioLista].nDNI= DNI;
+                nUsuarios[indiceUsuarioLista].nNombre = nombre;
+                nUsuarios[indiceUsuarioLista].nApellido = apellido;
+                nUsuarios[indiceUsuarioLista].nMail = Mail;
+                nUsuarios[indiceUsuarioLista].nPassword = password;
+                nUsuarios[indiceUsuarioLista].nCUIT_CUIL = CUIT_CUIL;
+                nUsuarios[indiceUsuarioLista].nRol = rol;
+                MessageBox.Show("Usuario modificado con exito!");
+                return true;
+            }
             MessageBox.Show("ERROR: no hay Usuario con ese ID: " + ID);
             return false;
         }
 
         public bool EliminarUsuario(int ID) // FALTA PROGRAMARLA BIEN, JUNTO A LA BASE DE DATOS
         {
-            foreach (Usuario u in Usuarios)
+            int resultadoQuery = 0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "DELETE FROM dbo.Usuario WHERE idUsuario = @id";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
-                if (u.nID == ID)
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters["@id"].Value = ID;
+       
+                try
                 {
-                    Usuarios.Remove(u);
-                    Console.WriteLine("Usuario eliminado con exito!");
-                    return true;
+                    //Abro la conexión
+                    connection.Open();
+                    resultadoQuery = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
-            Console.WriteLine("ERROR: ID: " + ID + " usuario no encontrado");
+            if (resultadoQuery == 1)
+            {
+                int indiceUsuarioLista = nUsuarios.FindIndex(x => x.nID == ID);
+
+                nUsuarios.RemoveAt(indiceUsuarioLista);
+                MessageBox.Show("Usuario eliminado con exito!");
+                return true;
+            }
+            MessageBox.Show("ERROR: ID: " + ID + " usuario no encontrado");
             return false;
         }
 
@@ -342,48 +568,165 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (CantCategorias < MaxCategorias)
             {
-                for (int i = 0; i < MaxCategorias; i++)
-                {
-                    if (Categorias[i] == null)
-                    {
-                        Categorias[i] = new Categoria(i, nombre);
-                        CantCategorias++;
+                int resultadoQuery = 0;
+                int idNuevoCategoria = 0;
+                //Cargo la cadena de conexión desde el archivo de properties
+                string connectionString = Properties.Resources.ConnectionString;
 
-                        Console.WriteLine("Categoria agregada con exito!");
-                        return true;
+                //Defino el string con la consulta que quiero realizar
+                string queryString = "INSERT INTO dbo.Categoria (nombre) VALUES (@nombre)";
+
+                // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+                using (SqlConnection connection =
+                    new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+                {
+                    // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                    SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                    command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                    command.Parameters["@nombre"].Value = nombre;
+
+                    try
+                    {
+                        //Abro la conexión
+                        connection.Open();
+
+                        resultadoQuery = command.ExecuteNonQuery();
+
+                        string ConsultaID = "SELECT MAX([idCategoria]) FROM [dbo].[Categoria]";
+                        command = new SqlCommand(ConsultaID, connection);
+                        SqlDataReader reader = command.ExecuteReader();
+                        reader.Read();
+                        idNuevoCategoria = reader.GetInt16(0);
+                        reader.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+
                     }
                 }
+
+                if (resultadoQuery == 1)
+                {
+                    int indiceCategoriaArray = Array.FindIndex(nCategorias, x => x == null);
+
+                    nCategorias[indiceCategoriaArray] = new Categoria(idNuevoCategoria, nombre);
+                    CantCategorias++;
+                    MessageBox.Show("Categoria agregada con exito!");
+                    return true;
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no se pueden agregar mas categorias");
+                    return false;
+                }
             }
-            Console.WriteLine("ERROR: no se pueden agregar mas categorias");
             return false;
         }
 
-        public bool ModificarCategoria(int ID, string nombre) /********* A VECES TOMA OTRO VALOR DE ID, DIFERENTE AL QUE LE PASAMOS ********/
+        public bool ModificarCategoria(int ID, string nombre)
         {
-            Console.WriteLine(Categorias[ID].nID);
-            Console.ReadLine();
-            if (Categorias[ID].nID == ID) /* ALGUNA PARTE DE ACA ANDA MAL */
+
+            int resultadoQuery = 0;
+
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "UPDATE dbo.Categoria SET nombre = @nombre WHERE idCategoria = @id ";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
-                Categorias[ID].nNombre = nombre;
-                Console.WriteLine("Categoria modificada con exito!" + Categorias[ID].nID);
-                return true;
-            }
-            Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
-            return false;
-        }                   /* MODIFICADO, COMPROBAR QUE LES PARECE A LOS DEMAS, DEL GRUPO */
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters["@id"].Value = ID;
+                command.Parameters["@nombre"].Value = nombre;
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                if (resultadoQuery == 1)
+                {
+                    int indiceCategoriaArray = Array.FindIndex(nCategorias, x => x.nID == ID);
+
+                    nCategorias[indiceCategoriaArray].nNombre = nombre;
+
+                    MessageBox.Show("Categoria modificada con exito!");
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("ERROR: no hay categoria con ID: " + ID);
+                    return false;
+                }
+            } 
+        }
 
         public bool EliminarCategoria(int ID)
         {
-            if (Categorias[ID] != null)
-            {
-                Categorias[ID] = null;
-                CantCategorias--;
+            int resultadoQuery=0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
 
-                Console.WriteLine("Categoria eliminada con exito!");
-                return true;
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "DELETE FROM dbo.Categoria WHERE idCategoria = @id";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+            {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters["@id"].Value = ID;
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            Console.WriteLine("ERROR: no hay categoria con ID: " + ID);
-            return false;
+
+            if (resultadoQuery == 1)
+            {
+                try
+                {
+                    int indiceCategoriaArray = Array.FindIndex(nCategorias, x => x.nID == ID);
+
+                    nCategorias[indiceCategoriaArray] = null;
+                    CantCategorias--;
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
         }
 
         public Categoria[] MostrarCategoria()
@@ -418,11 +761,12 @@ namespace TP2_PlataformasDeDesarrollo
             int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
             if (nUsuarios[indiceUsuario].nCarro.QuitarProducto(nProductos[indiceProd], Cantidad))
             {
+                MessageBox.Show("El producto no se encuentra en la lista");
                 return true;
             }
             else
             {
-                Console.WriteLine("ERROR: no se encontro producto con el ID " + ID_Producto + " en el Carro.");
+                MessageBox.Show("ERROR: no se encontro producto con el ID " + ID_Producto + " en el Carro.");
                 return false;
             }
         }
@@ -430,7 +774,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
             nUsuarios[indiceUsuario].nCarro.Vaciar();
-            Console.WriteLine("Carro vaciado con exito!");
+            MessageBox.Show("Carro vaciado con exito!");
             return true;
         }
 
@@ -480,10 +824,10 @@ namespace TP2_PlataformasDeDesarrollo
                     }
                 }
                 VaciarCarro(ID_Usuario);
-                Console.WriteLine("Compraste con exito!");
+                MessageBox.Show("Compraste con exito!");
                 return true;
             }
-            Console.WriteLine("ERROR: no se pudo efectuar la compra");
+            MessageBox.Show("ERROR: no se pudo efectuar la compra");
             return false;
         }
 
@@ -512,16 +856,56 @@ namespace TP2_PlataformasDeDesarrollo
         // #######################################################################################
         public Usuario IniciarSesion(int DNI, string pass)
         {
-            
-            foreach (Usuario u in nUsuarios)
-            {
-                
-                if (u.nDNI == DNI && u.nPassword == pass)
-                {
+            int resultadoQuery=0;
+            int idUsuario=0;
+            //Cargo la cadena de conexión desde el archivo de properties
+            string connectionString = Properties.Resources.ConnectionString;
 
-                    llenarListas();
-                    return nUsuarios[u.nID];
+            //Defino el string con la consulta que quiero realizar
+            string queryString = "SELECT * from dbo.Usuario WHERE dni = @dni AND password = @password";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+            {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
+                command.Parameters["@dni"].Value = DNI;
+                command.Parameters["@password"].Value = pass;
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+                    
+                    //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
+                    SqlDataReader reader = command.ExecuteReader(); /*ExecuteReader para SELECT*/
+
+                    
+                    Usuario aux;
+                    //mientras haya registros/filas en mi DataReader, sigo leyendo
+                    if (reader.Read())
+                    {
+                        idUsuario = (reader.GetInt16(0));
+                    }
+                    //En este punto ya recorrí todas las filas del resultado de la query
+                    reader.Close();
+                    
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+            if (idUsuario > 0)
+            {
+                int indiceUsuario = Usuarios.FindIndex(x => x.nID == idUsuario);
+                return nUsuarios[indiceUsuario];
             }
             return null;
         }
@@ -530,89 +914,14 @@ namespace TP2_PlataformasDeDesarrollo
         // #######################################################################################
         public Boolean esAdmin(int ID)
         {
-            if (Usuarios[ID] != null && Usuarios[ID].nRol == 1) //preguntamos si usuario con ID es admin
+            int indiceUsuario = Usuarios.FindIndex(x => x.nID == ID);
+
+            if (nUsuarios[indiceUsuario] != null && nUsuarios[indiceUsuario].nRol == 1) //preguntamos si usuario con ID es admin
             { return true; }
             else
             { return false; }
         }
-        // #######################################################################################
-        //                                  GUARDAR ARCHIVOS
-        // #######################################################################################
 
-        public void guardarTodo()
-        {
-            //GUARDAR PRODUCTOS
-            StreamWriter file0 = new StreamWriter(Dest(0));
-            
-            //  ORDENAMOS LISTA DE PRODUCTOS POR ID
-            Productos.Sort(delegate (Producto a, Producto b) { return a.nIDProd.CompareTo(b.nIDProd); });
-            foreach (Producto p in Productos)
-            {
-                if (p != null)
-                {
-                    file0.WriteLine(p.nIDProd + "," + p.nNombre + "," + p.nPrecio + "," + p.nCantidad + "," + p.nCategoria.nID);
-                }
-            }
-            file0.Close();
-
-            //GUARDAR USUARIOS
-            StreamWriter file1 = new StreamWriter(Dest(1));
-            foreach (Usuario u in Usuarios)
-            {
-                if (u != null)
-                {
-                    file1.WriteLine(u.nID + "," + u.nDNI + "," + u.nNombre + "," + u.nApellido + "," + u.nMail + "," + u.nPassword + "," + u.nCUIT_CUIL + "," + u.nRol);
-                }
-            }
-            file1.Close();
-
-            //GUARDAR CARROS
-            StreamWriter file2 = new StreamWriter(Dest(2));
-            foreach (Usuario u in Usuarios)
-            {
-                if (u != null)
-                {
-                    foreach (KeyValuePair<Producto, int> kvp in u.nCarro.nProductos)
-                    {
-                        if (kvp.Key != null)
-                        {
-                            file2.WriteLine(u.nID + "," + kvp.Key.nIDProd + "," + kvp.Value);
-                        }
-                    }
-                }
-
-            }
-            file2.Close();
-
-            //GUARDAR COMPRAS
-            StreamWriter file3 = new StreamWriter(Dest(3));
-            foreach (Compra c in Compras)
-            {
-                if (c != null)
-                {
-                    foreach (KeyValuePair<Producto, int> kvp in c.nProductos)
-                    {
-                        if (kvp.Key != null)
-                        {
-                            file3.WriteLine(c.nComprador + "," + kvp.Key.nIDProd + "," + kvp.Value + "," + c.nTotal);
-                        }
-                    }
-                }
-            }
-            file3.Close();
-
-            //GUARDAR CATEGORIAS
-            StreamWriter file4 = new StreamWriter(Dest(4));
-            foreach (Categoria c in Categorias)
-            {
-                if (c != null)
-                {
-                    file4.WriteLine(c.nID + "," + c.nNombre);
-                }
-            }
-            file4.Close();
-
-        }
         // #######################################################################################
         //                                  LLENAR LISTAS
         // #######################################################################################
@@ -622,128 +931,178 @@ namespace TP2_PlataformasDeDesarrollo
             // MODIFICAR RELLENANDO LAS LISTAS CON LOS DATOS DE LA BASE DE DATOS
             
             //LIMPIAMOS LAS LISTAS
-            nProductos = new List<Producto>();
-            //nUsuarios = new List<Usuario>();
-            //nCompras = new List<Compra>();
-            nCategorias = new Categoria[MaxCategorias];
+            
             CantCategorias = 0;
+            string queryString;
+            string connectionString;
 
-            //###########################################
-            //  COMPROBACION DE DIRECTORIOS Y ARCHIVOS 
-            //###########################################
+            // ######################################
+            //      LLENAMOS LISTA CATEGORIAS
+            // ######################################
 
-            //PREGUNTAMOS SI EXISTE EL DIRECTORIO TARGET
-            if (System.IO.Directory.Exists(nTargetPath))
+            //Cargo la cadena de conexión desde el archivo de properties
+            connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            queryString = "SELECT * from dbo.Categoria";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
             {
-                //string[] files = System.IO.Directory.GetFiles(nTargetPath);
-                int cont = 0;
-                foreach (string s in fileName)
-                {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection);
 
-                    //PREGUNTAMOS SI EN EL DIRECTORIO TARGET, SE ENCUENTRAN LOS ARCHIVOS
-                    if (!File.Exists(Dest(cont)))
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+                    //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
+                    SqlDataReader reader = command.ExecuteReader();
+                    Categoria aux;
+                    //mientras haya registros/filas en mi DataReader, sigo leyendo
+                    while (reader.Read())
                     {
-                        //SI NO EXISTEN LOS ARCHIVOS, LOS COPIAMOS DE SOURCE
-                        System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, s), Dest(cont), true);
-
+                        aux = new Categoria(reader.GetInt16(0), reader.GetString(1));
+                        nCategorias[CantCategorias] = aux;
+                        CantCategorias++;
                     }
-                    cont++;
+                    //En este punto ya recorrí todas las filas del resultado de la query
+                    reader.Close();
                 }
-            }
-            else
-            {
-                //SI NO EXITE EL DIRECTORIO TARGET, LO CREAMOS
-                System.IO.Directory.CreateDirectory(nTargetPath);
-                //COPIAMOS TODOS LOS ARCHIVOS DE SOURCE A TARGET
-                for (int i = 0; i < fileName.Length; i++)
+                catch (Exception ex)
                 {
-                    System.IO.File.Copy(System.IO.Path.Combine(nSourcePath, fileName[i]), Dest(i));
-                }
-            }
-            //###########################################
-            //   PASAMOS DE LOS ARCHIVOS A LAS LISTAS 
-            //###########################################
 
-            string[] lines;
-
-            // 4 - Categorias -> ANTES DE PRODUCTOS
-            if (System.IO.File.Exists(Dest(4)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(4));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID
-                    // 1 - Nombre
-                    //nCategorias += new Categoria(parts[1]);
-                    AgregarCategoria(parts[1]);
-
+                    Console.WriteLine(ex.Message);
                 }
             }
 
-            // 0 - Productos
-            if (System.IO.File.Exists(Dest(0)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(0));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID PRODUCTO
-                    // 1 - NOMBRE
-                    // 2 - PRECIO
-                    // 3 - CANTIDAD
-                    // 4 - ID CATEGORIA
-                    AgregarProducto(parts[1], double.Parse(parts[2]), int.Parse(parts[3]), int.Parse(parts[4]));
-                }
-            }
-            // 1 - Usuarios
-            /*if (System.IO.File.Exists(Dest(1)))
-            {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(1));
-                foreach (string s in lines)
-                {
-                    string[] parts = s.Split(',');
-                    // 0 - ID
-                    // 1 - DNI
-                    // 2 - NOMBRE
-                    // 3 - APELLIDO
-                    // 4 - MAIL
-                    // 5 - PASSWORD
-                    // 6 - CUIT_CUIL
-                    // 7 - ROL
-                    AgregarUsuario(int.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], int.Parse(parts[6]), int.Parse(parts[7]));
-                }
-            }*/
+            // ######################################
+            //      LLENAMOS LISTA PRODUCTOS
+            // ######################################
 
-            // 2 - Carro
-            if (System.IO.File.Exists(Dest(2)))
+            //Cargo la cadena de conexión desde el archivo de properties
+            //connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            queryString = "SELECT * from dbo.Producto";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
             {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(2));
-                foreach (string s in lines)
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                try
                 {
-                    string[] parts = s.Split(',');
-                    // 0 - ID CARRO
-                    // 1 - ID PRODUCTO
-                    // 2 - CANTIDAD
-                    // 3 - ID USUARIO
-                    AgregarAlCarro(int.Parse(parts[1]), int.Parse(parts[2]), int.Parse(parts[3]));
+                    //Abro la conexión
+                    connection.Open();
+                    //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
+                    SqlDataReader reader = command.ExecuteReader();
+                    Producto aux;
+                    //mientras haya registros/filas en mi DataReader, sigo leyendo
+                    while (reader.Read())
+                    {
+                        int indiceCategoria = Array.FindIndex(nCategorias, x => x.nID == reader.GetInt16(4));
+                        
+                        //      PROBAR SI ESTO FUNCIONA BIEN
+                        aux = new Producto(reader.GetInt16(0), reader.GetString(1), ((double)reader.GetDecimal(2)), reader.GetInt32(3), nCategorias[indiceCategoria]);
+                        nProductos.Add(aux);
+                    }
+                    //En este punto ya recorrí todas las filas del resultado de la query
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
 
-            // 3 - Compras
-            if (System.IO.File.Exists(Dest(3)))
+            // ######################################
+            //      LLENAMOS LISTA USUARIOS
+            // ######################################
+
+            //Cargo la cadena de conexión desde el archivo de properties
+            //connectionString = Properties.Resources.ConnectionString;
+
+            //Defino el string con la consulta que quiero realizar
+            queryString = "SELECT * from dbo.Usuario";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
-                lines = System.IO.File.ReadAllLines(@"" + Dest(3));
-                foreach (string s in lines)
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+
+                try
                 {
-                    string[] parts = s.Split(',');
-                    // 0 - ID COMPRA
-                    // 1 - ID USUARIO
-                    // 3 - PRODUCTOS
-                    // 4 - TOTAL
-                    Comprar(int.Parse(parts[1]));
+                    //Abro la conexión
+                    connection.Open();
+                    //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
+                    SqlDataReader reader = command.ExecuteReader(); /*ExecuteReader para SELECT*/
+                    Usuario aux;
+                    //mientras haya registros/filas en mi DataReader, sigo leyendo
+                    while (reader.Read()) /* Devuelve true, si no hay nada devuelve false*/
+                    {
+
+                        aux = new Usuario(reader.GetInt16(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetInt32(6), ((int)reader.GetByte(7)));
+                        nUsuarios.Add(aux);
+                    }
+                    //En este punto ya recorrí todas las filas del resultado de la query
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
+
+
+            // ######################################
+            //      LLENAMOS LISTA CARROS
+            // ######################################
+
+            //Defino el string con la consulta que quiero realizar
+            queryString = "SELECT * from dbo.Carro INNER JOIN Carro_Producto ON dbo.Carro.idCarro = dbo.carro_Producto.idCarro";
+
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection =
+                new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+            {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+                    //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
+                    SqlDataReader reader = command.ExecuteReader(); /*ExecuteReader para SELECT*/
+                    
+                    //mientras haya registros/filas en mi DataReader, sigo leyendo
+                    while (reader.Read()) /* Devuelve true, si no hay nada devuelve false*/
+                    {
+                        ///*ESTO SÓLO FUNCIONA*/ Console.WriteLine("{0} {1}", reader.GetInt16(0), reader.GetInt32(1));
+                        int indiceUsuario = Usuarios.FindIndex(x => x.nID == reader.GetInt16(1));
+                        int indiceProducto = nProductos.FindIndex(x => x.nIDProd == reader.GetInt16(4));
+
+                        nUsuarios[indiceUsuario].nCarro.Productos.Add(nProductos[indiceProducto], reader.GetByte(5));
+                        
+                    }
+                    //En este punto ya recorrí todas las filas del resultado de la query
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            // ######################################
+            //      LLENAMOS LISTA COMPRAS
+            // ######################################
+
         }
         /* 
         public int compare(Categoria a, Categoria b) {

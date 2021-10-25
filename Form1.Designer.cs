@@ -18,6 +18,16 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 components.Dispose();
             }
+            if (hijoCliente != null)
+            {
+                hijoCliente.Dispose();
+            }
+            else if (hijoAdmin != null) 
+            {
+                hijoAdmin.Dispose();
+            }
+
+         
             base.Dispose(disposing);
         }
 
