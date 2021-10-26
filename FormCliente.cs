@@ -115,9 +115,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button5_Click(object sender, EventArgs e)
         {
-         
-            int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(label20.Text));
-            if (merc.AgregarAlCarro(indice, int.Parse(numericUpDown1.Value.ToString()), ID))
+            if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID))
             {
                 label20.Text = "";
                 label7.Text = "";
@@ -353,8 +351,10 @@ namespace TP2_PlataformasDeDesarrollo
                 if (resutl == DialogResult.Yes)
                 {
                     int idprod = int.Parse(dataGridView5[0, e.RowIndex].Value.ToString());
-                    int cantidad = int.Parse(dataGridView5[2, e.RowIndex].Value.ToString());
-                    merc.nUsuarios[ID].nCarro.QuitarProducto(merc.nProductos[idprod], cantidad);
+                    int cantidad = int.Parse(dataGridView5[3, e.RowIndex].Value.ToString());
+                    int indiceUsuario = merc.nUsuarios.FindIndex(x => x.nID == ID);
+
+                    merc.QuitarAlCarro(idprod, cantidad, ID);
                     dataGridView5.Rows.RemoveAt(e.RowIndex);
                 }
             }
@@ -362,8 +362,8 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 //MODIFICAR CANTIDAD DE PRODUCTO DEL CARRO
                 textBox31.Text = dataGridView5[0, e.RowIndex].Value.ToString();
-                textBox32.Text = dataGridView5[1, e.RowIndex].Value.ToString();
-                textBox33.Text = dataGridView5[2, e.RowIndex].Value.ToString();
+                textBox32.Text = dataGridView5[2, e.RowIndex].Value.ToString();
+                textBox33.Text = dataGridView5[3, e.RowIndex].Value.ToString();
                 tabControl6.SelectedTab = ModificarCarro;
             }
         }
@@ -379,6 +379,27 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox33.Text = "";
                 refreshData(merc);
                 tabControl6.SelectedTab = ListaCarro;
+            }
+        }
+        //######################################################
+        //             VACIAR CARRO
+        //######################################################
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (merc.VaciarCarro(ID)) 
+            {
+                refreshData(merc);
+            }
+
+        }
+        //######################################################
+        //             COMPRAR
+        //######################################################
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (merc.Comprar(ID))
+            {
+                refreshData(merc);
             }
         }
 
@@ -407,5 +428,6 @@ namespace TP2_PlataformasDeDesarrollo
             }
         }
 
+        
     }
 }

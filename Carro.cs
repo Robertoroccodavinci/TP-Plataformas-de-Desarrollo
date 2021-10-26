@@ -35,7 +35,7 @@ namespace TP2_PlataformasDeDesarrollo
             
             if (nProductos.ContainsKey(key))
             {
-                nProductos[key] += value;
+                nProductos[key] = value;
             }
             else
             {
@@ -60,7 +60,7 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 if (nProductos[P] > Cantidad)
                 {
-                    nProductos[P] = nProductos[P] - Cantidad;
+                    nProductos[P] = Cantidad;
 
                 }
                 else

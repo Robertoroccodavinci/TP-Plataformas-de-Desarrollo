@@ -122,7 +122,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PlataformasDeDesarrollo_v2 .sql" />
+    <Content Include="PlataformasDeDesarrollo_v3.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
