@@ -160,7 +160,6 @@ namespace TP2_PlataformasDeDesarrollo
 
             foreach (Compra c in data.nCompras)
             {
-               
                 if (c != null)
                 {
                     string prods = "";

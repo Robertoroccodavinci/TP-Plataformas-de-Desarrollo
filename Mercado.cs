@@ -1107,10 +1107,11 @@ namespace TP2_PlataformasDeDesarrollo
                     reader.Close();
 
                     //insertamos a compra_producto
-                    command = new SqlCommand(queryStringInsertCompraProducto, connection); /* Comando listo para disparar */
+                    
 
                     foreach (KeyValuePair<Producto,int>kvp in prod) 
                     {
+                        command = new SqlCommand(queryStringInsertCompraProducto, connection); /* Comando listo para disparar */
                         command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
                         command.Parameters.Add(new SqlParameter("@idProducto", SqlDbType.Int));
                         command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
@@ -1183,7 +1184,7 @@ namespace TP2_PlataformasDeDesarrollo
             return false;
         }
 
-        public bool EliminarCompra(int ID)
+        public bool EliminarCompra(int IDcompra)
         {
             int resultadoQuery = 0;
             string queryStringDelCompra = "DELETE FROM dbo.Compra WHERE idCompra = @idCompra";
@@ -1201,14 +1202,14 @@ namespace TP2_PlataformasDeDesarrollo
 
                     command = new SqlCommand(queryStringDelCompraProducto, connection); /* Comando listo para disparar */
                     command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
-                    command.Parameters["@idCompra"].Value = ID;
+                    command.Parameters["@idCompra"].Value = IDcompra;
 
                     resultadoQuery = command.ExecuteNonQuery();
 
                     //Modificamos el total de la compra correspondiente al ID
                     command = new SqlCommand(queryStringDelCompra, connection); /* Comando listo para disparar */
                     command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
-                    command.Parameters["@idCompra"].Value = ID;
+                    command.Parameters["@idCompra"].Value = IDcompra;
 
                     resultadoQuery = command.ExecuteNonQuery();
 
@@ -1222,7 +1223,7 @@ namespace TP2_PlataformasDeDesarrollo
           
             if (resultadoQuery == 1)
             {
-                int indiceCompra = nCompras.FindIndex(x => x.nIDCompra == ID);
+                int indiceCompra = nCompras.FindIndex(x => x.nIDCompra == IDcompra);
                 nCompras[indiceCompra] = null;
                 MessageBox.Show("La compra se elimino exitosamente");
                 return true;
@@ -1494,19 +1495,19 @@ namespace TP2_PlataformasDeDesarrollo
                 new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
                 // Defino el comando a enviar al motor SQL con la consulta y la conexión
-                SqlCommand command2; /* Comando listo para disparar */
+                SqlCommand command; /* Comando listo para disparar */
                 try
                 {
                     //Abro la conexión
                     connection.Open();
                     List<int> ids = new List<int>();
-                    command2 = new SqlCommand(queryStringIdsCompra, connection);
-                    SqlDataReader reader2 = command2.ExecuteReader();
-                    while (reader2.Read()) /* Devuelve true, si no hay nada devuelve false*/
+                    command = new SqlCommand(queryStringIdsCompra, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read()) /* Devuelve true, si no hay nada devuelve false*/
                     {
-                        ids.Add(reader2.GetInt16(0));
+                        ids.Add(reader.GetInt16(0));
                     }
-                    reader2.Close();
+                    reader.Close();
 
                     
                     //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
@@ -1515,25 +1516,26 @@ namespace TP2_PlataformasDeDesarrollo
                     double total=0;
                     foreach (Usuario u in nUsuarios) 
                     {
+                        prod = new Dictionary<Producto, int>();
                         foreach (int i in ids) 
                         {
                             
-                            command2 = new SqlCommand(queryStringCompra, connection);
-                            command2.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
-                            command2.Parameters["@idUsuario"].Value = u.nID;
-                            command2.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
-                            command2.Parameters["@idCompra"].Value = i;
-                            reader2 = command2.ExecuteReader(); /*ExecuteReader para SELECT*/
-                            while (reader2.Read()) /* Devuelve true, si no hay nada devuelve false*/
+                            command = new SqlCommand(queryStringCompra, connection);
+                            command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                            command.Parameters["@idUsuario"].Value = u.nID;
+                            command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
+                            command.Parameters["@idCompra"].Value = i;
+                            reader = command.ExecuteReader(); /*ExecuteReader para SELECT*/
+                            while (reader.Read()) /* Devuelve true, si no hay nada devuelve false*/
                             {
-                                int idProd = nProductos.FindIndex(x => x.nIDProd == reader2.GetInt16(0));
+                                int idProd = nProductos.FindIndex(x => x.nIDProd == reader.GetInt16(0));
 
-                                prod.Add(nProductos[idProd], reader2.GetByte(1));
-                                total += nProductos[idProd].nPrecio * reader2.GetByte(1);
+                                prod.Add(nProductos[idProd], reader.GetByte(1));
+                                total += nProductos[idProd].nPrecio * reader.GetByte(1);
 
                             }
-                            reader2.Close();
-                            if (prod.Count()>=1&&total>0) 
+                            reader.Close();
+                            if (prod.Count()>=1 && total>0) 
                             { 
                                 idUsuario = nUsuarios.FindIndex(x => x.nID == u.nID);
                                 aux = new Compra(i, u, prod, total);
