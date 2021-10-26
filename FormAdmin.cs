@@ -26,7 +26,9 @@ namespace TP2_PlataformasDeDesarrollo
             refreshData(merc);
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
-            comboBoxRol.SelectedIndex = 0;
+            comboBoxRol.SelectedIndex = 1;
+            //comboBoxModRol.SelectedIndex = 0;
+
             //tabControl1.SelectedIndexChanged += new EventHandler(ocultarMostrar);
 
             //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
@@ -241,6 +243,11 @@ namespace TP2_PlataformasDeDesarrollo
             if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
                                        int.Parse(textBox7.Text), int.Parse(textBox8.Text)))
             {
+                textBox9.Text = "";
+                textBox5.Text = "";
+                textBox6.Text = "";
+                textBox7.Text = "";
+                textBox8.Text = "";
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }
@@ -481,6 +488,9 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.ModificarCategoria(int.Parse(textBox11.Text), textBox12.Text))
             {
+
+                textBox11.Text = "";
+                textBox12.Text = "";
                 refreshData(merc);
                 tabControl3.SelectedTab = ListaCategoria;
             }
@@ -539,8 +549,15 @@ namespace TP2_PlataformasDeDesarrollo
         private void buttonModificarUsuario_Click(object sender, EventArgs e)
         {
             if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
-                                      textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex +1 ))
+                                      textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex + 1))
             {
+                textBox20.Text = "";
+                textBox21.Text = "";
+                textBox22.Text = "";
+                textBox23.Text = "";
+                textBox24.Text = "";
+                textBox25.Text = "";
+                textBox26.Text = "";
                 refreshData(merc);
                 tabControl4.SelectedTab = ListaUsuarios;
             }
@@ -592,6 +609,9 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
             {
+                textBox28.Text = "";
+                textBox29.Text = "";
+                textBox30.Text = "";
                 refreshData(merc);
                 tabControl5.SelectedTab = ListaCompras;
             }
@@ -605,7 +625,7 @@ namespace TP2_PlataformasDeDesarrollo
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         //######################################################
-        //                  MODIFICAR CARRO
+        //                  MOSTRAR CARRO
         //######################################################
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -664,7 +684,7 @@ namespace TP2_PlataformasDeDesarrollo
             }
             else if (tabControl1.SelectedTab.Text == "Usuarios")
             {
-                tabControl4.SelectedTab = AgregarUsuario;
+                tabControl4.SelectedTab = AgregarUsuario; 
             }
         }
 
@@ -684,7 +704,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("Desea Salir?", "", MessageBoxButtons.YesNo);
+            DialogResult respuesta = MessageBox.Show("¿Seguro que desea salir?", "", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {               
                 this.TrasfEvento();

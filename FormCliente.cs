@@ -63,8 +63,8 @@ namespace TP2_PlataformasDeDesarrollo
                     dataGridView1.Rows.Add(prods);
                 }
             }
-
-            foreach (KeyValuePair<Producto, int> kvp in data.nUsuarios[ID].nCarro.nProductos)
+            int indiceUser = merc.nUsuarios.FindIndex(x => x.nID == ID);
+            foreach (KeyValuePair<Producto, int> kvp in data.nUsuarios[indiceUser].nCarro.nProductos)
             {
                 if (kvp.Key != null)
                 {
@@ -119,6 +119,12 @@ namespace TP2_PlataformasDeDesarrollo
             int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(label20.Text));
             if (merc.AgregarAlCarro(indice, int.Parse(numericUpDown1.Value.ToString()), ID))
             {
+                label20.Text = "";
+                label7.Text = "";
+                label8.Text = "";
+                label9.Text = "";
+                label10.Text = "";
+                numericUpDown1.Value = 1;
                 MessageBox.Show("Producto agregada con exito al Carro.");
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
@@ -203,10 +209,10 @@ namespace TP2_PlataformasDeDesarrollo
                             if (p != null)
                             {
                                 string[] prods = { p.nIDProd.ToString(),
-                                               p.nNombre,
-                                               p.nPrecio.ToString(),
-                                               p.nCantidad.ToString(),
-                                               p.nCategoria.nID.ToString() };
+                                                   p.nNombre,
+                                                   p.nPrecio.ToString(),
+                                                   p.nCantidad.ToString(),
+                                                   p.nCategoria.nID.ToString() };
                                 dataGridView1.Rows.Add(prods);
                             }
                         }
@@ -368,6 +374,10 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (merc.QuitarAlCarro(int.Parse(textBox31.Text), int.Parse(textBox33.Text), ID)) 
             {
+                textBox31.Text = "";
+                textBox32.Text = "";
+                textBox33.Text = "";
+                refreshData(merc);
                 tabControl6.SelectedTab = ListaCarro;
             }
         }
@@ -389,7 +399,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("Desea Salir?", "", MessageBoxButtons.YesNo);
+            DialogResult respuesta = MessageBox.Show("¿Seguro que desea salir?", "", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
                 this.TrasfEvento();

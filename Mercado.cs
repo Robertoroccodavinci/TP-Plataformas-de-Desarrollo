@@ -384,7 +384,7 @@ namespace TP2_PlataformasDeDesarrollo
             int idNuevoUsuario = 0;
             //Cargo la cadena de conexión desde el archivo de properties
             string connectionString = Properties.Resources.ConnectionString;
-
+            int resultadoQueryCarro = 0;
             //Defino el string con la consulta que quiero realizar
             string queryString = "INSERT INTO dbo.Usuario (dni, nombre, apellido, mail, password, cuitCuil, rol)"+
                                   "VALUES (@dni, @nombre, @apellido, @mail, @password, @cuit_cuil, @rol)";
@@ -423,13 +423,24 @@ namespace TP2_PlataformasDeDesarrollo
                     reader.Read();
                     idNuevoUsuario = reader.GetInt16(0);
                     reader.Close();
+
+                   // INSERT INTO dbo.Carro(idUsuario) VALUES((SELECT MAX([idUsuario]) FROM[dbo].[Usuario]))
+
+                    string crearCarro = "INSERT INTO dbo.Carro (idUsuario) VALUES (@idUser)";
+
+                    command = new SqlCommand(crearCarro, connection);
+                    command.Parameters.Add(new SqlParameter("@idUser", SqlDbType.Int));
+                    command.Parameters["@idUser"].Value = idNuevoUsuario;
+                    resultadoQueryCarro = command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
+                // Aca agregamos un carro nuevo, que corresponde al Usuario
+
             }
-            if (resultadoQuery == 1)
+            if (resultadoQuery == 1 && resultadoQueryCarro == 1)
             {
                 if (nUsuarios.Contains(null))
                 {
@@ -455,7 +466,7 @@ namespace TP2_PlataformasDeDesarrollo
 
             //Defino el string con la consulta que quiero realizar
             string queryString = "UPDATE dbo.Usuario SET dni = @dni, nombre = @nombre, apellido = @apellido, " +
-                "mail = @mail, password = @password, cuitCuil = @cuit_cuil, rol = @rol WHERE idUsuario = @id";
+                            "mail = @mail, password = @password, cuitCuil = @cuit_cuil, rol = @rol WHERE idUsuario = @id";
 
             // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
             using (SqlConnection connection =
@@ -511,33 +522,60 @@ namespace TP2_PlataformasDeDesarrollo
         public bool EliminarUsuario(int ID) // FALTA PROGRAMARLA BIEN, JUNTO A LA BASE DE DATOS
         {
             int resultadoQuery = 0;
+            int resultadoQueryUsuario = 0;
+            int idCarro = 0;
             //Cargo la cadena de conexión desde el archivo de properties
             string connectionString = Properties.Resources.ConnectionString;
 
             //Defino el string con la consulta que quiero realizar
-            string queryString = "DELETE FROM dbo.Usuario WHERE idUsuario = @id";
+            string queryDelUsuario = "DELETE FROM dbo.Usuario WHERE idUsuario = @id";
+            string queryDelCarro = "DELETE FROM Carro WHERE idCarro = @id";
+            string queryDelCarroProducto = "DELETE FROM carro_producto WHERE idCarro = @id";
+            
 
             // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
             using (SqlConnection connection =
                 new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
             {
-                // Defino el comando a enviar al motor SQL con la consulta y la conexión
-                SqlCommand command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
-                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters["@id"].Value = ID;
-       
+                SqlCommand command;
                 try
                 {
-                    //Abro la conexión
                     connection.Open();
+                    string ConsultaIDCarro = "SELECT C.idCarro FROM dbo.Usuario U INNER JOIN dbo.Carro C  ON U.idUsuario = C.idUsuario WHERE U.idUsuario = @id ";
+                    command = new SqlCommand(ConsultaIDCarro, connection);
+                    command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                    command.Parameters["@id"].Value = ID;
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idCarro = reader.GetInt16(0);
+                    reader.Close();
+
+                    // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                    command = new SqlCommand(queryDelCarroProducto, connection); /* Comando listo para disparar */
+                    command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                    command.Parameters["@id"].Value = idCarro;
                     resultadoQuery = command.ExecuteNonQuery();
+                    if (resultadoQuery >= 1)
+                    {
+                        command = new SqlCommand(queryDelCarro, connection); /* Comando listo para disparar */
+                        command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                        command.Parameters["@id"].Value = idCarro;
+                        resultadoQuery = command.ExecuteNonQuery();
+                        if (resultadoQuery == 1)
+                        {
+                            command = new SqlCommand(queryDelUsuario, connection); /* Comando listo para disparar */
+                            command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                            command.Parameters["@id"].Value = ID;
+                            resultadoQueryUsuario = command.ExecuteNonQuery();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
-            if (resultadoQuery == 1)
+            if (resultadoQueryUsuario == 1)
             {
                 int indiceUsuarioLista = nUsuarios.FindIndex(x => x.nID == ID);
 
@@ -746,29 +784,156 @@ namespace TP2_PlataformasDeDesarrollo
         public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
             int indiceProd = nProductos.FindIndex(x => x.nIDProd == ID_Producto);
-            int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
+
             if (nProductos[indiceProd].nCantidad >= Cantidad && Cantidad > 0)
             {
-                nUsuarios[indiceUsuario].nCarro.AgregarProducto(nProductos[indiceProd], Cantidad);
-                return true;
+
+                nProductos[indiceProd].nCantidad -= Cantidad;
+
+                int resultadoQuery = 0;
+                int resultadoQueryCantidad = 0;
+                int idCarro = 0;
+                //Cargo la cadena de conexión desde el archivo de properties
+                
+
+                //Defino el string con la consulta que quiero realizar
+                string queryStringIdCarro = "SELECT idCarro FROM dbo.Carro C INNER JOIN dbo.Usuario U ON C.idUsuario = U.idUsuario WHERE U.idUsuario = @id";
+                string queryString = "INSERT INTO dbo.carro_producto (idCarro,idProducto,cantidad) " +
+                                      "VALUES (@idCarro, @idProducto, @cantidad)";
+                string queryStringStockProducto = "UPDATE dbo.Producto SET cantidad = @cantidad WHERE idProducto = @idProducto ";
+                string connectionString = Properties.Resources.ConnectionString;
+                SqlCommand command;
+                // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+                using (SqlConnection connection = new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+                {
+                    // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                    try
+                    {
+                        //Abro la conexión
+                        connection.Open();
+
+                        command = new SqlCommand(queryStringIdCarro, connection); /* Comando listo para disparar */
+                        command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                        command.Parameters["@id"].Value = ID_Usuario;
+                        SqlDataReader reader = command.ExecuteReader();
+                        reader.Read();
+                        idCarro = reader.GetInt16(0);
+                        reader.Close();
+
+
+                        command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                        command.Parameters.Add(new SqlParameter("@idCarro", SqlDbType.Int));
+                        command.Parameters.Add(new SqlParameter("@idProducto", SqlDbType.Int));
+                        command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                        command.Parameters["@idCarro"].Value = idCarro;
+                        command.Parameters["@idProducto"].Value = ID_Producto;
+                        command.Parameters["@cantidad"].Value = Cantidad;
+
+                        resultadoQuery = command.ExecuteNonQuery();
+
+                        command = new SqlCommand(queryStringStockProducto, connection); /* Comando listo para disparar */
+                        command.Parameters.Add(new SqlParameter("@idProducto", SqlDbType.Int));
+                        command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                        command.Parameters["@idProducto"].Value = ID_Producto;
+                        command.Parameters["@cantidad"].Value = nProductos[indiceProd].nCantidad;
+
+                        resultadoQueryCantidad = command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                if (resultadoQuery ==1 && resultadoQueryCantidad == 1) 
+                {
+                    int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
+                    nUsuarios[indiceUsuario].nCarro.AgregarProducto(nProductos[indiceProd], Cantidad);
+                    return true;
+                }
             }
-             
             return false;
         }
-        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario) /*  MODIFICADO, PREGUNTAR OPINION DE LOS DEMAS  */
+        public bool QuitarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
         {
             int indiceProd = nProductos.FindIndex(x => x.nIDProd == ID_Producto);
             int indiceUsuario = nUsuarios.FindIndex(x => x.nID == ID_Usuario);
-            if (nUsuarios[indiceUsuario].nCarro.QuitarProducto(nProductos[indiceProd], Cantidad))
+            int idCarro = 0;
+            string queryString = "";
+            string queryStringIdCarro = "";
+            int resultadoQuery = 0;
+            bool update = false;
+            queryStringIdCarro = "SELECT idCarro FROM carro WHERE idUsuario = @idUsuario";
+            // Si la cantidad Actual es mayor a la ingresada, se descuenta de la cantidad actual
+            if (nUsuarios[indiceUsuario].nCarro.nProductos[nProductos[indiceProd]] > Cantidad)
             {
-                MessageBox.Show("El producto no se encuentra en la lista");
-                return true;
+                queryString = "UPDATE carro_producto SET cantidad = @cantidad WHERE idCarro = @idCarro AND idProducto = @idProd";
+                update = true;
+            } // Si la cantidad Actual es igual a la ingresada, se borra el producto del carro
+            else if (nUsuarios[indiceUsuario].nCarro.nProductos[nProductos[indiceProd]] == Cantidad)
+            {
+                queryString = "DELETE FROM carro_producto WHERE idCarro = @idCarro";
+                // DELETE FROM carro_producto WHERE idCarro = @id
             }
             else
             {
-                MessageBox.Show("ERROR: no se encontro producto con el ID " + ID_Producto + " en el Carro.");
+                MessageBox.Show("La cantidad ingresada es incorrecta");
                 return false;
             }
+            
+
+            string connectionString = Properties.Resources.ConnectionString;
+            SqlCommand command;
+            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
+            using (SqlConnection connection = new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
+            {
+                // Defino el comando a enviar al motor SQL con la consulta y la conexión
+                try
+                {
+                    //Abro la conexión
+                    connection.Open();
+
+                    command = new SqlCommand(queryStringIdCarro, connection); /* Comando listo para disparar */
+                    command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                    command.Parameters["@idUsuario"].Value = ID_Usuario;
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idCarro = reader.GetInt16(0);
+                    reader.Close();
+
+                    command = new SqlCommand(queryString, connection); /* Comando listo para disparar */
+                    command.Parameters.Add(new SqlParameter("@idCarro", SqlDbType.Int));
+                    command.Parameters["@idCarro"].Value = idCarro;
+                    command.Parameters.Add(new SqlParameter("@idProd", SqlDbType.Int));
+                    command.Parameters["@idProd"].Value = nProductos[indiceProd].nIDProd;
+                    if (update) 
+                    {
+                        command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+                        command.Parameters["@cantidad"].Value = Cantidad;
+                    }
+                    resultadoQuery = command.ExecuteNonQuery();
+                   
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            if (resultadoQuery==1 && nUsuarios[indiceUsuario].nCarro.QuitarProducto(nProductos[indiceProd], Cantidad)) 
+            {
+                if (update)
+                {
+                    MessageBox.Show("Se desconto la cantidad del producto del carro");
+                    return true;
+                }
+                else 
+                {
+                    MessageBox.Show("Se quito el Producto del Carro");
+                    return true;
+                }
+            }
+                MessageBox.Show("ERROR: no se encontro el producto con el ID " + ID_Producto + " en el Carro.");
+                return false;
         }
         public bool VaciarCarro(int ID_Usuario)
         {
