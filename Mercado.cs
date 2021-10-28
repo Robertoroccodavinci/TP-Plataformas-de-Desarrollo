@@ -1345,7 +1345,7 @@ namespace TP2_PlataformasDeDesarrollo
             connectionString = Properties.Resources.ConnectionString;
 
             //Defino el string con la consulta que quiero realizar
-            queryString = "SELECT * from dbo.Categoria";
+            queryString = "SELECT * from dbo.Categoria ORDER BY nombre";
 
             // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
             using (SqlConnection connection =
