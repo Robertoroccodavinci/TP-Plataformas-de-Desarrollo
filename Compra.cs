@@ -10,8 +10,10 @@ namespace TP2_PlataformasDeDesarrollo
     {
         private int IDCompra;
         private Usuario Comprador;
-        private Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
+        public Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
         private double Total;
+
+        public Compra() { }
 
         public Compra(int ID, Usuario Comprador,Dictionary<Producto, int> Producto, double Total)
         {
@@ -42,6 +44,11 @@ namespace TP2_PlataformasDeDesarrollo
         {
             get { return Productos; }
             set { Productos = value;}
+        }
+
+        public void Agregar(Producto key, int value)
+        {
+                nProductos.Add(key, value);
         }
 
         public double nTotal

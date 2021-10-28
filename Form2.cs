@@ -115,10 +115,6 @@ namespace TP2_PlataformasDeDesarrollo
         {
             tabControl1.SelectedTab = tabPage3;
         }
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
 
 
         //################################################################################################
@@ -138,7 +134,7 @@ namespace TP2_PlataformasDeDesarrollo
             //se salta a iniciar sesion
             try
             {
-                m.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text, textPass.Text, int.Parse(textCUIT_CUIL.Text), 1);
+                m.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text, textPass.Text, int.Parse(textCUIT_CUIL.Text), 2);
                 textDNI.Text = "";
                 textNombre.Text = "";
                 textApellido.Text = "";

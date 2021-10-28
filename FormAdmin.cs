@@ -27,6 +27,7 @@ namespace TP2_PlataformasDeDesarrollo
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBoxRol.SelectedIndex = 1;
+            button3.Hide();
             //comboBoxModRol.SelectedIndex = 0;
 
             //tabControl1.SelectedIndexChanged += new EventHandler(ocultarMostrar);
@@ -40,8 +41,6 @@ namespace TP2_PlataformasDeDesarrollo
 
             //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
             dataGridView6.CellClick += dataGridView6_CellClick;
-
-
         }
 
         private void refreshData(Mercado data)
@@ -223,6 +222,7 @@ namespace TP2_PlataformasDeDesarrollo
                         textBox6.Text = merc.nProductos[indice].nPrecio.ToString();
                         textBox7.Text = merc.nProductos[indice].nCantidad.ToString();
                         textBox8.Text = merc.nProductos[indice].nCategoria.nID.ToString();
+                        button3.Show();
                         tabControl2.SelectedTab = ModificarProducto;
 
                     }
@@ -476,6 +476,7 @@ namespace TP2_PlataformasDeDesarrollo
                 //MODIFICAR
                 textBox11.Text = merc.nCategorias[indiceArrayCategoria].nID.ToString();
                 textBox12.Text = merc.nCategorias[indiceArrayCategoria].nNombre;
+                button3.Show();
                 tabControl3.SelectedTab = ModificarCategoria;
             }
         }
@@ -538,6 +539,7 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox24.Text = merc.nUsuarios[indice].nMail;
                 textBox25.Text = merc.nUsuarios[indice].nPassword;
                 textBox26.Text = merc.nUsuarios[indice].nCUIT_CUIL.ToString();
+                button3.Show();
                 comboBoxModRol.SelectedIndex = int.Parse(merc.nUsuarios[indice].nRol.ToString()) - 1;
 
             }
@@ -593,13 +595,15 @@ namespace TP2_PlataformasDeDesarrollo
             }
             else
             {
-                int indice = int.Parse(dataGridView4[0, e.RowIndex].Value.ToString());
+                int indice = merc.nCompras.FindIndex(x=>x.nIDCompra == int.Parse(dataGridView4[0, e.RowIndex].Value.ToString()) );
                 //MODIFICAR
                 textBox28.Text = merc.nCompras[indice].nIDCompra.ToString();
                 textBox29.Text = merc.nCompras[indice].nComprador.nID.ToString();
                 textBox30.Text = merc.nCompras[indice].nTotal.ToString();
+                button3.Show();
                 tabControl5.SelectedTab = ModificarCompra;
             }
+            
         }
         //######################################################
         //             MODIFICAR COMPRA
@@ -647,6 +651,7 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox34.Show();
                 // Mostrar Boton Agregar 
                 button2.Show();
+                
             }
             else
             {
@@ -664,6 +669,9 @@ namespace TP2_PlataformasDeDesarrollo
                     // Quitar Boton Agregar
                     button2.Hide();
                 }
+
+           
+
             }
         }
 
@@ -675,14 +683,17 @@ namespace TP2_PlataformasDeDesarrollo
         {
             if (tabControl1.SelectedTab.Text == "Productos")
             {
+                button3.Show();
                 tabControl2.SelectedTab = AgregarProducto;
             }
             else if (tabControl1.SelectedTab.Text == "Categorias")
             {
+                button3.Show();
                 tabControl3.SelectedTab = AgregarCategoria;
             }
             else if (tabControl1.SelectedTab.Text == "Usuarios")
             {
+                button3.Show();
                 tabControl4.SelectedTab = AgregarUsuario; 
             }
         }
@@ -712,6 +723,29 @@ namespace TP2_PlataformasDeDesarrollo
            
         }
 
-        
+        //######################################################
+        //             BOTON VOLVER
+        //######################################################
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Hide();
+            if (tabControl1.SelectedTab.Text == "Productos" && (tabControl2.SelectedTab == AgregarProducto || tabControl2.SelectedTab == ModificarProducto))
+            {
+                tabControl2.SelectedTab = ListaProductos;
+            }
+            else if (tabControl1.SelectedTab.Text == "Categorias" && (tabControl3.SelectedTab == AgregarCategoria || tabControl3.SelectedTab == ModificarCategoria))
+            {
+                tabControl3.SelectedTab = ListaCategoria;
+            }
+            else if (tabControl1.SelectedTab.Text == "Usuarios" && (tabControl4.SelectedTab == AgregarUsuario || tabControl4.SelectedTab == ModificarUsuario))
+            {
+                tabControl4.SelectedTab = ListaUsuarios; 
+            }
+            else if (tabControl1.SelectedTab.Text == "Compras" && tabControl5.SelectedTab == ModificarCompra)
+            {
+                tabControl5.SelectedTab = ListaCompras;
+            }
+        }
     }
 }

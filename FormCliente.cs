@@ -25,6 +25,7 @@ namespace TP2_PlataformasDeDesarrollo
             tabControl1.SelectedIndexChanged += new EventHandler(ocultarMostrar);
             button15.Hide();
             button14.Hide();
+            button2.Hide();
 
             //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
             dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
@@ -105,6 +106,7 @@ namespace TP2_PlataformasDeDesarrollo
             label9.Text = merc.nProductos[indice].nCantidad.ToString();
             label10.Text = merc.nProductos[indice].nCategoria.nID.ToString();
             numericUpDown1.Maximum = merc.nProductos[indice].nCantidad;
+            button2.Show();
             tabControl2.SelectedTab = MostrarProducto;
             
             
@@ -364,6 +366,7 @@ namespace TP2_PlataformasDeDesarrollo
                 textBox31.Text = dataGridView5[0, e.RowIndex].Value.ToString();
                 textBox32.Text = dataGridView5[2, e.RowIndex].Value.ToString();
                 textBox33.Text = dataGridView5[3, e.RowIndex].Value.ToString();
+                button2.Show();
                 tabControl6.SelectedTab = ModificarCarro;
             }
         }
@@ -386,7 +389,11 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button15_Click(object sender, EventArgs e)
         {
-            if (merc.VaciarCarro(ID)) 
+            if (dataGridView5.Rows.Count == 0)
+            {
+                MessageBox.Show("No tienes productos que vaciar");
+            }
+            else if (merc.VaciarCarro(ID))
             {
                 refreshData(merc);
             }
@@ -397,10 +404,15 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button14_Click(object sender, EventArgs e)
         {
-            if (merc.Comprar(ID))
+            if (dataGridView5.Rows.Count == 0)
+            {
+                MessageBox.Show("Debes agregar productos al carro");
+            }
+            else if (merc.Comprar(ID))
             {
                 refreshData(merc);
             }
+
         }
 
         //######################################################
@@ -420,7 +432,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void iconButton2_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Seguro que desea salir?", "", MessageBoxButtons.YesNo);
+            DialogResult respuesta = MessageBox.Show("¿Seguro que deseas salir?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (respuesta == DialogResult.Yes)
             {
                 this.TrasfEvento();
@@ -428,6 +440,22 @@ namespace TP2_PlataformasDeDesarrollo
             }
         }
 
-        
+        //######################################################
+        //             BOTON VOLVER
+        //######################################################
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            button2.Hide();
+            if (tabControl1.SelectedTab.Text == "Productos" && tabControl2.SelectedTab == MostrarProducto )
+            {
+                tabControl2.SelectedTab = ListaProductos;
+            }
+            else if (tabControl1.SelectedTab.Text == "Mi Carro" && tabControl6.SelectedTab == ModificarCarro )
+            {
+                tabControl6.SelectedTab = ListaCarro;
+            }
+            
+        }
     }
 }

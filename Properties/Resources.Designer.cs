@@ -61,7 +61,7 @@ namespace TP2_PlataformasDeDesarrollo.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Data Source=DESKTOP-HP82AM9;Initial Catalog=PlataformasDeDesarrollo;Integrated Security=True.
+        ///   Busca una cadena traducida similar a Data Source=LAPTOP-BIMP42AN;Initial Catalog=PlataformasDeDesarrollo;Integrated Security=True.
         /// </summary>
         internal static string ConnectionString {
             get {

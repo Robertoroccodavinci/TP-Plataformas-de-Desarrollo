@@ -134,10 +134,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.tabControl5 = new System.Windows.Forms.TabControl();
             this.ListaCompras = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModificarCompra = new System.Windows.Forms.TabPage();
             this.textBox30 = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
@@ -160,6 +156,11 @@ namespace TP2_PlataformasDeDesarrollo
             this.textBox34 = new System.Windows.Forms.TextBox();
             this.buttonB = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1293,11 +1294,11 @@ namespace TP2_PlataformasDeDesarrollo
             // 
             this.tabControl5.Controls.Add(this.ListaCompras);
             this.tabControl5.Controls.Add(this.ModificarCompra);
-            this.tabControl5.Location = new System.Drawing.Point(2, 0);
+            this.tabControl5.Location = new System.Drawing.Point(2, -22);
             this.tabControl5.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl5.Name = "tabControl5";
             this.tabControl5.SelectedIndex = 0;
-            this.tabControl5.Size = new System.Drawing.Size(896, 398);
+            this.tabControl5.Size = new System.Drawing.Size(896, 420);
             this.tabControl5.TabIndex = 0;
             // 
             // ListaCompras
@@ -1307,7 +1308,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.ListaCompras.Margin = new System.Windows.Forms.Padding(2);
             this.ListaCompras.Name = "ListaCompras";
             this.ListaCompras.Padding = new System.Windows.Forms.Padding(2);
-            this.ListaCompras.Size = new System.Drawing.Size(888, 372);
+            this.ListaCompras.Size = new System.Drawing.Size(888, 394);
             this.ListaCompras.TabIndex = 0;
             this.ListaCompras.Text = "ListaCompras";
             this.ListaCompras.UseVisualStyleBackColor = true;
@@ -1333,38 +1334,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.dataGridView4.Size = new System.Drawing.Size(892, 381);
             this.dataGridView4.TabIndex = 1;
             // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "ID";
-            this.Column14.MinimumWidth = 6;
-            this.Column14.Name = "Column14";
-            this.Column14.ReadOnly = true;
-            this.Column14.Width = 125;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "ID Usuario";
-            this.Column15.MinimumWidth = 6;
-            this.Column15.Name = "Column15";
-            this.Column15.ReadOnly = true;
-            this.Column15.Width = 125;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Productos";
-            this.Column16.MinimumWidth = 6;
-            this.Column16.Name = "Column16";
-            this.Column16.ReadOnly = true;
-            this.Column16.Width = 125;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Total";
-            this.Column17.MinimumWidth = 6;
-            this.Column17.Name = "Column17";
-            this.Column17.ReadOnly = true;
-            this.Column17.Width = 125;
-            // 
             // ModificarCompra
             // 
             this.ModificarCompra.Controls.Add(this.textBox30);
@@ -1378,7 +1347,7 @@ namespace TP2_PlataformasDeDesarrollo
             this.ModificarCompra.Margin = new System.Windows.Forms.Padding(2);
             this.ModificarCompra.Name = "ModificarCompra";
             this.ModificarCompra.Padding = new System.Windows.Forms.Padding(2);
-            this.ModificarCompra.Size = new System.Drawing.Size(888, 372);
+            this.ModificarCompra.Size = new System.Drawing.Size(592, 263);
             this.ModificarCompra.TabIndex = 1;
             this.ModificarCompra.Text = "ModificarCompra";
             this.ModificarCompra.UseVisualStyleBackColor = true;
@@ -1604,12 +1573,57 @@ namespace TP2_PlataformasDeDesarrollo
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "ID";
+            this.Column14.MinimumWidth = 6;
+            this.Column14.Name = "Column14";
+            this.Column14.ReadOnly = true;
+            this.Column14.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column14.Width = 125;
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "ID Usuario";
+            this.Column15.MinimumWidth = 6;
+            this.Column15.Name = "Column15";
+            this.Column15.ReadOnly = true;
+            this.Column15.Width = 125;
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Productos";
+            this.Column16.MinimumWidth = 6;
+            this.Column16.Name = "Column16";
+            this.Column16.ReadOnly = true;
+            this.Column16.Width = 125;
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "Total";
+            this.Column17.MinimumWidth = 6;
+            this.Column17.Name = "Column17";
+            this.Column17.ReadOnly = true;
+            this.Column17.Width = 125;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(494, 12);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(94, 29);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "Volver";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(892, 462);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label46);
@@ -1772,10 +1786,6 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.TabControl tabControl5;
         private System.Windows.Forms.TabPage ListaCompras;
         private System.Windows.Forms.DataGridView dataGridView4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.TabPage ModificarCompra;
         private System.Windows.Forms.TextBox textBox30;
         private System.Windows.Forms.Label label42;
@@ -1803,5 +1813,10 @@ namespace TP2_PlataformasDeDesarrollo
         private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.Button button3;
     }
 }

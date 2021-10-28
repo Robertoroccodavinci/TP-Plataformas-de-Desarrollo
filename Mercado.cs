@@ -15,7 +15,7 @@ namespace TP2_PlataformasDeDesarrollo
         private const int MaxCategorias = 10;
         private int CantCategorias = 0;
         private Categoria[] Categorias;
-        private List<Compra> Compras = new List<Compra>();
+        private List<Compra> Compras;
 
         public string[] fileName = { "1productos.txt", "2usuario.txt", "3carro.txt", "4compras.txt", "5categoria.txt" };
         private string sourcePath;
@@ -249,7 +249,7 @@ namespace TP2_PlataformasDeDesarrollo
                 nProductos[indiceProductosLista].nPrecio = precio;
                 nProductos[indiceProductosLista].nCantidad = cantidad;
                 nProductos[indiceProductosLista].nCategoria = nCategorias[indiceCategoriaArray];
-                MessageBox.Show("Producto modificado correctamente!");
+               //MessageBox.Show("Producto modificado correctamente!");
                 return true;
             }
             MessageBox.Show("ERROR: producto no encontrado.");
@@ -530,9 +530,8 @@ namespace TP2_PlataformasDeDesarrollo
             //Defino el string con la consulta que quiero realizar
             string queryDelUsuario = "DELETE FROM dbo.Usuario WHERE idUsuario = @id";
             string queryDelCarro = "DELETE FROM Carro WHERE idCarro = @id";
-            string queryDelCarroProducto = "DELETE FROM carro_producto WHERE idCarro = @id";
             
-
+            
             // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
             using (SqlConnection connection =
                 new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
@@ -541,7 +540,7 @@ namespace TP2_PlataformasDeDesarrollo
                 try
                 {
                     connection.Open();
-                    string ConsultaIDCarro = "SELECT C.idCarro FROM dbo.Usuario U INNER JOIN dbo.Carro C  ON U.idUsuario = C.idUsuario WHERE U.idUsuario = @id ";
+                    string ConsultaIDCarro = "SELECT C.idCarro FROM dbo.Usuario U INNER JOIN dbo.Carro C ON U.idUsuario = C.idUsuario WHERE U.idUsuario = @id";
                     command = new SqlCommand(ConsultaIDCarro, connection);
                     command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                     command.Parameters["@id"].Value = ID;
@@ -550,25 +549,46 @@ namespace TP2_PlataformasDeDesarrollo
                     idCarro = reader.GetInt16(0);
                     reader.Close();
 
+                    int indiceUsuarioLista = nUsuarios.FindIndex(x => x.nID == ID);
                     // Defino el comando a enviar al motor SQL con la consulta y la conexión
-                    command = new SqlCommand(queryDelCarroProducto, connection); /* Comando listo para disparar */
+                    if (nCompras.Exists(x => x.nComprador == nUsuarios[indiceUsuarioLista]))
+                    {
+                        int indiceCompra = nCompras.FindIndex(x => x.nComprador == nUsuarios[indiceUsuarioLista]);
+                        string queryEliminarComprasProducto = "DELETE FROM compra_producto WHERE idCompra = @idCompra";
+                        command = new SqlCommand(queryEliminarComprasProducto, connection); /* Comando listo para disparar */
+                        command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
+                        command.Parameters["@idCompra"].Value = nCompras[indiceCompra].nIDCompra;
+                        int resultadoQueryCompraProducto = command.ExecuteNonQuery();
+                        if (resultadoQueryCompraProducto >= 1)
+                        {
+                            string queryEliminarCompras = "DELETE FROM Compra WHERE idCompra = @idCompra";
+                            command = new SqlCommand(queryEliminarCompras, connection); /* Comando listo para disparar */
+                            command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
+                            command.Parameters["@idCompra"].Value = nCompras[indiceCompra].nIDCompra;
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    if (nUsuarios[indiceUsuarioLista].nCarro.nProductos.Count() != 0)
+                    {
+                        string queryDelCarroProducto = "DELETE FROM carro_producto WHERE idCarro = @id";
+                        command = new SqlCommand(queryDelCarroProducto, connection); /* Comando listo para disparar */
+                        command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                        command.Parameters["@id"].Value = idCarro;
+                        command.ExecuteNonQuery();
+                    }
+
+                    command = new SqlCommand(queryDelCarro, connection); /* Comando listo para disparar */
                     command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                     command.Parameters["@id"].Value = idCarro;
                     resultadoQuery = command.ExecuteNonQuery();
-                    if (resultadoQuery >= 1)
+                    if (resultadoQuery == 1)
                     {
-                        command = new SqlCommand(queryDelCarro, connection); /* Comando listo para disparar */
+                        command = new SqlCommand(queryDelUsuario, connection); /* Comando listo para disparar */
                         command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                        command.Parameters["@id"].Value = idCarro;
-                        resultadoQuery = command.ExecuteNonQuery();
-                        if (resultadoQuery == 1)
-                        {
-                            command = new SqlCommand(queryDelUsuario, connection); /* Comando listo para disparar */
-                            command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                            command.Parameters["@id"].Value = ID;
-                            resultadoQueryUsuario = command.ExecuteNonQuery();
-                        }
+                        command.Parameters["@id"].Value = ID;
+                        resultadoQueryUsuario = command.ExecuteNonQuery();
                     }
+   
                 }
                 catch (Exception ex)
                 {
@@ -1485,11 +1505,9 @@ namespace TP2_PlataformasDeDesarrollo
             // ######################################
 
             //Defino el string con la consulta que quiero realizar
-            string queryStringCompra = "SELECT CP.idProducto, CP.cantidad FROM dbo.Compra C " +
-                                       "INNER JOIN dbo.compra_producto CP ON C.idCompra = CP.idCompra " +
-                                       "WHERE C.idUsuario = @idUsuario AND C.idCompra = @idCompra";
-            string queryStringIdsCompra = "SELECT C.idCompra FROM dbo.Compra C";
-            int idUsuario=0;
+            string queryStringIdsCompra = "SELECT * FROM Compra C JOIN compra_producto CP ON C.idCompra = CP.idCompra";
+            Compra compraAuxiliar;
+            
             // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
             using (SqlConnection connection =
                 new SqlConnection(connectionString)) /*Se crea el objeto apuntando a esa BD*/
@@ -1500,49 +1518,31 @@ namespace TP2_PlataformasDeDesarrollo
                 {
                     //Abro la conexión
                     connection.Open();
-                    List<int> ids = new List<int>();
                     command = new SqlCommand(queryStringIdsCompra, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read()) /* Devuelve true, si no hay nada devuelve false*/
                     {
-                        ids.Add(reader.GetInt16(0));
+                        int indiceUsuario = Usuarios.FindIndex(x => x.nID == reader.GetInt16(1));
+                        int indiceCompra = Compras.FindIndex(x => x.nIDCompra == reader.GetInt16(0));
+                        int indiceProd = nProductos.FindIndex(x => x.nIDProd == reader.GetInt16(5));
+                        
+
+                        if (Compras.Exists(x => x.nIDCompra == reader.GetInt16(0)))
+                        {
+                            Compras[indiceCompra].Agregar(nProductos[indiceProd], reader.GetByte(6));
+                        }
+                        else
+                        {
+                            Dictionary<Producto, int> produc = new Dictionary<Producto, int>();
+                            produc.Add(nProductos[indiceProd], reader.GetByte(6));
+                            compraAuxiliar = new Compra(reader.GetInt16(0), Usuarios[indiceUsuario], produc, reader.GetInt32(2));
+                            nCompras.Add(compraAuxiliar);
+
+                        }
+
                     }
                     reader.Close();
-
                     
-                    //mi objecto DataReader va a obtener los resultados de la consulta, notar que a comando se le pide ExecuteReader()
-                    Dictionary<Producto, int> prod = new Dictionary<Producto, int>();
-                    Compra aux;
-                    double total=0;
-                    foreach (Usuario u in nUsuarios) 
-                    {
-                        prod = new Dictionary<Producto, int>();
-                        foreach (int i in ids) 
-                        {
-                            
-                            command = new SqlCommand(queryStringCompra, connection);
-                            command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
-                            command.Parameters["@idUsuario"].Value = u.nID;
-                            command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
-                            command.Parameters["@idCompra"].Value = i;
-                            reader = command.ExecuteReader(); /*ExecuteReader para SELECT*/
-                            while (reader.Read()) /* Devuelve true, si no hay nada devuelve false*/
-                            {
-                                int idProd = nProductos.FindIndex(x => x.nIDProd == reader.GetInt16(0));
-
-                                prod.Add(nProductos[idProd], reader.GetByte(1));
-                                total += nProductos[idProd].nPrecio * reader.GetByte(1);
-
-                            }
-                            reader.Close();
-                            if (prod.Count()>=1 && total>0) 
-                            { 
-                                idUsuario = nUsuarios.FindIndex(x => x.nID == u.nID);
-                                aux = new Compra(i, u, prod, total);
-                                nCompras.Add(aux);
-                            }
-                        }
-                    }
                 }
                 catch (Exception ex)
                 {

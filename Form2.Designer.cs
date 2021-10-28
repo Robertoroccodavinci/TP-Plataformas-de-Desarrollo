@@ -328,7 +328,6 @@ namespace TP2_PlataformasDeDesarrollo
             this.label6.Size = new System.Drawing.Size(84, 24);
             this.label6.TabIndex = 22;
             this.label6.Text = "Apellido:";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label7
             // 

@@ -10,7 +10,6 @@ C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-
 C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.Properties.Resources.resources
 C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.GenerateResource.cache
 C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.CoreCompileInputs.cache
-C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP3_PlataformasDeDesarrollo.csproj.CopyComplete
 C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.exe
 C:\Users\seba\Desktop\4to cuatrimestre\Plataformas de desarrollo\TP-Plataformas-de-Desarrollo\obj\Debug\TP2_PlataformasDeDesarrollo.pdb
 C:\Users\rober\Desktop\Proyectos\TP-Plataformas-de-Desarrollo\bin\Debug\TP2_PlataformasDeDesarrollo.exe.config
