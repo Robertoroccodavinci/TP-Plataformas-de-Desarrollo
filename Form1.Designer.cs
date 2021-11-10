@@ -1,5 +1,5 @@
 ﻿
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
     partial class Form1
     {
@@ -22,12 +22,12 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 hijoCliente.Dispose();
             }
-            else if (hijoAdmin != null) 
+            else if (hijoAdmin != null)
             {
                 hijoAdmin.Dispose();
             }
 
-         
+
             base.Dispose(disposing);
         }
 

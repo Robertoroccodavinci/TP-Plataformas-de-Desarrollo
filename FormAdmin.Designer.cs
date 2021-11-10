@@ -1,5 +1,5 @@
 ﻿
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
     partial class FormAdmin
     {
@@ -18,7 +18,7 @@ namespace TP2_PlataformasDeDesarrollo
             {
                 components.Dispose();
             }
-            
+
             base.Dispose(disposing);
         }
 

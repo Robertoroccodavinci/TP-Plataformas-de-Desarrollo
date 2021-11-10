@@ -1,5 +1,5 @@
 ﻿
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
     partial class FormCliente
     {

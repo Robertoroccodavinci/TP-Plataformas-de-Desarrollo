@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
     public partial class Form2 : Form
     {
@@ -17,12 +14,12 @@ namespace TP2_PlataformasDeDesarrollo
         private string pass;
         public delegate void TransfDelegado(int ID, string nombre, Object m);
         public TransfDelegado TrasfEvento;
-        private Mercado m=new Mercado();
+        private Mercado m = new Mercado();
 
         public Form2()
         {
             InitializeComponent();
-            textBox8.Text = m.nTargetPath;
+            //textBox8.Text = m.nTargetPath;
         }
 
         //################################################################################################
@@ -40,28 +37,27 @@ namespace TP2_PlataformasDeDesarrollo
         {
             DNI = int.Parse(textBox1.Text);
             pass = inputPass.Text;
-            m.nTargetPath = textBox8.Text;
 
             Usuario u;
-            if (( u=m.IniciarSesion(DNI,pass))!=null)
+            if ((u = m.IniciarSesion(DNI, pass)) != null)
             {
                 MessageBox.Show("Te damos la bienvenida!");
-                this.TrasfEvento(u.nID,u.nNombre, m);
+                this.TrasfEvento(u.idUsuario, u.nombre, m);
             }
             else
-                MessageBox.Show("Debes registrarte");
+                MessageBox.Show("No existe usuario con ese DNI o Password, vuelve a intentar o registrarte");
         }
 
         //Iniciar sesión con tecla Enter (repite implementación anterior de "button1_Click")
         private void inputPass_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+          /*  if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
                 DNI = int.Parse(textBox1.Text);
                 pass = inputPass.Text;
-                m.nTargetPath = textBox8.Text;
+                //m.nTargetPath = textBox8.Text;
 
-                Usuario u;
+                UsuarioOLD u;
                 if ((u = m.IniciarSesion(DNI, pass)) != null)
                 {
                     MessageBox.Show("Te damos la bienvenida!");
@@ -69,7 +65,7 @@ namespace TP2_PlataformasDeDesarrollo
                 }
                 else
                     MessageBox.Show("Debes registrarte");
-            }
+            }*/
         }
 
         private void button1_MouseHover(object sender, EventArgs e)
@@ -132,7 +128,7 @@ namespace TP2_PlataformasDeDesarrollo
         {
             //si puso todos los datos y se registra sin problemas en la lista de usuarios
             //se salta a iniciar sesion
-            try
+        /*    try
             {
                 m.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text, textPass.Text, int.Parse(textCUIT_CUIL.Text), 2);
                 textDNI.Text = "";
@@ -145,7 +141,7 @@ namespace TP2_PlataformasDeDesarrollo
             catch (Exception)
             {
                 MessageBox.Show("ERROR ingreso dato incorrecto");
-            }
+            }*/
 
             tabControl1.SelectedTab = tabPage1;
         }
@@ -154,7 +150,7 @@ namespace TP2_PlataformasDeDesarrollo
         //           BOTON VER - OCULTAR CONTRASEÑA
         //        FORMULARIO REGISTRO DE USUARIO NUEVO
         //######################################################
-        
+
         private void button6_Click(object sender, EventArgs e)
         {
             if (textPass.UseSystemPasswordChar == true)
@@ -172,7 +168,7 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################
         private void button7_Click(object sender, EventArgs e)
         {
-            textDNI.Text="";
+            textDNI.Text = "";
             textNombre.Text = "";
             textApellido.Text = "";
             textMail.Text = "";
@@ -200,7 +196,7 @@ namespace TP2_PlataformasDeDesarrollo
         //
         //################################################################################################
         //################################################################################################
-        
+
 
 
         //######################################################
@@ -209,10 +205,10 @@ namespace TP2_PlataformasDeDesarrollo
         //######################################################R
         private void button8_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
+          /*  FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.ShowDialog();
             m.nTargetPath = fbd.SelectedPath;
-            textBox8.Text = m.nTargetPath;
+            textBox8.Text = m.nTargetPath;*/
         }
 
         //######################################################
@@ -224,6 +220,6 @@ namespace TP2_PlataformasDeDesarrollo
             tabControl1.SelectedTab = tabPage1;
         }
 
-        
+
     }
 }

@@ -1,68 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
-    class Producto : IComparable<Producto>
+    class Producto
     {
-        private int IDProd;
-        private string Nombre;
-        private double Precio;
-        private int Cantidad;
-        public Categoria Cat;
+        public int idProducto { get; set; }
+        public string nombre { get; set; }
+        public double precio { get; set; }
+        public int cantidad { get; set; }
+        public Categoria cat { get; set; }
+        public int idCategoria { get; set; }
 
-        public Producto(int IDProd, string nombre, double precio, int cant, Categoria cat)
+        public List<CarroProducto> carroProducto { get; set; }
+        public List<CompraProducto> compraProducto { get; set; }
+
+        public Producto() { }
+        public Producto(int idProducto, string nombre, double precio, int cantidad, 
+                        Categoria cat,int idCategoria,
+                        List<CarroProducto> carroProducto, List<CompraProducto> compraProducto)
         {
-            nIDProd = IDProd;
-            nNombre = nombre;
-            nPrecio = precio;
-            nCantidad = cant;
-            nCategoria = cat;
-        }
-
-        public int nIDProd
-        {
-            get { return IDProd; }
-            set { IDProd = value; }
-        }
-
-        public string nNombre
-        {
-            get { return Nombre; }
-            set { Nombre = value; }
-        }
-
-
-        public double nPrecio
-        {
-            get { return Precio; }
-            set { Precio = value; }
-        }
-
-        public int nCantidad
-        {
-            get { return Cantidad; }
-            set { Cantidad = value; }
-        }
-
-        public Categoria nCategoria
-        {
-            get { return Cat; }
-            set { Cat = value; }
-        }
-
-        public int CompareTo(Producto otro)
-        {
-            return nNombre.CompareTo(otro.nNombre);
+            this.idProducto     = idProducto;
+            this.nombre         = nombre;
+            this.precio         = precio;
+            this.cantidad       = cantidad;
+            this.cat            = cat;
+            this.idCategoria    = idCategoria;
+            this.carroProducto  = carroProducto;
+            this.compraProducto = compraProducto;
         }
 
         public override string ToString()
         {
-            return nIDProd + "-" + nNombre + "-" + nPrecio + "-" + nCantidad + "-" + nCategoria.ToString();
+            return idProducto + "-" + nombre + "-" + precio + "-" + cantidad + "-" + cat;
         }
 
     }
 }
+
+

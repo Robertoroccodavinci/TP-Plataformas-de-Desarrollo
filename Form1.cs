@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
     public partial class Form1 : Form
     {
@@ -20,14 +20,14 @@ namespace TP2_PlataformasDeDesarrollo
         public Form1()
         {
             InitializeComponent();
-            
+
             hijoLogin = new Form2();
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;
             hijoLogin.Show();
-            
+
         }
-        private void TransfDelegado(int ID, string nombre,Object m)
+        private void TransfDelegado(int ID, string nombre, Object m)
         {
             merc = (Mercado)m;
             if (merc.esAdmin(ID))
@@ -38,7 +38,7 @@ namespace TP2_PlataformasDeDesarrollo
                 hijoAdmin.MdiParent = this;
                 hijoAdmin.Show();
             }
-            else 
+            else
             {
                 hijoLogin.Close();
                 hijoCliente = new FormCliente(ID, nombre, m);

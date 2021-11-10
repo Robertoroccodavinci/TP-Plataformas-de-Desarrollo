@@ -1,78 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace TP2_PlataformasDeDesarrollo
+namespace TP_Plataformas_de_Desarrollo
 {
-    class Compra : IComparable<Compra>
+    class Compra
     {
-        private int IDCompra;
-        private Usuario Comprador;
-        public Dictionary<Producto, int> Productos = new Dictionary<Producto, int>();
-        private double Total;
+        public int idCompra {get; set; }
+        public Usuario usuario {get; set;}
+        public int idUsuario  { get; set; }
+        public List<CompraProducto> compraProducto { get; set; }
+        public double total { get; set; }
 
         public Compra() { }
-
-        public Compra(int ID, Usuario Comprador,Dictionary<Producto, int> Producto, double Total)
+        public Compra(int idCompra, Usuario usuario,int idUsuario, List<CompraProducto> compraProducto, double total)
         {
-            nIDCompra = ID;
-            nComprador = Comprador;
-            foreach (KeyValuePair<Producto, int> kvp in Producto)
-            {
-                nProductos.Add(kvp.Key, kvp.Value);
-            }
-            nTotal = Total;
-
-
+            this.idCompra       = idCompra;
+            this.usuario        = usuario;
+            this.idUsuario      = idUsuario;
+            this.compraProducto = compraProducto;
+            this.total          = total;
         }
 
-        public int nIDCompra
-        {
-            get { return IDCompra; }
-            set { IDCompra = value; }
-        }
-
-        public Usuario nComprador
-        {
-            get { return Comprador; }
-            set { Comprador = value; }
-        }
-
-        public Dictionary<Producto, int> nProductos
-        {
-            get { return Productos; }
-            set { Productos = value;}
-        }
-
-        public void Agregar(Producto key, int value)
-        {
-                nProductos.Add(key, value);
-        }
-
-        public double nTotal
-        {
-            get { return Total; }
-            set { Total = value; }
-        }
-
-        public int CompareTo(Compra otro)
-        {
-            return nIDCompra.CompareTo(otro.nIDCompra);
-        }
-
-        public override string ToString()
-        {
-
-            string leer = "";
-            foreach (KeyValuePair<Producto, int> kvp in Productos)
-            {
-                leer += "Key = " + kvp.Key + ", Value = " + kvp.Value + "\n";
-            }
-
-            return nIDCompra + "-" + nComprador + "-" + nTotal + "-" + leer;
-
-        }
     }
 }
