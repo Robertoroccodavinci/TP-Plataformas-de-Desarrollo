@@ -128,7 +128,7 @@ namespace TP_Plataformas_de_Desarrollo
         {
             //si puso todos los datos y se registra sin problemas en la lista de usuarios
             //se salta a iniciar sesion
-        /*    try
+            try
             {
                 m.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text, textPass.Text, int.Parse(textCUIT_CUIL.Text), 2);
                 textDNI.Text = "";
@@ -138,10 +138,10 @@ namespace TP_Plataformas_de_Desarrollo
                 textPass.Text = "";
                 textCUIT_CUIL.Text = "";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("ERROR ingreso dato incorrecto");
-            }*/
+                MessageBox.Show("ERROR ingreso dato incorrecto"+ex);
+            }
 
             tabControl1.SelectedTab = tabPage1;
         }

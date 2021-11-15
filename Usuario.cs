@@ -29,7 +29,8 @@ namespace TP_Plataformas_de_Desarrollo
             this.password   = password;
             this.cuit_cuil  = cuit_cuil;
             this.rol        = rol;
-            this.miCarro    = new Carro();
+           
+            
         }
     }
 }

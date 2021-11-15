@@ -19,7 +19,11 @@ namespace TP_Plataformas_de_Desarrollo
         public DbSet<Categoria> categorias { get; set; }
         public DbSet<Carro> carros { get; set; }
         public DbSet<Compra> compras { get; set; }
-       
+
+        //################################################
+        public DbSet<CarroProducto> carroProducto { get; set; }
+        public DbSet<CompraProducto> compraProducto { get; set; }
+
         public MyContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -340,10 +344,16 @@ namespace TP_Plataformas_de_Desarrollo
                 new { idCarro = 3, idUsuario = 3 }
                 );
 
-            
-
             modelBuilder.Entity<Compra>().HasData(
-               new { idCompra = 1, idUsuario = 2, total = 723.00 }
+               new { idCompra = 1, idUsuario = 2, total= 723.00 }
+               );
+
+            modelBuilder.Entity<CarroProducto>().HasData(
+               new { idCarroProducto = 1, idCarro = 2, idProducto = 47, cantidad = 2 }
+               );
+
+            modelBuilder.Entity<CompraProducto>().HasData(
+               new { idCompraProducto = 1, idCompra = 1, idProducto = 20, cantidad = 3 }
                );
 
             

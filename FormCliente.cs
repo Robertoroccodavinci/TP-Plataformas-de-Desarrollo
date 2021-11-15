@@ -22,7 +22,7 @@ namespace TP_Plataformas_de_Desarrollo
             this.ID = ID;
             label2.Text = nombre;
             merc = (Mercado)m;
-           // refreshData(merc);
+            refreshData(merc);
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
 
@@ -33,52 +33,64 @@ namespace TP_Plataformas_de_Desarrollo
 
             //CREAMOS EVENTOS EN LAS TABLAS PARA DAR MAS ACCIONES
             dataGridView1.CellClick += dataGridView1_CellClick; //EVENTO TABLA PRODUCTOS
-            dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA MI CARRO
+            dataGridView5.CellClick += dataGridView5_CellClick; //EVENTO TABLA CARRO DEL USUARIO
 
-            //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
+            //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS EN LA PESTAÑA DE PRODUCTOS
             dataGridView6.CellClick += dataGridView6_CellClick;
         }
         //######################################################
         //           ACTUALIZAR DATOS DE LAS TABLAS
         //######################################################
-       /* private void refreshData(Mercado data)
+        private void refreshData(Mercado data)
         {
             //borro los datos
             dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
             dataGridView5.Rows.Clear(); //LIMPIAMOS TABLA MI CARRO
             dataGridView6.Rows.Clear(); //LIMPIAMOS TABLA CATEGORIAS DE PRODUCTOS
-
-            foreach (Categoria c in merc.nCategorias)
+            
+            // LLENAMOS LISTADO DE CATEGORIAS DE LA PESTAÑA DE PRODUCTOS
+            foreach (Categoria c in data.nContexto.categorias)
             {
                 if (c != null)
                 {
-                    dataGridView6.Rows.Add(c.nNombre);
+                    dataGridView6.Rows.Add(c.nombre);
                 }
             }
 
-            foreach (Producto p in data.nProductos)
+            // LLENAMOS LISTADO DE PRODUCTOS
+            foreach (Producto p in data.nContexto.productos)
             {
                 if (p != null)
                 {
-                    string[] prods = { p.nIDProd.ToString(),
-                                p.nNombre,
-                                p.nPrecio.ToString(),
-                                p.nCantidad.ToString(),
-                                p.nCategoria.nID.ToString() };
-                    dataGridView1.Rows.Add(prods);
+                    string[] pro = { p.idProducto.ToString(),
+                                     p.nombre,
+                                     p.precio.ToString(),
+                                     p.cantidad.ToString(),
+                                     p.cat.nombre };
+                    dataGridView1.Rows.Add(pro);
                 }
             }
-            int indiceUser = merc.nUsuarios.FindIndex(x => x.nID == ID);
-            foreach (KeyValuePair<Producto, int> kvp in data.nUsuarios[indiceUser].nCarro.nProductos)
+
+            // LLENAMOS LISTADO DEL CARRO DEL USUARIO
+            foreach (Carro c in data.nContexto.carros)
             {
-                if (kvp.Key != null)
+                if (c.usuario.idUsuario == ID) 
                 {
-                    string[] prods = { kvp.Key.nIDProd.ToString(),
-                                       kvp.Key.nNombre,
-                                       kvp.Key.nPrecio.ToString(),
-                                       kvp.Value.ToString(),
-                                      (kvp.Key.nPrecio * kvp.Value).ToString() };
-                    dataGridView5.Rows.Add(prods);
+                    double total = 0;
+                    if (c.carroProducto != null)
+                    {
+                        foreach (CarroProducto cp in c.carroProducto)
+                        {
+                            total += cp.producto.precio * cp.cantidad;
+                            string[] carroproducto = { cp.producto.idProducto.ToString(),
+                                                       cp.producto.nombre,
+                                                       cp.producto.precio.ToString(),
+                                                       cp.cantidad.ToString(),
+                                                       total.ToString()
+                                                     };
+                             dataGridView5.Rows.Add(carroproducto);
+                        }
+                    }
                 }
             }
             if (dataGridView5.Columns["botonBorrarDelCarro"] == null)
@@ -91,7 +103,7 @@ namespace TP_Plataformas_de_Desarrollo
                 dataGridView5.Columns.Add(borrarDelCarro);
             }
         }
-*/
+
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //                                       PESTAÑA PRODUCTOS
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

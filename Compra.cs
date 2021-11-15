@@ -13,14 +13,7 @@ namespace TP_Plataformas_de_Desarrollo
         public double total { get; set; }
 
         public Compra() { }
-        public Compra(int idCompra, Usuario usuario,int idUsuario, List<CompraProducto> compraProducto, double total)
-        {
-            this.idCompra       = idCompra;
-            this.usuario        = usuario;
-            this.idUsuario      = idUsuario;
-            this.compraProducto = compraProducto;
-            this.total          = total;
-        }
+       
 
     }
 }

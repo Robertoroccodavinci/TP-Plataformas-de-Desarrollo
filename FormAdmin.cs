@@ -41,10 +41,10 @@ namespace TP_Plataformas_de_Desarrollo
             //EVENTO PARA LOS BOTONES DE LA LISTA DE CATEGORIAS
             dataGridView6.CellClick += dataGridView6_CellClick;
         }
-        
+
         private void refreshData(Mercado data)
         {
-            //borro los datos
+            // LIMPIAMOS LAS TABLAS
             dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
             dataGridView2.Rows.Clear(); //LIMPIAMOS TABLA CATEGORIAS
             dataGridView3.Rows.Clear(); //LIMPIAMOS TABLA USUARIOS
@@ -52,15 +52,15 @@ namespace TP_Plataformas_de_Desarrollo
             dataGridView5.Rows.Clear(); //LIMPIAMOS TABLA MI CARRO
             dataGridView6.Rows.Clear(); //LIMPIAMOS TABLA CATEGORIA DE PRODUCTOS
 
-            // LISTADO DE CATEGORIAS
+            // LLENAMOS LISTADO DE CATEGORIAS
             foreach (Categoria c in data.nContexto.categorias)
             {
                 if (c != null)
                 {
                     string[] cate = { c.idCategoria.ToString(),
-                                        c.nombre };
+                                      c.nombre };
                     dataGridView2.Rows.Add(cate);
-                    // LISTADO DE CATEGORIAS DE LA LISTA DE PRODUCTOS
+                    // LLENAMOS LISTADO DE CATEGORIAS DE LA PESTAÑA DE PRODUCTOS
                     dataGridView6.Rows.Add(c.nombre);
                 }
             }
@@ -74,8 +74,8 @@ namespace TP_Plataformas_de_Desarrollo
                 dataGridView2.Columns.Add(borrarCategoria);
             }
 
-            // LISTADO DE PRODUCTOS
-            
+            // LLENAMOS LISTADO DE PRODUCTOS
+
             foreach (Producto p in data.nContexto.productos)
             {
                 if (p != null)
@@ -84,7 +84,7 @@ namespace TP_Plataformas_de_Desarrollo
                                      p.nombre,
                                      p.precio.ToString(),
                                      p.cantidad.ToString(),
-                                     p.idCategoria.ToString() };
+                                     p.cat.nombre };
                     dataGridView1.Rows.Add(pro);
                 }
             }
@@ -97,8 +97,8 @@ namespace TP_Plataformas_de_Desarrollo
                 borrarProducto.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(borrarProducto);
             }
-            
-            // LISTADO DE USUARIOS
+
+            // LLENAMOS LISTADO DE USUARIOS
             foreach (Usuario u in data.nContexto.usuarios)
             {
                 if (u != null)
@@ -109,13 +109,13 @@ namespace TP_Plataformas_de_Desarrollo
                     else r = "Empresa";     //Preguntar si seguimos necesitando empresa
 
                     string[] users = { u.idUsuario.ToString(),
-                                u.dni.ToString(),
-                                u.nombre,
-                                u.apellido,
-                                u.mail,
-                                u.password,
-                                u.cuit_cuil.ToString(),
-                                r };
+                                       u.dni.ToString(),
+                                       u.nombre,
+                                       u.apellido,
+                                       u.mail,
+                                       u.password,
+                                       u.cuit_cuil.ToString(),
+                                       r };
                     dataGridView3.Rows.Add(users);
                 }
             }
@@ -128,52 +128,48 @@ namespace TP_Plataformas_de_Desarrollo
                 borrarUsuario.UseColumnTextForButtonValue = true;
                 dataGridView3.Columns.Add(borrarUsuario);
             }
-           // LISTADO DE CARROS
-            string prods = "";
-            double total = 0;
-            
-            foreach (Carro carro in data.nContexto.carros)
+            // LLENAMOS LISTADO DE CARROS
+            foreach (Carro c in data.nContexto.carros)
             {
-                if (carro.carroProducto != null) 
+                string prods = "";
+                double total = 0;
+                if (c.carroProducto != null)
                 {
-                    foreach (CarroProducto cp in carro.carroProducto)
+                    foreach (CarroProducto cp in c.carroProducto)
                     {
-                        Producto p = data.nContexto.productos.Where(p => p.idProducto == cp.idProducto).FirstOrDefault();
-                        prods += p.nombre + "*" + cp.cantidad + ", ";
-                        total += p.precio * cp.cantidad;
+                        prods += cp.producto.nombre + "*" + cp.cantidad + ", ";
+                        total += cp.producto.precio * cp.cantidad;
                     }
-                    string[] carroproducto = { carro.idUsuario.ToString(),
-                                           prods,
-                                           total.ToString()
-                                         };
+                    string[] carroproducto = { c.usuario.idUsuario.ToString(),
+                                                prods,
+                                                total.ToString()
+                                              };
                     if (total != 0 && prods != "")
                     {
-
                         dataGridView5.Rows.Add(carroproducto);
                     }
                 }
             }
-            /*
-            // LISTADO DE COMPRAS
-            prods = "";
-            
+
+            // LLENAMOS LISTADO DE COMPRAS
             foreach (Compra c in data.nContexto.compras)
             {
-                if (c.compraProducto != null) 
+                string prods = "";
+                double total = 0;
+                if (c.compraProducto != null)
                 {
-                    foreach (CompraProducto compraP in c.compraProducto)
+                    foreach (CompraProducto cp in c.compraProducto)
                     {
-                        Producto p = data.nContexto.productos.Where(p => p.idProducto == compraP.idProducto).FirstOrDefault();
-                        prods += p.nombre + "*" + compraP.cantidad + ", ";
+                        prods += cp.producto.nombre + "*" + cp.cantidad + ", ";
+                        total += c.total;
                     }
-                    string[] ca = { c.idCompra.ToString(),
-                                c.idUsuario.ToString(),
-                                prods,
-                                c.total.ToString()
-                              };
-                    if (prods != "")
+                    string[] carroproducto = { c.idCompra.ToString(),
+                                               c.usuario.idUsuario.ToString(),
+                                               prods,
+                                               total.ToString() };
+                    if (total != 0 && prods != "")
                     {
-                        dataGridView4.Rows.Add(ca);
+                        dataGridView4.Rows.Add(carroproducto);
                     }
                 }
             }
@@ -185,7 +181,7 @@ namespace TP_Plataformas_de_Desarrollo
                 borrarCompra.Name = "botonBorrar";
                 borrarCompra.UseColumnTextForButtonValue = true;
                 dataGridView4.Columns.Add(borrarCompra);
-            }*/
+            }
         }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -552,31 +548,31 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void buttonModificarUsuario_Click(object sender, EventArgs e)
         {
-           /* if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
-                                      textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex + 1))
-            {
-                textBox20.Text = "";
-                textBox21.Text = "";
-                textBox22.Text = "";
-                textBox23.Text = "";
-                textBox24.Text = "";
-                textBox25.Text = "";
-                textBox26.Text = "";
-                refreshData(merc);
-                tabControl4.SelectedTab = ListaUsuarios;
-            }*/
+            /* if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
+                                       textBox24.Text, textBox25.Text, long.Parse(textBox26.Text), comboBoxModRol.SelectedIndex + 1))
+             {
+                 textBox20.Text = "";
+                 textBox21.Text = "";
+                 textBox22.Text = "";
+                 textBox23.Text = "";
+                 textBox24.Text = "";
+                 textBox25.Text = "";
+                 textBox26.Text = "";
+                 refreshData(merc);
+                 tabControl4.SelectedTab = ListaUsuarios;
+             }*/
         }
         //######################################################
         //             AGREGAR USUARIO NUEVO
         //######################################################
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-          /*  if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
-                                    textPass.Text, long.Parse(textCUILCUIT.Text), comboBoxRol.SelectedIndex + 1))
-            {
-                refreshData(merc);
-                tabControl4.SelectedTab = ListaUsuarios;
-            }*/
+            /*  if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
+                                      textPass.Text, long.Parse(textCUILCUIT.Text), comboBoxRol.SelectedIndex + 1))
+              {
+                  refreshData(merc);
+                  tabControl4.SelectedTab = ListaUsuarios;
+              }*/
         }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -584,28 +580,28 @@ namespace TP_Plataformas_de_Desarrollo
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-/*
-            if (e.ColumnIndex == dataGridView4.Columns["botonBorrar"].Index)
-            {
-                // ELIMINAR
-                DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar la Compra?", "", MessageBoxButtons.YesNo);
-                if (resutl == DialogResult.Yes)
-                {
-                    int indice = int.Parse(dataGridView4[0, e.RowIndex].Value.ToString());
-                    merc.EliminarCompra(indice);
-                    dataGridView4.Rows.RemoveAt(e.RowIndex);
-                }
-            }
-            else
-            {
-                int indice = merc.nCompras.FindIndex(x => x.nIDCompra == int.Parse(dataGridView4[0, e.RowIndex].Value.ToString()));
-                //MODIFICAR
-                textBox28.Text = merc.nCompras[indice].nIDCompra.ToString();
-                textBox29.Text = merc.nCompras[indice].nComprador.nID.ToString();
-                textBox30.Text = merc.nCompras[indice].nTotal.ToString();
-                button3.Show();
-                tabControl5.SelectedTab = ModificarCompra;
-            }*/
+            /*
+                        if (e.ColumnIndex == dataGridView4.Columns["botonBorrar"].Index)
+                        {
+                            // ELIMINAR
+                            DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar la Compra?", "", MessageBoxButtons.YesNo);
+                            if (resutl == DialogResult.Yes)
+                            {
+                                int indice = int.Parse(dataGridView4[0, e.RowIndex].Value.ToString());
+                                merc.EliminarCompra(indice);
+                                dataGridView4.Rows.RemoveAt(e.RowIndex);
+                            }
+                        }
+                        else
+                        {
+                            int indice = merc.nCompras.FindIndex(x => x.nIDCompra == int.Parse(dataGridView4[0, e.RowIndex].Value.ToString()));
+                            //MODIFICAR
+                            textBox28.Text = merc.nCompras[indice].nIDCompra.ToString();
+                            textBox29.Text = merc.nCompras[indice].nComprador.nID.ToString();
+                            textBox30.Text = merc.nCompras[indice].nTotal.ToString();
+                            button3.Show();
+                            tabControl5.SelectedTab = ModificarCompra;
+                        }*/
 
         }
         //######################################################
@@ -613,14 +609,14 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button11_Click(object sender, EventArgs e)
         {
-           /* if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
-            {
-                textBox28.Text = "";
-                textBox29.Text = "";
-                textBox30.Text = "";
-                refreshData(merc);
-                tabControl5.SelectedTab = ListaCompras;
-            }*/
+            /* if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
+             {
+                 textBox28.Text = "";
+                 textBox29.Text = "";
+                 textBox30.Text = "";
+                 refreshData(merc);
+                 tabControl5.SelectedTab = ListaCompras;
+             }*/
         }
 
 
@@ -708,7 +704,7 @@ namespace TP_Plataformas_de_Desarrollo
         {
             button1.Text = "Actualizar Datos";
             textBox34.Text = "";
-           // refreshData(merc); //RECARGA LAS LISTAS
+            // refreshData(merc); //RECARGA LAS LISTAS
         }
 
 

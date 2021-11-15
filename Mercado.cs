@@ -11,9 +11,15 @@ namespace TP_Plataformas_de_Desarrollo
 {
     class Mercado
     {
+        //private List<Producto> Productos;
+        //private List<Usuario> Usuarios;
+        //private List<Compra> Compras;
+        //private Categoria[] Categorias;
+        //#####################################
+        private const int MaxCategorias = 10;
+        private int CantCategorias = 0;
         
-       // private const int MaxCategorias = 10;
-       // private int CantCategorias = 0;
+        
 
         private MyContext contexto;
 
@@ -35,16 +41,9 @@ namespace TP_Plataformas_de_Desarrollo
                 contexto.usuarios.Load();
                 contexto.carros.Load();
                 contexto.compras.Load();
-
-                foreach (Usuario u in contexto.usuarios) 
-                {
-                    u.miCarro = new Carro(u);
-                    u.compras = new List<Compra>();
-                    if (contexto.compras.Where(c => c.idUsuario == u.idUsuario) != null) 
-                    {
-                        u.compras = contexto.compras.Where(c => c.idUsuario == u.idUsuario).ToList();
-                    }
-                }
+                contexto.carroProducto.Load();
+                contexto.compraProducto.Load();
+               
 
                 contexto.SaveChanges();
             }
@@ -74,7 +73,7 @@ namespace TP_Plataformas_de_Desarrollo
 
             try 
             {
-                if (contexto.usuarios.Where(U => U.dni == DNI && U.password == password).FirstOrDefault() != null)
+                if (contexto.usuarios.Where(U => U.dni == DNI && U.password == password).FirstOrDefault() == null)
                 {
                     Usuario aux = new Usuario(DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol);
                     contexto.usuarios.Add(aux);

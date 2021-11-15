@@ -76,6 +76,15 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
                     b.HasIndex("idProducto");
 
                     b.ToTable("CarroProducto");
+
+                    b.HasData(
+                        new
+                        {
+                            idCarroProducto = 1,
+                            cantidad = (byte)2,
+                            idCarro = 2,
+                            idProducto = 47
+                        });
                 });
 
             modelBuilder.Entity("TP_Plataformas_de_Desarrollo.Categoria", b =>
@@ -197,6 +206,15 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
                     b.HasIndex("idProducto");
 
                     b.ToTable("CompraProducto");
+
+                    b.HasData(
+                        new
+                        {
+                            idCompraProducto = 1,
+                            cantidad = (byte)3,
+                            idCompra = (short)1,
+                            idProducto = 20
+                        });
                 });
 
             modelBuilder.Entity("TP_Plataformas_de_Desarrollo.Producto", b =>
