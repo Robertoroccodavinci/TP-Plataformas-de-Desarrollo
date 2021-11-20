@@ -11,5 +11,13 @@ namespace TP_Plataformas_de_Desarrollo
         public int cantidad { get; set; }
 
         public CarroProducto() { }
+        public CarroProducto(Carro carro, Producto producto, int cantidad) 
+        {
+            idCarro = carro.idCarro;
+            this.carro = carro;
+            idProducto = producto.idProducto;
+            this.producto = producto;
+            this.cantidad = cantidad;
+        }
     }
 }

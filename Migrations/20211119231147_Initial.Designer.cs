@@ -9,8 +9,8 @@ using TP_Plataformas_de_Desarrollo;
 namespace TP_Plataformas_de_Desarrollo.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211115143659_AgregamosContenido")]
-    partial class AgregamosContenido
+    [Migration("20211119231147_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,15 +78,6 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
                     b.HasIndex("idProducto");
 
                     b.ToTable("CarroProducto");
-
-                    b.HasData(
-                        new
-                        {
-                            idCarroProducto = 1,
-                            cantidad = (byte)2,
-                            idCarro = 2,
-                            idProducto = 47
-                        });
                 });
 
             modelBuilder.Entity("TP_Plataformas_de_Desarrollo.Categoria", b =>
@@ -159,10 +150,10 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
 
             modelBuilder.Entity("TP_Plataformas_de_Desarrollo.Compra", b =>
                 {
-                    b.Property<short>("idCompra")
+                    b.Property<int>("idCompra")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("idUsuario")
                         .HasColumnType("int");
@@ -179,9 +170,9 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
                     b.HasData(
                         new
                         {
-                            idCompra = (short)1,
+                            idCompra = 1,
                             idUsuario = 2,
-                            total = 723m
+                            total = 0m
                         });
                 });
 
@@ -195,8 +186,8 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
                     b.Property<byte>("cantidad")
                         .HasColumnType("tinyint");
 
-                    b.Property<short>("idCompra")
-                        .HasColumnType("smallint");
+                    b.Property<int>("idCompra")
+                        .HasColumnType("int");
 
                     b.Property<int>("idProducto")
                         .HasColumnType("int");
@@ -208,15 +199,6 @@ namespace TP_Plataformas_de_Desarrollo.Migrations
                     b.HasIndex("idProducto");
 
                     b.ToTable("CompraProducto");
-
-                    b.HasData(
-                        new
-                        {
-                            idCompraProducto = 1,
-                            cantidad = (byte)3,
-                            idCompra = (short)1,
-                            idProducto = 20
-                        });
                 });
 
             modelBuilder.Entity("TP_Plataformas_de_Desarrollo.Producto", b =>

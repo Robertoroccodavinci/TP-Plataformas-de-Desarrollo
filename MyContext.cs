@@ -20,10 +20,6 @@ namespace TP_Plataformas_de_Desarrollo
         public DbSet<Carro> carros { get; set; }
         public DbSet<Compra> compras { get; set; }
 
-        //################################################
-        public DbSet<CarroProducto> carroProducto { get; set; }
-        public DbSet<CompraProducto> compraProducto { get; set; }
-
         public MyContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -100,8 +96,7 @@ namespace TP_Plataformas_de_Desarrollo
 
             //propiedades de los datos
             modelBuilder.Entity<Producto>(
-                prod =>
-                {
+                prod =>{ 
                     prod.Property(P => P.nombre).HasColumnType("varchar(50)");
                     prod.Property(P => P.nombre).IsRequired(true);
                     prod.Property(P => P.precio).HasColumnType("decimal(8,2)");
@@ -118,48 +113,41 @@ namespace TP_Plataformas_de_Desarrollo
             modelBuilder.Entity<Producto>()
                 .HasOne(P => P.cat)
                 .WithMany(C => C.productos)
-                .HasForeignKey(P => P.idCategoria)
-                ;
+                .HasForeignKey(P => P.idCategoria);
+
+            //#######################################
+            // relacion: muchos a muchos con CompraProducto
+            //#######################################
+            modelBuilder.Entity<Producto>()
+                .HasMany(P => P.compras)
+                .WithMany(C => C.productos)
+                .UsingEntity<CompraProducto>(
+                    ecp => ecp.HasOne(cp => cp.compra).WithMany(p => p.compraProducto).HasForeignKey(cp => cp.idCompra),
+                    ecp => ecp.HasOne(cp => cp.producto).WithMany(p => p.compraProducto).HasForeignKey(cp => cp.idProducto),
+                    ecp => ecp.HasKey(pk => pk.idCompraProducto)
+                );
+            //#######################################
+            // relacion: muchos a muchos con CarroProducto
+            //#######################################
+            modelBuilder.Entity<Producto>()
+                .HasMany(P => P.carros)
+                .WithMany(C => C.productos)
+                .UsingEntity<CarroProducto>(
+                    ecp => ecp.HasOne(cp => cp.carro).WithMany(p => p.carroProducto).HasForeignKey(cp => cp.idCarro),
+                    ecp => ecp.HasOne(cp => cp.producto).WithMany(p => p.carroProducto).HasForeignKey(cp => cp.idProducto),
+                    ecp => ecp.HasKey(pk => pk.idCarroProducto)
+                );
 
             //##############################################################
             //       CARRO PRODUCTO
-            // Creacion de la tabla, primary key y columnas
+            // propiedades
             //##############################################################
-
-            //nombre de la tabla y primary key
-            modelBuilder.Entity<CarroProducto>()
-                .ToTable("CarroProducto")
-                .HasKey(pk => pk.idCarroProducto);
 
             //propiedades de los datos
             modelBuilder.Entity<CarroProducto>(
-                carroproducto =>
-                {
-                    carroproducto.Property(cp => cp.idCarro).HasColumnType("int");
-                    carroproducto.Property(cp => cp.idCarro).IsRequired(true);
-                    carroproducto.Property(cp => cp.idProducto).HasColumnType("int");
-                    carroproducto.Property(cp => cp.idProducto).IsRequired(true);
-                    carroproducto.Property(cp => cp.cantidad).HasColumnType("tinyint");
-                    carroproducto.Property(cp => cp.cantidad).IsRequired(true);
-                });
-
-            //#######################################
-            // relacion: 1 a muchos con Producto    
-            //#######################################
-            modelBuilder.Entity<CarroProducto>()
-                .HasOne(cp => cp.producto)
-                .WithMany(p => p.carroProducto)
-                .HasForeignKey(capro => capro.idProducto)
-                ;
-
-            //#######################################
-            // relacion: 1 a muchos con Carro
-            //#######################################
-            modelBuilder.Entity<CarroProducto>()
-                .HasOne(cp => cp.carro)
-                .WithMany(c => c.carroProducto)
-                .HasForeignKey(cp => cp.idCarro)
-                ;
+                cp => { cp.Property(cp => cp.cantidad).HasColumnType("tinyint");
+                        cp.Property(cp => cp.cantidad).IsRequired(true); }
+                );
 
             //##############################################################
             //       CATEGORIA
@@ -173,13 +161,9 @@ namespace TP_Plataformas_de_Desarrollo
 
             //propiedades de los datos
             modelBuilder.Entity<Categoria>(
-                cat =>
-                {
-                    cat.Property(C => C.idCategoria).HasColumnType("int");
-                    cat.Property(C => C.idCategoria).IsRequired(true);
-                    cat.Property(C => C.nombre).HasColumnType("varchar(50)");
-                    cat.Property(C => C.nombre).IsRequired(true);
-                });
+                cat => { cat.Property(C => C.nombre).HasColumnType("varchar(50)");
+                         cat.Property(C => C.nombre).IsRequired(true); }
+                );
 
 
             //##############################################################
@@ -194,14 +178,9 @@ namespace TP_Plataformas_de_Desarrollo
 
             //propiedades de los datos
             modelBuilder.Entity<Compra>(
-            compra => {
-                compra.Property(Co => Co.idCompra).HasColumnType("smallint");
-                compra.Property(Co => Co.idCompra).IsRequired(true);
-                compra.Property(Co => Co.idUsuario).HasColumnType("int");
-                compra.Property(Co => Co.idUsuario).IsRequired(true);
-                compra.Property(Co => Co.total).HasColumnType("decimal(8,2)");
-                compra.Property(Co => Co.total).IsRequired(true);
-            });
+                c => { c.Property(Co => Co.total).HasColumnType("decimal(8,2)");
+                       c.Property(Co => Co.total).IsRequired(true);}
+                );
 
             //#######################################
             // relacion: muchos a 1 con Usuario
@@ -211,49 +190,17 @@ namespace TP_Plataformas_de_Desarrollo
                 .WithMany(U => U.compras)
                 .HasForeignKey(Co => Co.idUsuario);
 
-            //#######################################
-            // relacion: muchos a 1 con Carro Producto
-            //#######################################
-            modelBuilder.Entity<Compra>()
-                .HasMany(Co => Co.compraProducto)
-                .WithOne(Cp => Cp.compra)
-                .HasForeignKey(Cp => Cp.idCompra)
-                .HasForeignKey(Cp => Cp.idProducto);
-
             //##############################################################
             //       COMPRA PRODUCTO
-            // Creacion de la tabla, primary key y columnas
+            // propiedades
             //##############################################################
-
-            //nombre de la tabla y primary key
-            modelBuilder.Entity<CompraProducto>()
-                .ToTable("CompraProducto")
-                .HasKey(CaP => CaP.idCompraProducto);
 
             //propiedades de los datos
             modelBuilder.Entity<CompraProducto>(
-                compraproducto =>
-                {
-                    compraproducto.Property(cp => cp.cantidad).HasColumnType("tinyint");
-                    compraproducto.Property(cp => cp.cantidad).IsRequired(true);
-                });
+                cp => { cp.Property(cp => cp.cantidad).HasColumnType("tinyint");
+                        cp.Property(cp => cp.cantidad).IsRequired(true); }
+                );
 
-            //#######################################
-            // relacion: 1 a muchos con Compra
-            //#######################################
-            modelBuilder.Entity<CompraProducto>()
-                .HasOne(cp => cp.compra)
-                .WithMany(c => c.compraProducto)
-                .HasForeignKey(cp => cp.idCompra);
-            //#######################################
-            // relacion: muchos a muchos con Producto
-            //#######################################
-            modelBuilder.Entity<CompraProducto>()
-                .HasOne(cp => cp.producto)
-                .WithMany(p => p.compraProducto)
-                .HasForeignKey(cp => cp.idProducto);
-
-            
             //###############################
             //      IGNORAMOS
             //###############################
@@ -345,9 +292,10 @@ namespace TP_Plataformas_de_Desarrollo
                 );
 
             modelBuilder.Entity<Compra>().HasData(
-               new { idCompra = 1, idUsuario = 2, total= 723.00 }
+               new { idCompra = 1, idUsuario = 2, total= 0.0 }
                );
 
+            /*
             modelBuilder.Entity<CarroProducto>().HasData(
                new { idCarroProducto = 1, idCarro = 2, idProducto = 47, cantidad = 2 }
                );
@@ -355,7 +303,7 @@ namespace TP_Plataformas_de_Desarrollo
             modelBuilder.Entity<CompraProducto>().HasData(
                new { idCompraProducto = 1, idCompra = 1, idProducto = 20, cantidad = 3 }
                );
-
+            */
             
             
         }

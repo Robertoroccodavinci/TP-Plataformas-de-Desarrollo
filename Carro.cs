@@ -10,8 +10,8 @@ namespace TP_Plataformas_de_Desarrollo
         public int idCarro { get; set; }
         public Usuario usuario { get; set; }
         public int idUsuario { get; set; }
-        public ICollection<CarroProducto> carroProducto { get; set; }
-
+        public List<CarroProducto> carroProducto { get; set; } = new List<CarroProducto>();
+        public ICollection<Producto> productos { get; } = new List<Producto>();
         public Carro() { }
         public Carro(Usuario usuario)
         {

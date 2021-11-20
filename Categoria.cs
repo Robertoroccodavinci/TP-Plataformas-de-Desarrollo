@@ -13,9 +13,8 @@ namespace TP_Plataformas_de_Desarrollo
         
         public Categoria() { }
 
-        public Categoria(int ID, string Nombre)
+        public Categoria(string Nombre)
         {
-            this.idCategoria = ID;
             this.nombre = Nombre;
         }
         

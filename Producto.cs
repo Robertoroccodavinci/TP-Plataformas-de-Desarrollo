@@ -12,8 +12,9 @@ namespace TP_Plataformas_de_Desarrollo
         public int cantidad { get; set; }
         public Categoria cat { get; set; }
         public int idCategoria { get; set; }
-
+        public ICollection<Carro> carros { get; } = new List<Carro>();
         public List<CarroProducto> carroProducto { get; set; }
+        public ICollection<Compra> compras { get; } = new List<Compra>();
         public List<CompraProducto> compraProducto { get; set; }
 
         public Producto() { }
