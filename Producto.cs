@@ -18,18 +18,15 @@ namespace TP_Plataformas_de_Desarrollo
         public List<CompraProducto> compraProducto { get; set; }
 
         public Producto() { }
-        public Producto(int idProducto, string nombre, double precio, int cantidad, 
-                        Categoria cat,int idCategoria,
-                        List<CarroProducto> carroProducto, List<CompraProducto> compraProducto)
+        public Producto(string nombre, double precio, int cantidad, Categoria cat)
         {
-            this.idProducto     = idProducto;
             this.nombre         = nombre;
             this.precio         = precio;
             this.cantidad       = cantidad;
             this.cat            = cat;
-            this.idCategoria    = idCategoria;
-            this.carroProducto  = carroProducto;
-            this.compraProducto = compraProducto;
+            this.idCategoria    = cat.idCategoria;
+            this.carroProducto  = new List<CarroProducto>();
+            this.compraProducto = new List<CompraProducto>();
         }
 
         public override string ToString()

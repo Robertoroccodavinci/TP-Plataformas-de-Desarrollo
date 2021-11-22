@@ -11,16 +11,8 @@ namespace TP_Plataformas_de_Desarrollo
 {
     class Mercado
     {
-        //private List<Producto> Productos;
-        //private List<Usuario> Usuarios;
-        //private List<Compra> Compras;
-        //private Categoria[] Categorias;
-        //#####################################
-        
-        //private const int MaxCategorias = 10;//   QUITAMOS ESTAS VARIABLES? 
-        //private int CantCategorias = 0;
-        
-        
+        private const int MaxCategorias = 10;//   QUITAMOS ESTAS VARIABLES? 
+        private int CantCategorias = 0;
 
         private MyContext contexto;
 
@@ -43,47 +35,7 @@ namespace TP_Plataformas_de_Desarrollo
                 contexto.carros.Load();
                 contexto.compras.Load();
 
-
-                // agregamos un carro con un producto
-                Producto prod1 = contexto.productos.Where(p => p.idProducto == 46).FirstOrDefault();
-                Producto prod2 = contexto.productos.Where(p => p.idProducto == 47).FirstOrDefault();
-                Producto prod3 = contexto.productos.Where(p => p.idProducto == 48).FirstOrDefault();
-                
-                Carro carro = contexto.carros.Where(c => c.idCarro == 2).FirstOrDefault();
-                CarroProducto cp1 = new CarroProducto(carro, prod1, 3);
-                CarroProducto cp2 = new CarroProducto(carro, prod2, 2);
-                CarroProducto cp3 = new CarroProducto(carro, prod3, 1);
-                
-                // para que se agregue una sola vez
-
-                if ( carro.carroProducto != null && 
-                    !carro.carroProducto.Where(cp => cp.producto.idProducto == 46).Any() &&
-                    !carro.carroProducto.Where(cp => cp.producto.idProducto == 47).Any() &&
-                    !carro.carroProducto.Where(cp => cp.producto.idProducto == 48).Any() ) 
-                {
-                    carro.carroProducto.Add(cp1);
-                    carro.carroProducto.Add(cp2);
-                    carro.carroProducto.Add(cp3);
-                    contexto.carros.Update(carro);
-                }
-
-                // agregamos una compra de un producto
-                Producto prod4 = contexto.productos.Where(p => p.idProducto == 21).FirstOrDefault();
-                Producto prod5 = contexto.productos.Where(p => p.idProducto == 23).FirstOrDefault();
-                Compra compra = contexto.compras.Where(c => c.idCompra == 1).FirstOrDefault();
-                CompraProducto comProd1 = new CompraProducto(compra, prod4, 1);
-                CompraProducto comProd2 = new CompraProducto(compra, prod5, 1);
-
-                if (compra.compraProducto != null &&
-                    !compra.compraProducto.Where(cp => cp.producto.idProducto == 21).Any() &&
-                    !compra.compraProducto.Where(cp => cp.producto.idProducto == 23).Any() )
-                {
-                    compra.compraProducto.Add(comProd1);
-                    compra.total += prod4.precio * 1;
-                    compra.compraProducto.Add(comProd2);
-                    compra.total += prod5.precio * 1;
-                    contexto.compras.Update(compra);
-                }
+                CantCategorias = contexto.categorias.Count();
 
                 // guardamos
                 contexto.SaveChanges();
@@ -101,6 +53,153 @@ namespace TP_Plataformas_de_Desarrollo
         }
 
         // ######################################################################################
+        //                                  METODOS DE PRODUCTO
+        // ######################################################################################
+        //                                  AGREGAR PRODUCTO
+        //                                  MODIFICAR PRODUCTO
+        //                                  ELIMINAR PRODUCTO
+        //                                  BUSCAR PRODUCTO
+        //                                  BUSCAR PRODUCTO POR PRECIO
+        //                                  BUSCAR PRODUCTO POR CATEGORIA
+        //                                  MOSTRAR TODOS LOS PRODUCTOS POR PRECIO
+        //                                  MOSTRAR TODOS LOS PRODUCTOS POR CATEGORIA
+        // ######################################################################################
+
+        public bool AgregarProducto(string nombre, double precio, int cantidad, int ID_Categoria)
+        {
+            try
+            {
+                if (contexto.productos.Where(P => P.nombre == nombre && P.cat.idCategoria == ID_Categoria).FirstOrDefault() == null)
+                {
+                    Categoria cat = contexto.categorias.Where(C => C.idCategoria == ID_Categoria).FirstOrDefault();
+                    Producto aux = new Producto(nombre, precio, cantidad, cat);
+                    contexto.productos.Add(aux);
+
+                    contexto.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("ERROR ya existe ese Producto");
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR: no se pudo agregar el producto");
+                return false;
+            }
+            MessageBox.Show("Producto agregado exitosamente!");
+            return true;
+        }
+
+        public bool ModificarProducto(int ID, string nombre, double precio, int cantidad, int ID_Categoria)
+        {
+            try
+            {
+                if (contexto.productos.Where(P => P.idProducto == ID).FirstOrDefault() != null)
+                {
+                    Producto aux = contexto.productos.Where(P => P.idProducto == ID).FirstOrDefault();
+                    aux.nombre = nombre;
+                    aux.precio = precio;
+                    aux.cantidad = cantidad;
+                    aux.idCategoria = ID_Categoria;
+
+
+                    contexto.productos.Update(aux);
+                    contexto.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("ERROR: no hay Producto con ese ID: " + ID);
+                    return false;
+                }
+            }
+            catch (Exception )
+            {
+                MessageBox.Show("ERROR: no pudo modoficar el Producto ");
+                return false;
+            }
+
+            MessageBox.Show("Producto modificado con exito!");
+            return true;
+            
+        }
+
+        public bool EliminarProducto(int ID)
+        {
+            try
+            {
+                if (nContexto.productos.Where(p => p.idProducto == ID).FirstOrDefault() != null)
+                {
+                    Producto p = nContexto.productos.Where(p => p.idProducto == ID).FirstOrDefault();
+                    nContexto.productos.Remove(p);
+
+                    nContexto.SaveChanges();
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: No se encontro el producto con ese ID");
+                    return false;
+                }
+                
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR: no se pudo eliminar el producto");
+                return false;
+            }
+            
+            MessageBox.Show("Producto eliminado correctamente.");
+            return true;
+        }
+
+        public List<Producto> BuscarProducto(string Query)
+        {
+            var query = from prod in nContexto.productos
+                        where prod.nombre.Contains(Query)
+                        orderby prod.cat.nombre
+                        select prod;
+            return query.ToList();
+        }
+
+
+        public List<Producto> BuscarProductoPorPrecio(string Query)
+        {
+            var query = from prod in nContexto.productos
+                        where prod.precio <= int.Parse(Query)
+                        orderby prod.precio
+                        select prod;
+            return query.ToList();
+        }
+
+
+        public List<Producto> BuscarProductoPorCategoria(string nombre)
+        {
+            var query = from prod in nContexto.productos
+                        where prod.cat.nombre.Contains(nombre)
+                        orderby prod.cat.nombre
+                        select prod;
+            return query.ToList();
+        }
+
+
+        public List<Producto> MostrarTodosProductosPorPrecio()
+        {
+            var query = from prod in nContexto.productos
+                        orderby prod.precio
+                        select prod;
+            return query.ToList();
+        }
+
+        public List<Producto> MostrarTodosProductosPorCategoria()
+        {
+            var query = from prod in nContexto.productos
+                        orderby prod.idCategoria
+                        select prod;
+            return query.ToList();
+        }
+
+        // ######################################################################################
         //                                  METODOS DE USUARIO
         // ######################################################################################
         //                                  AGREGAR USUARIO
@@ -112,7 +211,6 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try 
             {
-            /*<===REVISAR===>*/
                 if (contexto.usuarios.Where(U => U.dni == DNI && U.password == password).FirstOrDefault() == null) 
                 {
                     Usuario aux = new Usuario(DNI, nombre, apellido, Mail, password, CUIT_CUIL, rol);
@@ -139,26 +237,32 @@ namespace TP_Plataformas_de_Desarrollo
 
         public bool ModificarUsuario(int ID, int DNI, string nombre, string apellido, string Mail, string password, int CUIT_CUIL, int rol)
         {
-            
-           
             try
             {
-                Usuario aux = contexto.usuarios.Where(u => u.idUsuario == ID).FirstOrDefault();
-                aux.dni = DNI;
-                aux.nombre = nombre;
-                aux.apellido = apellido;
-                aux.mail = Mail;
-                aux.password = password;
-                aux.cuit_cuil = CUIT_CUIL;
-                aux.rol = rol;
+                if (contexto.usuarios.Where(u => u.idUsuario == ID).FirstOrDefault() != null)
+                {
+                    Usuario aux = contexto.usuarios.Where(u => u.idUsuario == ID).FirstOrDefault();
+                    aux.dni = DNI;
+                    aux.nombre = nombre;
+                    aux.apellido = apellido;
+                    aux.mail = Mail;
+                    aux.password = password;
+                    aux.cuit_cuil = CUIT_CUIL;
+                    aux.rol = rol;
 
-                contexto.usuarios.Update(aux);
-                contexto.SaveChanges();
+                    contexto.usuarios.Update(aux);
+                    contexto.SaveChanges();
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no hay Usuario con ese ID: " + ID);
+                    return false;
+                }
+                
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                MessageBox.Show(ex.Message);
-                MessageBox.Show("ERROR: no hay Usuario con ese ID: " + ID);
+                MessageBox.Show("ERROR: no se pudo modificar el usuario");
                 return false;
             }
 
@@ -205,14 +309,29 @@ namespace TP_Plataformas_de_Desarrollo
         
         public bool AgregarCategoria(string nombre)
         {
-            /*if (CantCategorias < MaxCategorias)
-            { }*/
-
             try
             {
-                Categoria aux = new Categoria(nombre);
-                contexto.categorias.Add(aux);
-                contexto.SaveChanges();
+                if (CantCategorias < MaxCategorias)
+                {
+                    if (contexto.categorias.Where(c => c.nombre == nombre).FirstOrDefault() == null)
+                    {
+                        Categoria aux = new Categoria(nombre);
+                        contexto.categorias.Add(aux);
+                        contexto.SaveChanges();
+                        CantCategorias++;
+                    }
+                    else
+                    {
+                        MessageBox.Show("ERROR: ya existe la categoria");
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ERROR: No se pueden agregar mas categorias");
+                    return false;
+                }
+                
             }
             catch (Exception)
             {
@@ -227,14 +346,23 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try
             {
-                Categoria aux = contexto.categorias.Where(c => c .idCategoria == ID).FirstOrDefault();
-                aux.nombre = nombre;
-                contexto.Update(aux);
-                contexto.SaveChanges();
+                if (contexto.categorias.Where(c => c.idCategoria == ID).FirstOrDefault() != null)
+                {
+                    Categoria aux = contexto.categorias.Where(c => c.idCategoria == ID).FirstOrDefault();
+                    aux.nombre = nombre;
+                    contexto.Update(aux);
+                    contexto.SaveChanges();
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no existe la categoria ");
+                    return false;
+                }
+              
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR: no hay categoria con ID: " + ID);
+                MessageBox.Show("ERROR: no se pudo modificar la categoria");
                 return false;
             }
             MessageBox.Show("Categoria modificada con exito!");
@@ -245,17 +373,31 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try
             {
-                Categoria aux = contexto.categorias.Where(c => c.idCategoria == ID).FirstOrDefault();
-                //CantCategorias--;
-                contexto.categorias.Remove(aux);
-                contexto.SaveChanges();
+                if (contexto.categorias.Where(c => c.idCategoria == ID).FirstOrDefault() != null)
+                {
+                    Categoria aux = contexto.categorias.Where(c => c.idCategoria == ID).FirstOrDefault();
+                    //CantCategorias--;
+                  
+                    contexto.Remove(aux);
+                                        
+                    contexto.SaveChanges();
+                    
+                    CantCategorias--;
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no existe la Categoriase");
+                    return false;
+                }
+                
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("ERROR: la Categoria no se pudo eliminadar");
                 return false;
             }
+            MessageBox.Show("Categoria eliminada con exito");
             return true;
         }
 
@@ -268,6 +410,127 @@ namespace TP_Plataformas_de_Desarrollo
         }
 
         // #######################################################################################
+        //                                  METODOS DE CARRO
+        // #######################################################################################
+        //                                  AGREGAR AL CARRO
+        //                                  QUITAR AL CARRO
+        //                                  VACIAR CARRO
+        // #######################################################################################
+
+        public bool AgregarAlCarro(int ID_Producto, int Cantidad, int ID_Usuario)
+        {
+            try
+            {
+                Carro aux = contexto.usuarios.Where(U => U.idUsuario == ID_Usuario).FirstOrDefault().miCarro;
+                aux.productos.Add(contexto.productos.Where(P => P.idProducto == ID_Producto).FirstOrDefault());
+                contexto.carros.Update(aux);
+
+                contexto.SaveChanges();
+
+                foreach (CarroProducto CarProd in aux.carroProducto)
+                {
+                    if (CarProd.idProducto == ID_Producto)
+                    {
+                        CarProd.cantidad = Cantidad;
+                        contexto.carros.Update(aux);
+                        Producto prod = contexto.productos.Where(P => P.idProducto == ID_Producto).FirstOrDefault();
+                        prod.cantidad -= Cantidad;
+                        contexto.productos.Update(prod);
+
+                        contexto.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR: No se puede agregar producto al Carro");
+                return false;
+            }
+            MessageBox.Show("Producto agregado al Carro correctamente");
+            return true;
+        }
+
+
+        public bool ModificarCarro(int ID_Producto, int Cantidad, int ID_Usuario)
+        {
+            try
+            {
+                if (contexto.carros.Where(c => c.idUsuario == ID_Usuario).FirstOrDefault() != null)
+                {
+                    Carro aux = contexto.carros.Where(c => c.idUsuario == ID_Usuario).FirstOrDefault();
+                    Producto p = contexto.productos.Where(p => p.idProducto == ID_Producto).FirstOrDefault();
+
+                    if (Cantidad == 0)
+                    {
+                        p.cantidad += aux.carroProducto.Where(cp => cp.producto.idProducto == ID_Producto).FirstOrDefault().cantidad;
+                        aux.productos.Remove(aux.productos.Where(p => p.idProducto == ID_Producto).FirstOrDefault());
+                        contexto.carros.Update(aux);
+                        contexto.productos.Update(p);
+                        contexto.SaveChanges();
+                    }
+                    else
+                    {
+                        int Cant = aux.carroProducto.Where(p => p.idProducto == ID_Producto).FirstOrDefault().cantidad;
+                        p.cantidad += Cant;
+                        aux.carroProducto.Where(p => p.idProducto == ID_Producto).FirstOrDefault().cantidad = Cantidad;
+                        p.cantidad -= Cantidad;
+                        contexto.carros.Update(aux);
+                        contexto.productos.Update(p);
+                        contexto.SaveChanges();
+                    }
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no se encontro el carro");
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR: el Producto no se pudo modificar del carro");
+                return false;
+            }
+            MessageBox.Show("Producto modificado del carro");
+            return true;
+        }
+
+        public bool VaciarCarro(int ID_Usuario)
+        {
+            try
+            {
+                if (contexto.carros.Where(c => c.idUsuario == ID_Usuario).FirstOrDefault() != null)
+                {
+                    Carro aux = contexto.carros.Where(c => c.idUsuario == ID_Usuario).FirstOrDefault();
+
+                    foreach (CarroProducto cp in aux.carroProducto) 
+                    {
+                        Producto p = contexto.productos.Where(p => p.idProducto == cp.producto.idProducto).FirstOrDefault();
+                        p.cantidad += cp.cantidad;
+                        contexto.productos.Update(p);
+
+                    }
+                    aux.carroProducto = new List<CarroProducto>();
+                    contexto.carros.Update(aux);
+
+                    contexto.SaveChanges();
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no existe el carro");
+                    return false;
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR: no se pudo vaciar el carro");
+                return false;
+            }
+            MessageBox.Show("Carro vaciado con exito!");
+            return true;
+        }
+
+        // #######################################################################################
         //                                  METODOS DE COMPRA
         // #######################################################################################
         //                                  COMPRA
@@ -277,140 +540,42 @@ namespace TP_Plataformas_de_Desarrollo
 
         public bool Comprar(int ID_Usuario)
         {                               // idCompra_producto - idProducto - cantidad
-            /*double total = 0;
-            int indiceUsuario = Usuarios.FindIndex(x => x.nID == ID_Usuario);
-            foreach (KeyValuePair<Producto, int> kvp in nUsuarios[indiceUsuario].nCarro.nProductos)
+            try
             {
-                total += kvp.Key.nPrecio * kvp.Value;
-            }
-
-            int idCarro = 0;
-            int idCompra = 0;
-            int resultadoQuery = 1;
-            int resultadoQueryCompra = 1;
-            //string queryStringIdCarro = "SELECT idCarro FROM Carro WHERE idUsuario = @idUsuario ";
-            string queryStringInsertCompra = "INSERT INTO dbo.Compra (idUsuario, total) VALUES (@idUsuario,@total) ";
-            string queryStringSelectCarroProducto = "SELECT * FROM carro_producto WHERE idCarro= @idCarro";
-            string queryStringInsertCompraProducto = "INSERT INTO dbo.compra_producto (idCompra,idProducto, cantidad) VALUES (@idCompra, @idProducto, @cantidad)";
-            string queryStringDelCarroProducto = "DELETE FROM carro_producto WHERE idCarro = @idCarro";
-            string queryStringIdCompra = "SELECT MAX(idCompra) FROM dbo.Compra WHERE idUsuario = @idUsuario";
-
-
-            string connectionString = Properties.Resources.ConnectionString;
-            SqlCommand command;
-            // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
-            using (SqlConnection connection = new SqlConnection(connectionString)) *//*Se crea el objeto apuntando a esa BD*//*
-            {
-                // Defino el comando a enviar al motor SQL con la consulta y la conexión
-                try
+                double total = 0;
+                Carro car = contexto.usuarios.Where(U => U.idUsuario == ID_Usuario).FirstOrDefault().miCarro;
+                foreach (CarroProducto carProd in car.carroProducto)
                 {
-                    //Abro la conexión
-                    connection.Open();
-                    SqlDataReader reader;
-                    *//* //Obtenemos el ID del Carro
-                     command = new SqlCommand(queryStringIdCarro, connection); *//* Comando listo para disparar *//*
-                     command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
-                    command.Parameters["@idUsuario"].Value = nUsuarios[indiceUsuario].nID;
-                    SqlDataReader reader = command.ExecuteReader();
-                    reader.Read();
-                    idCarro = reader.GetInt16(0);
-                    reader.Close(); *//*
-                    idCarro = nUsuarios[indiceUsuario].nCarro.nID;
-                    //obtenemos productos y cantidades de carro_producto
-                    command = new SqlCommand(queryStringSelectCarroProducto, connection); *//* Comando listo para disparar *//*
-                    command.Parameters.Add(new SqlParameter("@idCarro", SqlDbType.Int));
-                    command.Parameters["@idCarro"].Value = idCarro;
-                    SqlDataReader readerCarroProducto = command.ExecuteReader();
-                    Dictionary<Producto, int> prod = new Dictionary<Producto, int>();
-                    while (readerCarroProducto.Read())
-                    {
-                        int indiceProd = nProductos.FindIndex(x => x.nIDProd == readerCarroProducto.GetInt16(2));
-                        prod.Add(nProductos[indiceProd], readerCarroProducto.GetByte(3));
-
-                    }
-                    readerCarroProducto.Close();
-
-
-                    //Eliminamos el carro del usuario
-                    command = new SqlCommand(queryStringDelCarroProducto, connection); *//* Comando listo para disparar *//*
-                    command.Parameters.Add(new SqlParameter("@idCarro", SqlDbType.Int));
-                    command.Parameters["@idCarro"].Value = idCarro;
-
-                    resultadoQuery = command.ExecuteNonQuery();
-
-                    //Insertamos la compra del usuario
-                    command = new SqlCommand(queryStringInsertCompra, connection); *//* Comando listo para disparar *//*
-                    command.Parameters.Add(new SqlParameter("@total", SqlDbType.Int));
-                    command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
-                    command.Parameters["@total"].Value = total;
-                    command.Parameters["@idUsuario"].Value = nUsuarios[indiceUsuario].nID;
-
-                    resultadoQueryCompra = command.ExecuteNonQuery();
-
-                    //Obtenemos el ID del Compra
-                    command = new SqlCommand(queryStringIdCompra, connection); *//* Comando listo para disparar *//*
-                    command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
-                    command.Parameters["@idUsuario"].Value = nUsuarios[indiceUsuario].nID;
-                    reader = command.ExecuteReader();
-                    reader.Read();
-                    idCompra = reader.GetInt16(0);
-                    reader.Close();
-
-                    //insertamos a compra_producto
-
-
-                    foreach (KeyValuePair<Producto, int> kvp in prod)
-                    {
-                        command = new SqlCommand(queryStringInsertCompraProducto, connection); *//* Comando listo para disparar *//*
-                        command.Parameters.Add(new SqlParameter("@idCompra", SqlDbType.Int));
-                        command.Parameters.Add(new SqlParameter("@idProducto", SqlDbType.Int));
-                        command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
-                        command.Parameters["@idCompra"].Value = idCompra;
-                        command.Parameters["@idProducto"].Value = kvp.Key.nIDProd;
-                        command.Parameters["@cantidad"].Value = kvp.Value;
-                        resultadoQuery = command.ExecuteNonQuery();
-                    }
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    total += (carProd.cantidad * carProd.producto.precio);
                 }
 
+                Usuario user = contexto.usuarios.Where(U => U.idUsuario == ID_Usuario).FirstOrDefault();
+                Compra aux = new Compra(user, total);
+                contexto.compras.Add(aux);
+
+                contexto.SaveChanges();
+
+                foreach (Producto prod in car.productos)
+                {
+                    int cant = car.carroProducto.Where(CP => CP.idProducto == prod.idProducto).FirstOrDefault().cantidad;
+                    CompraProducto cp = new CompraProducto(aux, prod, cant);
+                    aux.compraProducto.Add(cp);
+                    
+                   
+                }
+                car.carroProducto = new List<CarroProducto>();
+                contexto.carros.Update(car);
+
+                contexto.compras.Update(aux);
+
+                contexto.SaveChanges();
             }
-            if (resultadoQueryCompra == 1)
+            catch (Exception)
             {
-                Compras.Add(new Compra(idCompra, nUsuarios[indiceUsuario], nUsuarios[indiceUsuario].nCarro.nProductos, total));
-                nUsuarios[indiceUsuario].nCarro.nProductos = new Dictionary<Producto, int>();
-
-                //VaciarCarro(ID_Usuario);
-                
+                MessageBox.Show("ERROR: no se pudo realizar la compra");
+                return false;
             }
-            
-            */
-            /* try
-             {
-                 Usuario u = contexto.usuarios.Where(u => u.idUsuario == ID_Usuario).FirstOrDefault();
-                 double total = 0;
-                 List<Producto> prods = new List<Producto>();
-
-                 foreach (CarroProducto cp in u.miCarro.carroProducto) 
-                 {
-
-
-                     total += (cp.producto.precio * cp.cantidad);
-                 }
-                 Compra c = new Compra();//u, list<CarroProducto>, total
-
-             }
-             catch (Exception) 
-             {
-                 MessageBox.Show("ERROR: no se pudo efectuar la compra");
-                 return false;
-             }
-             MessageBox.Show("Compraste con exito!");
-             */
+            MessageBox.Show("Compra realizada con exito!!");
             return true;
         }
 
@@ -418,10 +583,19 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try
             {
-                Compra aux = contexto.compras.Where(c => c.idCompra == ID).FirstOrDefault();
-                aux.total = Total;
-                contexto.compras.Update(aux);
-                contexto.SaveChanges();
+                if (contexto.compras.Where(c => c.idCompra == ID).FirstOrDefault() != null)
+                {
+                    Compra aux = contexto.compras.Where(c => c.idCompra == ID).FirstOrDefault();
+                    aux.total = Total;
+                    contexto.compras.Update(aux);
+                    contexto.SaveChanges();
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no existe la Compra ");
+                    return false;
+                }
+                
             }
             catch (Exception)
             {
@@ -436,9 +610,18 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try
             {
-                Compra aux = contexto.compras.Where(c => c.idCompra == IDcompra).FirstOrDefault();
-                contexto.compras.Remove(aux);
-                contexto.SaveChanges();
+                if (contexto.compras.Where(c => c.idCompra == IDcompra).FirstOrDefault() != null)
+                {
+                    Compra aux = contexto.compras.Where(c => c.idCompra == IDcompra).FirstOrDefault();
+                    contexto.compras.Remove(aux);
+                    contexto.SaveChanges();
+                }
+                else 
+                {
+                    MessageBox.Show("ERROR: no existe esta compra");
+                    return false;
+                }
+                
             }
             catch (Exception)
             {
@@ -462,15 +645,12 @@ namespace TP_Plataformas_de_Desarrollo
 
         public Usuario IniciarSesion(int DNI, string pass)
         {
-            Usuario aux = contexto.usuarios.Where(U => U.dni == DNI && U.password == pass).FirstOrDefault();
-            if (aux != null)
+            if (contexto.usuarios.Where(U => U.dni == DNI && U.password == pass).FirstOrDefault() != null) 
             {
+                Usuario aux = contexto.usuarios.Where(U => U.dni == DNI && U.password == pass).FirstOrDefault();
                 return aux;
             }
-            else 
-            {
-                return null;
-            }
+            return null;
         }
 
         // #######################################################################################

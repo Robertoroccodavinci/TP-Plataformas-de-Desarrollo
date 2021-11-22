@@ -195,7 +195,7 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-           /* try
+            try
             {
                 if (merc.esAdmin(ID))
                 {
@@ -205,26 +205,21 @@ namespace TP_Plataformas_de_Desarrollo
                         DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar Producto?", "", MessageBoxButtons.YesNo);
                         if (resutl == DialogResult.Yes)
                         {
-
                             merc.EliminarProducto(int.Parse(dataGridView1[0, e.RowIndex].Value.ToString()));
                             dataGridView1.Rows.RemoveAt(e.RowIndex);
-
                         }
                     }
                     else
                     {
-
                         //MODIFICAR 
-
-                        int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(dataGridView1[0, e.RowIndex].Value.ToString()));
-                        textBox9.Text = merc.nProductos[indice].nIDProd.ToString();
-                        textBox5.Text = merc.nProductos[indice].nNombre;
-                        textBox6.Text = merc.nProductos[indice].nPrecio.ToString();
-                        textBox7.Text = merc.nProductos[indice].nCantidad.ToString();
-                        textBox8.Text = merc.nProductos[indice].nCategoria.nID.ToString();
+                        Producto p = merc.nContexto.productos.Where(p => p.idProducto == int.Parse(dataGridView1[0, e.RowIndex].Value.ToString())).FirstOrDefault();
+                        textBox9.Text = p.idProducto.ToString();
+                        textBox5.Text = p.nombre;
+                        textBox6.Text = p.precio.ToString();
+                        textBox7.Text = p.cantidad.ToString();
+                        textBox8.Text = p.idCategoria.ToString();
                         button3.Show();
                         tabControl2.SelectedTab = ModificarProducto;
-
                     }
                 }
             }
@@ -232,14 +227,13 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 MessageBox.Show("no se puede seleccionar las columnas");
             }
-*/
         }
         //######################################################
         //             MODIFICAR PRODUCTOS
         //######################################################
         private void button7_Click(object sender, EventArgs e)
         {
-            /*if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
+            if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
                                        int.Parse(textBox7.Text), int.Parse(textBox8.Text)))
             {
                 textBox9.Text = "";
@@ -249,19 +243,22 @@ namespace TP_Plataformas_de_Desarrollo
                 textBox8.Text = "";
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
-            }*/
+            }
         }
         //######################################################
         //             AGREGAR PRODUCTO NUEVO
         //######################################################
         private void button6_Click(object sender, EventArgs e)
         {
-            /*if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
+            if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
             {
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
-            }*/
-
+            }
         }
         //######################################################
         //              SELECCIONAR CATEGORIA 
@@ -269,30 +266,28 @@ namespace TP_Plataformas_de_Desarrollo
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*button1.Text = "Restablecer datos";
+            button1.Text = "Restablecer datos";
             dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
             foreach (Producto p in merc.BuscarProductoPorCategoria(dataGridView6[0, e.RowIndex].Value.ToString()))
             {
                 if (p != null)
                 {
-                    string[] prods = { p.nIDProd.ToString(),
-                                       p.nNombre,
-                                       p.nPrecio.ToString(),
-                                       p.nCantidad.ToString(),
-                                       p.nCategoria.nID.ToString() };
+                    string[] prods = { p.idProducto.ToString(),
+                                       p.nombre,
+                                       p.precio.ToString(),
+                                       p.cantidad.ToString(),
+                                       p.idCategoria.ToString() };
                     dataGridView1.Rows.Add(prods);
                 }
-            }*/
+            }
         }
-
-
 
         //######################################################
         //             BOTON BUSCAR PRODUCTO
         //######################################################
         private void buttonB_Click(object sender, EventArgs e)
         {
-            /*if (textBox34.Text != "")
+            if (textBox34.Text != "")
             {
                 //Se intenta parsear el texto, si lo logra, busca Producto por precio.
                 if (int.TryParse(textBox34.Text, out int result))
@@ -312,11 +307,11 @@ namespace TP_Plataformas_de_Desarrollo
                         {
                             if (p != null)
                             {
-                                string[] prods = { p.nIDProd.ToString(),
-                                               p.nNombre,
-                                               p.nPrecio.ToString(),
-                                               p.nCantidad.ToString(),
-                                               p.nCategoria.nID.ToString() };
+                                string[] prods = { p.idProducto.ToString(),
+                                                   p.nombre,
+                                                   p.precio.ToString(),
+                                                   p.cantidad.ToString(),
+                                                   p.idCategoria.ToString() };
                                 dataGridView1.Rows.Add(prods);
                             }
                         }
@@ -340,17 +335,17 @@ namespace TP_Plataformas_de_Desarrollo
                         {
                             if (p != null)
                             {
-                                string[] prods = { p.nIDProd.ToString(),
-                                               p.nNombre,
-                                               p.nPrecio.ToString(),
-                                               p.nCantidad.ToString(),
-                                               p.nCategoria.nID.ToString() };
+                                string[] prods = { p.idProducto.ToString(),
+                                                   p.nombre,
+                                                   p.precio.ToString(),
+                                                   p.cantidad.ToString(),
+                                                   p.idCategoria.ToString() };
                                 dataGridView1.Rows.Add(prods);
                             }
                         }
                     }
                 }
-            }*/
+            }
         }
         //######################################################
         //                COMBO BOX DE ORDEN
@@ -358,20 +353,23 @@ namespace TP_Plataformas_de_Desarrollo
         //   COMBO BOX 2 -> ORDEN ASCENDENTE O DESCENDENTE
         //######################################################
         private void OrdenNPC() //Se repite en ambos eventos COMBOBOX entonces hago una sola funcion
-        {/*
+        {
             if (comboBox1.Text == "Nombre")
             {
                 dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
-                merc.nProductos.Sort();
-                foreach (Producto p in merc.nProductos)
+                var query = from prod in merc.nContexto.productos
+                            orderby prod.nombre
+                            select prod;
+
+                foreach (Producto p in query.ToList())
                 {
                     if (p != null)
                     {
-                        string[] prods = { p.nIDProd.ToString(),
-                                           p.nNombre,
-                                           p.nPrecio.ToString(),
-                                           p.nCantidad.ToString(),
-                                           p.nCategoria.nID.ToString() };
+                        string[] prods = { p.idProducto.ToString(),
+                                           p.nombre,
+                                           p.precio.ToString(),
+                                           p.cantidad.ToString(),
+                                           p.idCategoria.ToString() };
                         dataGridView1.Rows.Add(prods);
                     }
                 }
@@ -384,11 +382,11 @@ namespace TP_Plataformas_de_Desarrollo
                 {
                     if (p != null)
                     {
-                        string[] prods = { p.nIDProd.ToString(),
-                                           p.nNombre,
-                                           p.nPrecio.ToString(),
-                                           p.nCantidad.ToString(),
-                                           p.nCategoria.nID.ToString() };
+                        string[] prods = { p.idProducto.ToString(),
+                                           p.nombre,
+                                           p.precio.ToString(),
+                                           p.cantidad.ToString(),
+                                           p.idCategoria.ToString() };
                         dataGridView1.Rows.Add(prods);
                     }
                 }
@@ -401,38 +399,38 @@ namespace TP_Plataformas_de_Desarrollo
                 {
                     if (p != null)
                     {
-                        string[] prods = { p.nIDProd.ToString(),
-                                           p.nNombre,
-                                           p.nPrecio.ToString(),
-                                           p.nCantidad.ToString(),
-                                           p.nCategoria.nID.ToString() };
+                        string[] prods = { p.idProducto.ToString(),
+                                           p.nombre,
+                                           p.precio.ToString(),
+                                           p.cantidad.ToString(),
+                                           p.idCategoria.ToString() };
                         dataGridView1.Rows.Add(prods);
                     }
                 }
-            }*/
+            }
         }
 
         // Variable que arregla error del REVERSE, si COMBOBOX es DESC (1), no vuelve a ejecutar el REVERSE
         int cambio = 0;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*OrdenNPC();
+            OrdenNPC();
             //Permite ejecutar el DESC
             cambio = 1;
 
             // SI ESTA SELECCIONADO EL ORDEN DESCENDENTE
             if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
-                merc.nProductos.Reverse();
+                merc.nContexto.productos.Reverse();
                 refreshData(merc);
                 //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
                 cambio = 0;
-            }*/
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*if (comboBox2.SelectedIndex == 0)
+            if (comboBox2.SelectedIndex == 0)
             {
                 //EN CASO DE ESTAR PREVIAMENTE SELECCIONADO EL ORDEN DESCENDENTE, SE VUELVE A ORDENAR
                 OrdenNPC();
@@ -441,11 +439,11 @@ namespace TP_Plataformas_de_Desarrollo
             }
             else if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
-                merc.nProductos.Reverse();
+                merc.nContexto.productos.Reverse();
                 refreshData(merc);
                 //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
                 cambio = 0;
-            }*/
+            }
         }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -454,9 +452,8 @@ namespace TP_Plataformas_de_Desarrollo
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Categoria aux = merc.nContexto.categorias
-                .Where(c => c.idCategoria == int.Parse(dataGridView2[0, e.RowIndex].Value.ToString())).FirstOrDefault();
-
+            int indice = int.Parse(dataGridView2[0, e.RowIndex].Value.ToString());
+            Categoria aux = merc.nContexto.categorias.Where(c => c.idCategoria == indice).FirstOrDefault();
             
             if (e.ColumnIndex == dataGridView2.Columns["botonBorrar"].Index)
             {
@@ -465,13 +462,12 @@ namespace TP_Plataformas_de_Desarrollo
                 if (resutl == DialogResult.Yes && merc.EliminarCategoria(aux.idCategoria))
                 {
                     dataGridView2.Rows.RemoveAt(e.RowIndex);
+                    refreshData(merc);
                 }
                 else
                 {
                     MessageBox.Show("No se puede eliminar esta categoria, porque hay productos que dependen de ella");
                 }
-
-
             }
             else
             {
@@ -503,6 +499,7 @@ namespace TP_Plataformas_de_Desarrollo
         {
             if (merc.AgregarCategoria(textBox10.Text))
             {
+                textBox10.Text = "";
                 refreshData(merc);
                 tabControl3.SelectedTab = ListaCategoria;
             }
@@ -589,7 +586,7 @@ namespace TP_Plataformas_de_Desarrollo
                             if (resutl == DialogResult.Yes)
                             {
                                 int indice = int.Parse(dataGridView4[0, e.RowIndex].Value.ToString());
-                                //merc.EliminarCompra(indice);
+                                merc.EliminarCompra(indice);
                                 dataGridView4.Rows.RemoveAt(e.RowIndex);
                             }
                         }
@@ -611,27 +608,15 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button11_Click(object sender, EventArgs e)
         {
-            /* if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
+             if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
              {
                  textBox28.Text = "";
                  textBox29.Text = "";
                  textBox30.Text = "";
                  refreshData(merc);
                  tabControl5.SelectedTab = ListaCompras;
-             }*/
+             }
         }
-
-
-
-
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        //                                       PESTAÑA MI CARRO
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        //######################################################
-        //              ACA VA ALGO???????
-        //######################################################
-
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //                                           OTROS

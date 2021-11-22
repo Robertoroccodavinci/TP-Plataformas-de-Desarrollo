@@ -42,6 +42,7 @@ namespace TP_Plataformas_de_Desarrollo
             modelBuilder.Entity<Usuario>()
                 .ToTable("Usuario")
                 .HasKey(u => u.idUsuario);
+            
             //propiedades de los datos
             modelBuilder.Entity<Usuario>(
                 usr =>
@@ -81,7 +82,7 @@ namespace TP_Plataformas_de_Desarrollo
                 .WithOne(u => u.miCarro)
                 .HasForeignKey<Carro>(c => c.idUsuario)
                 //.HasConstraintName("ForeignName_Usuario_Carro") //podemos dejarle el nombre por defecto quitando el string
-                //.OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);
                 ;
 
             //##############################################################
@@ -113,7 +114,8 @@ namespace TP_Plataformas_de_Desarrollo
             modelBuilder.Entity<Producto>()
                 .HasOne(P => P.cat)
                 .WithMany(C => C.productos)
-                .HasForeignKey(P => P.idCategoria);
+                .HasForeignKey(P => P.idCategoria)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //#######################################
             // relacion: muchos a muchos con CompraProducto
@@ -125,7 +127,8 @@ namespace TP_Plataformas_de_Desarrollo
                     ecp => ecp.HasOne(cp => cp.compra).WithMany(p => p.compraProducto).HasForeignKey(cp => cp.idCompra),
                     ecp => ecp.HasOne(cp => cp.producto).WithMany(p => p.compraProducto).HasForeignKey(cp => cp.idProducto),
                     ecp => ecp.HasKey(pk => pk.idCompraProducto)
-                );
+                )
+                ;
             //#######################################
             // relacion: muchos a muchos con CarroProducto
             //#######################################
@@ -188,7 +191,8 @@ namespace TP_Plataformas_de_Desarrollo
             modelBuilder.Entity<Compra>()
                 .HasOne(Co => Co.usuario)
                 .WithMany(U => U.compras)
-                .HasForeignKey(Co => Co.idUsuario);
+                .HasForeignKey(Co => Co.idUsuario)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //##############################################################
             //       COMPRA PRODUCTO

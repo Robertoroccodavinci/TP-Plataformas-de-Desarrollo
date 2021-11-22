@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -76,11 +77,12 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 if (c.usuario.idUsuario == ID) 
                 {
-                    double total = 0;
+                   
                     if (c.carroProducto != null)
                     {
                         foreach (CarroProducto cp in c.carroProducto)
                         {
+                            double total = 0;
                             total += cp.producto.precio * cp.cantidad;
                             string[] carroproducto = { cp.producto.idProducto.ToString(),
                                                        cp.producto.nombre,
@@ -114,17 +116,18 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-         /*   int indice = merc.nProductos.FindIndex(x => x.nIDProd == int.Parse(dataGridView1[0, e.RowIndex].Value.ToString()));
+            int indice = int.Parse(dataGridView1[0, e.RowIndex].Value.ToString());
+            Producto p = merc.nContexto.productos.Where(p => p.idProducto == indice ).First();
+            
 
-            label20.Text = merc.nProductos[indice].nIDProd.ToString();
-            label7.Text = merc.nProductos[indice].nNombre;
-            label8.Text = merc.nProductos[indice].nPrecio.ToString();
-            label9.Text = merc.nProductos[indice].nCantidad.ToString();
-            label10.Text = merc.nProductos[indice].nCategoria.nID.ToString();
-            numericUpDown1.Maximum = merc.nProductos[indice].nCantidad;
+            label20.Text = p.idProducto.ToString();
+            label7.Text = p.nombre;
+            label8.Text = p.precio.ToString();
+            label9.Text = p.cantidad.ToString();
+            label10.Text = p.idCategoria.ToString();
+            numericUpDown1.Maximum = p.cantidad;
             button2.Show();
             tabControl2.SelectedTab = MostrarProducto;
-*/
 
         }
 
@@ -133,7 +136,7 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button5_Click(object sender, EventArgs e)
         {
-          /*  if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID))
+            if (merc.AgregarAlCarro(int.Parse(label20.Text), int.Parse(numericUpDown1.Value.ToString()), ID))
             {
                 label20.Text = "";
                 label7.Text = "";
@@ -141,14 +144,13 @@ namespace TP_Plataformas_de_Desarrollo
                 label9.Text = "";
                 label10.Text = "";
                 numericUpDown1.Value = 1;
-                MessageBox.Show("Producto agregada con exito al Carro.");
                 refreshData(merc);
                 tabControl2.SelectedTab = ListaProductos;
             }
             else
             {
                 MessageBox.Show("ERROR: el Producto no se pudo agregar al Carro.");
-            }*/
+            }
         }
 
         //######################################################
@@ -157,20 +159,20 @@ namespace TP_Plataformas_de_Desarrollo
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          /*  button1.Text = "Restablecer datos";
+            button1.Text = "Restablecer datos";
             dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
             foreach (Producto p in merc.BuscarProductoPorCategoria(dataGridView6[0, e.RowIndex].Value.ToString()))
             {
                 if (p != null)
                 {
-                    string[] prods = { p.nIDProd.ToString(),
-                                       p.nNombre,
-                                       p.nPrecio.ToString(),
-                                       p.nCantidad.ToString(),
-                                       p.nCategoria.nID.ToString() };
+                    string[] prods = { p.idProducto.ToString(),
+                                       p.nombre,
+                                       p.precio.ToString(),
+                                       p.cantidad.ToString(),
+                                       p.idCategoria.ToString() };
                     dataGridView1.Rows.Add(prods);
                 }
-            }*/
+            }
         }
 
         //######################################################
@@ -205,7 +207,7 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button13_Click(object sender, EventArgs e)
         {
-            /*if (textBox34.Text != "")
+            if (textBox34.Text != "")
             {
                 //Se intenta parsear el texto, si lo logra, busca Producto por precio.
                 if (int.TryParse(textBox34.Text, out int result))
@@ -225,11 +227,11 @@ namespace TP_Plataformas_de_Desarrollo
                         {
                             if (p != null)
                             {
-                                string[] prods = { p.nIDProd.ToString(),
-                                                   p.nNombre,
-                                                   p.nPrecio.ToString(),
-                                                   p.nCantidad.ToString(),
-                                                   p.nCategoria.nID.ToString() };
+                                string[] prods = { p.idProducto.ToString(),
+                                                   p.nombre,
+                                                   p.precio.ToString(),
+                                                   p.cantidad.ToString(),
+                                                   p.idCategoria.ToString() };
                                 dataGridView1.Rows.Add(prods);
                             }
                         }
@@ -253,17 +255,17 @@ namespace TP_Plataformas_de_Desarrollo
                         {
                             if (p != null)
                             {
-                                string[] prods = { p.nIDProd.ToString(),
-                                               p.nNombre,
-                                               p.nPrecio.ToString(),
-                                               p.nCantidad.ToString(),
-                                               p.nCategoria.nID.ToString() };
+                                string[] prods = { p.idProducto.ToString(),
+                                                   p.nombre,
+                                                   p.precio.ToString(),
+                                                   p.cantidad.ToString(),
+                                                   p.idCategoria.ToString() };
                                 dataGridView1.Rows.Add(prods);
                             }
                         }
                     }
                 }
-            }*/
+            }
         }
         //######################################################
         //                COMBO BOX DE ORDEN
@@ -272,20 +274,23 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void OrdenNPC() //Se repite en ambos eventos COMBOBOX entonces hago una sola funcion
         {
-           /* if (comboBox1.Text == "Nombre")
+            if (comboBox1.Text == "Nombre")
             {
 
                 dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
-                merc.nProductos.Sort();
-                foreach (Producto p in merc.nProductos)
+                var query = from prod in merc.nContexto.productos
+                            orderby prod.nombre
+                            select prod;
+
+                foreach (Producto p in query.ToList())
                 {
                     if (p != null)
                     {
-                        string[] prods = { p.nIDProd.ToString(),
-                                           p.nNombre,
-                                           p.nPrecio.ToString(),
-                                           p.nCantidad.ToString(),
-                                           p.nCategoria.nID.ToString() };
+                        string[] prods = { p.idProducto.ToString(),
+                                           p.nombre,
+                                           p.precio.ToString(),
+                                           p.cantidad.ToString(),
+                                           p.idCategoria.ToString() };
                         dataGridView1.Rows.Add(prods);
                     }
                 }
@@ -298,11 +303,11 @@ namespace TP_Plataformas_de_Desarrollo
                 {
                     if (p != null)
                     {
-                        string[] prods = { p.nIDProd.ToString(),
-                                           p.nNombre,
-                                           p.nPrecio.ToString(),
-                                           p.nCantidad.ToString(),
-                                           p.nCategoria.nID.ToString() };
+                        string[] prods = { p.idProducto.ToString(),
+                                           p.nombre,
+                                           p.precio.ToString(),
+                                           p.cantidad.ToString(),
+                                           p.idCategoria.ToString() };
                         dataGridView1.Rows.Add(prods);
                     }
                 }
@@ -315,15 +320,15 @@ namespace TP_Plataformas_de_Desarrollo
                 {
                     if (p != null)
                     {
-                        string[] prods = { p.nIDProd.ToString(),
-                                           p.nNombre,
-                                           p.nPrecio.ToString(),
-                                           p.nCantidad.ToString(),
-                                           p.nCategoria.nID.ToString() };
+                        string[] prods = { p.idProducto.ToString(),
+                                           p.nombre,
+                                           p.precio.ToString(),
+                                           p.cantidad.ToString(),
+                                           p.idCategoria.ToString() };
                         dataGridView1.Rows.Add(prods);
                     }
                 }
-            }*/
+            }
         }
 
         int cambio = 0; // Variable que arregla error del REVERSE, si COMBOBOX es DESC (1), no vuelve a ejecutar el REVERSE 
@@ -333,17 +338,17 @@ namespace TP_Plataformas_de_Desarrollo
             cambio = 1;//Permite ejecutar el DESC
 
             // SI ESTA SELECCIONADO EL ORDEN DESCENDENTE
-            /*if (comboBox2.SelectedIndex == 1 && cambio == 1)
+            if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
-                merc.nProductos.Reverse();// El reverse hace que ande mal la segunda vez que lo elegimos
+                merc.nContexto.productos.Reverse();// El reverse hace que ande mal la segunda vez que lo elegimos
                 refreshData(merc);
                 cambio = 0;//Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
-            }*/
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-           /* if (comboBox2.SelectedIndex == 0)
+            if (comboBox2.SelectedIndex == 0)
             {
                 //EN CASO DE ESTAR PREVIAMENTE SELECCIONADO EL ORDEN DESCENDENTE, SE VUELVE A ORDENAR
                 OrdenNPC();
@@ -351,10 +356,10 @@ namespace TP_Plataformas_de_Desarrollo
             }
             else if (comboBox2.SelectedIndex == 1 && cambio == 1)
             {
-                merc.nProductos.Reverse();// El reverse hace que ande mal la segunda vez que lo elegimos
+                merc.nContexto.productos.Reverse();// El reverse hace que ande mal la segunda vez que lo elegimos
                 refreshData(merc);
                 cambio = 0; //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
-            }*/
+            }
         }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -363,17 +368,15 @@ namespace TP_Plataformas_de_Desarrollo
         private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
-          /*  if (e.ColumnIndex == dataGridView5.Columns["botonBorrarDelCarro"].Index)
+            if (e.ColumnIndex == dataGridView5.Columns["botonBorrarDelCarro"].Index)
             {
                 // ELIMINAR PRODUCTO DEL CARRO
                 DialogResult resutl = MessageBox.Show("¿Seguro que desea eliminar el producto de tu Carro?", "", MessageBoxButtons.YesNo);
                 if (resutl == DialogResult.Yes)
                 {
                     int idprod = int.Parse(dataGridView5[0, e.RowIndex].Value.ToString());
-                    int cantidad = int.Parse(dataGridView5[3, e.RowIndex].Value.ToString());
-                    int indiceUsuario = merc.nUsuarios.FindIndex(x => x.nID == ID);
 
-                    merc.QuitarAlCarro(idprod, cantidad, ID);
+                    merc.ModificarCarro(idprod, 0, ID);
                     dataGridView5.Rows.RemoveAt(e.RowIndex);
                 }
             }
@@ -385,35 +388,38 @@ namespace TP_Plataformas_de_Desarrollo
                 textBox33.Text = dataGridView5[3, e.RowIndex].Value.ToString();
                 button2.Show();
                 tabControl6.SelectedTab = ModificarCarro;
-            }*/
+            }
         }
         //######################################################
         //             MODIFICAR CARRO
         //######################################################
         private void button12_Click(object sender, EventArgs e)
         {
-           /* if (merc.QuitarAlCarro(int.Parse(textBox31.Text), int.Parse(textBox33.Text), ID))
+            if (merc.nContexto.carros.Where(c => c.idUsuario == ID).FirstOrDefault() != null) 
             {
-                textBox31.Text = "";
-                textBox32.Text = "";
-                textBox33.Text = "";
-                refreshData(merc);
-                tabControl6.SelectedTab = ListaCarro;
-            }*/
+                if (merc.ModificarCarro(int.Parse(textBox31.Text), int.Parse(textBox33.Text), ID))
+                {
+                    textBox31.Text = "";
+                    textBox32.Text = "";
+                    textBox33.Text = "";
+                    refreshData(merc);
+                    tabControl6.SelectedTab = ListaCarro;
+                }
+            }
         }
         //######################################################
         //             VACIAR CARRO
         //######################################################
         private void button15_Click(object sender, EventArgs e)
         {
-           /* if (dataGridView5.Rows.Count == 0)
+            if (dataGridView5.Rows.Count == 0)
             {
                 MessageBox.Show("No tienes productos que vaciar");
             }
             else if (merc.VaciarCarro(ID))
             {
                 refreshData(merc);
-            }*/
+            }
 
         }
         //######################################################
@@ -421,14 +427,14 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button14_Click(object sender, EventArgs e)
         {
-           /* if (dataGridView5.Rows.Count == 0)
+            if (dataGridView5.Rows.Count == 0)
             {
                 MessageBox.Show("Debes agregar productos al carro");
             }
             else if (merc.Comprar(ID))
             {
                 refreshData(merc);
-            }*/
+            }
 
         }
 
@@ -439,7 +445,7 @@ namespace TP_Plataformas_de_Desarrollo
         {
             button1.Text = "Actualizar Datos";
             textBox34.Text = "";
-            //refreshData(merc); //RECARGA LAS LISTAS
+            refreshData(merc); //RECARGA LAS LISTAS
         }
 
 
