@@ -138,9 +138,13 @@ namespace TP_Plataformas_de_Desarrollo
                 textPass.Text = "";
                 textCUIT_CUIL.Text = "";
             }
-            catch (Exception ex)
+            catch (FormatException)
             {
-                MessageBox.Show("ERROR ingreso dato incorrecto"+ex);
+                MessageBox.Show("ERROR al ingresar los datos.");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ERROR ingreso dato incorrecto");
             }
             MessageBox.Show("Usuario registrado correctamente");
             tabControl1.SelectedTab = tabPage1;

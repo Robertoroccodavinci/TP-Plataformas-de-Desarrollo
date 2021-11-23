@@ -233,31 +233,45 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button7_Click(object sender, EventArgs e)
         {
-            if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
-                                       int.Parse(textBox7.Text), int.Parse(textBox8.Text)))
-            {
-                textBox9.Text = "";
-                textBox5.Text = "";
-                textBox6.Text = "";
-                textBox7.Text = "";
-                textBox8.Text = "";
-                refreshData(merc);
-                tabControl2.SelectedTab = ListaProductos;
+            try 
+            { 
+                if (merc.ModificarProducto(int.Parse(textBox9.Text), textBox5.Text, double.Parse(textBox6.Text),
+                                           int.Parse(textBox7.Text), int.Parse(textBox8.Text)))
+                {
+                    textBox9.Text = "";
+                    textBox5.Text = "";
+                    textBox6.Text = "";
+                    textBox7.Text = "";
+                    textBox8.Text = "";
+                    refreshData(merc);
+                    tabControl2.SelectedTab = ListaProductos;
+                }
             }
-        }
+            catch(FormatException) 
+            {
+                MessageBox.Show("ERROR al ingresar los datos.");
+            }
+}
         //######################################################
         //             AGREGAR PRODUCTO NUEVO
         //######################################################
         private void button6_Click(object sender, EventArgs e)
         {
-            if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
+            try 
             {
-                textBox1.Text = "";
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                refreshData(merc);
-                tabControl2.SelectedTab = ListaProductos;
+                if (merc.AgregarProducto(textBox1.Text, double.Parse(textBox2.Text), int.Parse(textBox3.Text), int.Parse(textBox4.Text)))
+                {
+                    textBox1.Text = "";
+                    textBox2.Text = "";
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    refreshData(merc);
+                    tabControl2.SelectedTab = ListaProductos;
+                }
+            }
+            catch(FormatException) 
+            {
+                MessageBox.Show("ERROR al ingresar los datos.");
             }
         }
         //######################################################
@@ -479,26 +493,57 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button8_Click(object sender, EventArgs e)
         {
-            if (merc.ModificarCategoria(int.Parse(textBox11.Text), textBox12.Text))
+            try 
             {
-                textBox11.Text = "";
-                textBox12.Text = "";
-                refreshData(merc);
-                tabControl3.SelectedTab = ListaCategoria;
+                if (!Int64.TryParse(textBox12.Text, out long result)) 
+                {
+                    if (merc.ModificarCategoria(int.Parse(textBox11.Text), textBox12.Text))
+                    {
+                        textBox11.Text = "";
+                        textBox12.Text = "";
+                        refreshData(merc);
+                        tabControl3.SelectedTab = ListaCategoria;
+                    }
+                }
+                else
+                {
+                    textBox12.Text = "";
+                    MessageBox.Show("ERROR el nombre no debe ser un numero.");
+                }
+                
             }
-        }
+            catch(FormatException) 
+            {
+                MessageBox.Show("ERROR al ingresar los datos.");
+            }
+}
         //######################################################
         //             AGREGAR CATEGORIA NUEVA
         //######################################################
         private void button4_Click(object sender, EventArgs e)
         {
-            if (merc.AgregarCategoria(textBox10.Text))
+            try 
             {
-                textBox10.Text = "";
-                refreshData(merc);
-                tabControl3.SelectedTab = ListaCategoria;
+                if (!Int64.TryParse(textBox10.Text, out long result))
+                {
+                    if (merc.AgregarCategoria(textBox10.Text))
+                    {
+                        textBox10.Text = "";
+                        refreshData(merc);
+                        tabControl3.SelectedTab = ListaCategoria;
+                    }
+                }
+                else 
+                {
+                    textBox10.Text = "";
+                    MessageBox.Show("ERROR el nombre no puede debe un numero.");
+                }
             }
-        }
+            catch(FormatException) 
+            {
+                MessageBox.Show("ERROR al ingresar los datos.");
+            }
+}
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //                                       PESTAÑA USUARIOS
@@ -542,31 +587,47 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void buttonModificarUsuario_Click(object sender, EventArgs e)
         {
-             if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
-                                       textBox24.Text, textBox25.Text, int.Parse(textBox26.Text), comboBoxModRol.SelectedIndex + 1))
-             {
-                 textBox20.Text = "";
-                 textBox21.Text = "";
-                 textBox22.Text = "";
-                 textBox23.Text = "";
-                 textBox24.Text = "";
-                 textBox25.Text = "";
-                 textBox26.Text = "";
-                 refreshData(merc);
-                 tabControl4.SelectedTab = ListaUsuarios;
-             }
+            try 
+            { 
+                if (merc.ModificarUsuario(int.Parse(textBox20.Text), int.Parse(textBox21.Text), textBox22.Text, textBox23.Text,
+                                           textBox24.Text, textBox25.Text, int.Parse(textBox26.Text), comboBoxModRol.SelectedIndex + 1))
+                 {
+                     textBox20.Text = "";
+                     textBox21.Text = "";
+                     textBox22.Text = "";
+                     textBox23.Text = "";
+                     textBox24.Text = "";
+                     textBox25.Text = "";
+                     textBox26.Text = "";
+                     refreshData(merc);
+                     tabControl4.SelectedTab = ListaUsuarios;
+                 }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("ERROR al ingresar los datos.");
+            }
         }
         //######################################################
         //             AGREGAR USUARIO NUEVO
         //######################################################
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-              if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
+            try
+            {
+                if (merc.AgregarUsuario(int.Parse(textDNI.Text), textNombre.Text, textApellido.Text, textMail.Text,
                                       textPass.Text, int.Parse(textCUILCUIT.Text), comboBoxRol.SelectedIndex + 1))
-              {
-                  refreshData(merc);
-                  tabControl4.SelectedTab = ListaUsuarios;
-              }
+                {
+                    refreshData(merc);
+                    tabControl4.SelectedTab = ListaUsuarios;
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Error al ingresar los datos");
+            }
+            
+              
         }
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -603,15 +664,22 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button11_Click(object sender, EventArgs e)
         {
-             if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
-             {
-                 textBox28.Text = "";
-                 textBox29.Text = "";
-                 textBox30.Text = "";
-                 refreshData(merc);
-                 tabControl5.SelectedTab = ListaCompras;
-             }
-        }
+            try 
+            { 
+                if (merc.ModificarCompra(int.Parse(textBox28.Text), double.Parse(textBox30.Text)))
+                {
+                    textBox28.Text = "";
+                    textBox29.Text = "";
+                    textBox30.Text = "";
+                    refreshData(merc);
+                    tabControl5.SelectedTab = ListaCompras;
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("ERROR al ingresar los datos.");
+            }
+}
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //                                           OTROS
@@ -693,7 +761,7 @@ namespace TP_Plataformas_de_Desarrollo
             DialogResult respuesta = MessageBox.Show("¿Seguro que desea salir?", "", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
-                merc.cerrarContexto();
+                
                 this.TrasfEvento();
                 this.Close();
             }

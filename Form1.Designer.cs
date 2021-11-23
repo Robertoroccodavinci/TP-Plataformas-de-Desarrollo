@@ -16,6 +16,7 @@ namespace TP_Plataformas_de_Desarrollo
         {
             if (disposing && (components != null))
             {
+                merc.cerrarContexto();
                 components.Dispose();
             }
             if (hijoCliente != null)
@@ -27,7 +28,6 @@ namespace TP_Plataformas_de_Desarrollo
                 hijoAdmin.Dispose();
             }
 
-            merc.cerrarContexto();
             base.Dispose(disposing);
         }
 

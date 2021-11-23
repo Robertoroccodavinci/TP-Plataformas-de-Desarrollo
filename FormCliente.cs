@@ -389,17 +389,26 @@ namespace TP_Plataformas_de_Desarrollo
         //######################################################
         private void button12_Click(object sender, EventArgs e)
         {
-            if (merc.nContexto.carros.Where(c => c.idUsuario == ID).FirstOrDefault() != null) 
+
+            try
             {
-                if (merc.ModificarCarro(int.Parse(textBox31.Text), int.Parse(textBox33.Text), ID))
+                if (merc.nContexto.carros.Where(c => c.idUsuario == ID).FirstOrDefault() != null)
                 {
-                    textBox31.Text = "";
-                    textBox32.Text = "";
-                    textBox33.Text = "";
-                    refreshData(merc);
-                    tabControl6.SelectedTab = ListaCarro;
+                    if (merc.ModificarCarro(int.Parse(textBox31.Text), int.Parse(textBox33.Text), ID))
+                    {
+                        textBox31.Text = "";
+                        textBox32.Text = "";
+                        textBox33.Text = "";
+                        refreshData(merc);
+                        tabControl6.SelectedTab = ListaCarro;
+                    }
                 }
             }
+            catch (FormatException)
+            {
+                MessageBox.Show("ERROR al ingresar los datos");
+            }
+
         }
         //######################################################
         //             VACIAR CARRO
@@ -452,7 +461,7 @@ namespace TP_Plataformas_de_Desarrollo
             DialogResult respuesta = MessageBox.Show("¿Seguro que deseas salir?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (respuesta == DialogResult.Yes)
             {
-                merc.cerrarContexto();
+                
                 this.TrasfEvento();
                 this.Close();
             }

@@ -69,7 +69,8 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try
             {
-                if (contexto.productos.Where(P => P.nombre == nombre && P.cat.idCategoria == ID_Categoria).FirstOrDefault() == null)
+                if (contexto.productos.Where(P => P.nombre == nombre && P.cat.idCategoria == ID_Categoria).FirstOrDefault() == null &&
+                    contexto.categorias.Where(C => C.idCategoria == ID_Categoria).FirstOrDefault() != null)
                 {
                     Categoria cat = contexto.categorias.Where(C => C.idCategoria == ID_Categoria).FirstOrDefault();
                     Producto aux = new Producto(nombre, precio, cantidad, cat);
@@ -79,7 +80,7 @@ namespace TP_Plataformas_de_Desarrollo
                 }
                 else
                 {
-                    MessageBox.Show("ERROR ya existe ese Producto");
+                    MessageBox.Show("ERROR en los datos ingresados");
                     return false;
                 }
             }
@@ -96,7 +97,8 @@ namespace TP_Plataformas_de_Desarrollo
         {
             try
             {
-                if (contexto.productos.Where(P => P.idProducto == ID).FirstOrDefault() != null)
+                if (contexto.productos.Where(P => P.idProducto == ID).FirstOrDefault() != null &&
+                    contexto.categorias.Where(C => C.idCategoria == ID_Categoria).FirstOrDefault() != null)
                 {
                     Producto aux = contexto.productos.Where(P => P.idProducto == ID).FirstOrDefault();
                     aux.nombre = nombre;
@@ -110,7 +112,7 @@ namespace TP_Plataformas_de_Desarrollo
                 }
                 else
                 {
-                    MessageBox.Show("ERROR: no hay Producto con ese ID: " + ID);
+                    MessageBox.Show("ERROR en los datos ingresados");
                     return false;
                 }
             }
