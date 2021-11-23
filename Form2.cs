@@ -51,21 +51,21 @@ namespace TP_Plataformas_de_Desarrollo
         //Iniciar sesión con tecla Enter (repite implementación anterior de "button1_Click")
         private void inputPass_KeyPress(object sender, KeyPressEventArgs e)
         {
-          /*  if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
                 DNI = int.Parse(textBox1.Text);
                 pass = inputPass.Text;
                 //m.nTargetPath = textBox8.Text;
 
-                UsuarioOLD u;
+                Usuario u;
                 if ((u = m.IniciarSesion(DNI, pass)) != null)
                 {
                     MessageBox.Show("Te damos la bienvenida!");
-                    this.TrasfEvento(u.nID, u.nNombre, m);
+                    this.TrasfEvento(u.idUsuario, u.nombre, m);
                 }
                 else
                     MessageBox.Show("Debes registrarte");
-            }*/
+            }
         }
 
         private void button1_MouseHover(object sender, EventArgs e)
@@ -142,7 +142,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
                 MessageBox.Show("ERROR ingreso dato incorrecto"+ex);
             }
-
+            MessageBox.Show("Usuario registrado correctamente");
             tabControl1.SelectedTab = tabPage1;
         }
 
@@ -174,9 +174,6 @@ namespace TP_Plataformas_de_Desarrollo
             textMail.Text = "";
             textPass.Text = "";
             textCUIT_CUIL.Text = "";
-
-
-
         }
         //######################################################
         //                   BOTON VOLVER
@@ -198,18 +195,6 @@ namespace TP_Plataformas_de_Desarrollo
         //################################################################################################
 
 
-
-        //######################################################
-        //                   BOTON CAMBIAR 
-        //             FORMULARIO CONFIGURACION
-        //######################################################R
-        private void button8_Click(object sender, EventArgs e)
-        {
-          /*  FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowDialog();
-            m.nTargetPath = fbd.SelectedPath;
-            textBox8.Text = m.nTargetPath;*/
-        }
 
         //######################################################
         //                   BOTON VOLVER

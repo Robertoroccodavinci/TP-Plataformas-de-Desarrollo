@@ -467,7 +467,6 @@ namespace TP_Plataformas_de_Desarrollo
             this.button8.TabIndex = 23;
             this.button8.Text = "Cambiar";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // textBox8
             // 
@@ -478,6 +477,7 @@ namespace TP_Plataformas_de_Desarrollo
             this.textBox8.ReadOnly = true;
             this.textBox8.Size = new System.Drawing.Size(615, 24);
             this.textBox8.TabIndex = 22;
+            this.textBox8.Text = "EN CONSTRUCCION";
             this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label10

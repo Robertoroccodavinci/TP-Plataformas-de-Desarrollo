@@ -27,7 +27,7 @@ namespace TP_Plataformas_de_Desarrollo
                 hijoAdmin.Dispose();
             }
 
-
+            merc.cerrarContexto();
             base.Dispose(disposing);
         }
 

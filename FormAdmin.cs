@@ -323,7 +323,7 @@ namespace TP_Plataformas_de_Desarrollo
                     button1.Text = "Restablecer datos";
                     dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
 
-                    if (merc.BuscarProducto(textBox34.Text).Count == 0)
+                    if (merc.BuscarProducto(textBox34.Text,1).Count == 0)
                     {
                         MessageBox.Show("No existe el producto: " + textBox34.Text);
                         refreshData(merc);
@@ -331,7 +331,7 @@ namespace TP_Plataformas_de_Desarrollo
                     }
                     else
                     {
-                        foreach (Producto p in merc.BuscarProducto(textBox34.Text))
+                        foreach (Producto p in merc.BuscarProducto(textBox34.Text,1))
                         {
                             if (p != null)
                             {
@@ -352,7 +352,7 @@ namespace TP_Plataformas_de_Desarrollo
         //   COMBO BOX 1 -> ORDEN POR NOMBRE, CATEGORIA O PRECIO
         //   COMBO BOX 2 -> ORDEN ASCENDENTE O DESCENDENTE
         //######################################################
-        private void OrdenNPC() //Se repite en ambos eventos COMBOBOX entonces hago una sola funcion
+        private void OrdenNPC(int cambio) //Se repite en ambos eventos COMBOBOX entonces hago una sola funcion
         {
             if (comboBox1.Text == "Nombre")
             {
@@ -361,7 +361,7 @@ namespace TP_Plataformas_de_Desarrollo
                             orderby prod.nombre
                             select prod;
 
-                foreach (Producto p in query.ToList())
+                foreach (Producto p in merc.BuscarProducto("",cambio))
                 {
                     if (p != null)
                     {
@@ -378,7 +378,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
 
                 dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
-                foreach (Producto p in merc.MostrarTodosProductosPorPrecio())
+                foreach (Producto p in merc.MostrarTodosProductosPorPrecio(cambio))
                 {
                     if (p != null)
                     {
@@ -395,7 +395,7 @@ namespace TP_Plataformas_de_Desarrollo
             {
 
                 dataGridView1.Rows.Clear(); //LIMPIAMOS TABLA PRODUCTOS
-                foreach (Producto p in merc.MostrarTodosProductosPorCategoria())
+                foreach (Producto p in merc.MostrarTodosProductosPorCategoria(cambio))
                 {
                     if (p != null)
                     {
@@ -414,35 +414,30 @@ namespace TP_Plataformas_de_Desarrollo
         int cambio = 0;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OrdenNPC();
-            //Permite ejecutar el DESC
-            cambio = 1;
-
             // SI ESTA SELECCIONADO EL ORDEN DESCENDENTE
-            if (comboBox2.SelectedIndex == 1 && cambio == 1)
+            if (comboBox2.SelectedIndex == 1 )
             {
-                merc.nContexto.productos.Reverse();
-                refreshData(merc);
-                //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
                 cambio = 0;
+                OrdenNPC(cambio);
+            }
+            else 
+            {
+                cambio = 1;
+                OrdenNPC(cambio);
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox2.SelectedIndex == 0)
+            if (comboBox2.SelectedIndex == 1)
             {
-                //EN CASO DE ESTAR PREVIAMENTE SELECCIONADO EL ORDEN DESCENDENTE, SE VUELVE A ORDENAR
-                OrdenNPC();
-                //Permite ejecutar el DESC
-                cambio = 1;
-            }
-            else if (comboBox2.SelectedIndex == 1 && cambio == 1)
-            {
-                merc.nContexto.productos.Reverse();
-                refreshData(merc);
-                //Impide volver a ejecutar DESC, que ejecuta devuelta el reverse que haria un loop
                 cambio = 0;
+                OrdenNPC(cambio);
+            }
+            else
+            {
+                cambio = 1;
+                OrdenNPC(cambio);
             }
         }
 

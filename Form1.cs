@@ -25,7 +25,6 @@ namespace TP_Plataformas_de_Desarrollo
             hijoLogin.MdiParent = this;
             hijoLogin.TrasfEvento += TransfDelegado;
             hijoLogin.Show();
-
         }
         private void TransfDelegado(int ID, string nombre, Object m)
         {

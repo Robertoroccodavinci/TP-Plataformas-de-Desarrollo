@@ -153,15 +153,31 @@ namespace TP_Plataformas_de_Desarrollo
             return true;
         }
 
-        public List<Producto> BuscarProducto(string Query)
+        public List<Producto> BuscarProducto(string Query,int orden)
         {
-            var query = from prod in nContexto.productos
-                        where prod.nombre.Contains(Query)
-                        orderby prod.cat.nombre
-                        select prod;
-            return query.ToList();
+            if (Query!="") 
+            {
+                var query = from prod in nContexto.productos
+                            where prod.nombre.Contains(Query)
+                            orderby prod.nombre
+                            select prod;
+                return query.ToList();
+            }
+            else if (orden == 1)
+            {
+                var query = from prod in nContexto.productos
+                            orderby prod.nombre ascending
+                            select prod;
+                return query.ToList();
+            }
+            else
+            {
+                var query = from prod in nContexto.productos
+                            orderby prod.nombre descending 
+                            select prod;
+                return query.ToList();
+            }
         }
-
 
         public List<Producto> BuscarProductoPorPrecio(string Query)
         {
@@ -183,20 +199,43 @@ namespace TP_Plataformas_de_Desarrollo
         }
 
 
-        public List<Producto> MostrarTodosProductosPorPrecio()
+        public List<Producto> MostrarTodosProductosPorPrecio(int orden)
         {
-            var query = from prod in nContexto.productos
-                        orderby prod.precio
-                        select prod;
-            return query.ToList();
+            if (orden == 1)
+            {
+                var query = from prod in nContexto.productos
+                            orderby prod.precio ascending
+                            select prod;
+                return query.ToList();
+            }
+            else
+            {
+                var query = from prod in nContexto.productos
+                            orderby prod.precio descending
+                            select prod;
+                return query.ToList();
+            }
+
+            
         }
 
-        public List<Producto> MostrarTodosProductosPorCategoria()
+        public List<Producto> MostrarTodosProductosPorCategoria(int orden)
         {
-            var query = from prod in nContexto.productos
-                        orderby prod.idCategoria
-                        select prod;
-            return query.ToList();
+            
+            if (orden == 1)
+            {
+                var query = from prod in nContexto.productos
+                            orderby prod.idCategoria ascending
+                            select prod;
+                return query.ToList();
+            }
+            else 
+            {
+                var query = from prod in nContexto.productos
+                            orderby prod.idCategoria descending
+                            select prod;
+                return query.ToList();
+            }
         }
 
         // ######################################################################################
@@ -360,7 +399,7 @@ namespace TP_Plataformas_de_Desarrollo
                 }
               
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 MessageBox.Show("ERROR: no se pudo modificar la categoria");
                 return false;
@@ -413,7 +452,7 @@ namespace TP_Plataformas_de_Desarrollo
         //                                  METODOS DE CARRO
         // #######################################################################################
         //                                  AGREGAR AL CARRO
-        //                                  QUITAR AL CARRO
+        //                                  MODIFICAR CARRO
         //                                  VACIAR CARRO
         // #######################################################################################
 
